@@ -1,19 +1,19 @@
 <div>
-
+    
     <form wire:submit.prevent="store">
-        
-    <div wire:loading wire:target="images, store"
+        <div class="position-relative">
+            <div wire:loading.flex 
+     wire:target="images"
      class="position-fixed top-0 start-0 w-100 h-100 
             bg-dark bg-opacity-50 
             justify-content-center align-items-center"
      style="z-index:9999;">
 
-        <div class="bg-white p-4 rounded shadow">
-            <p class="text-dark" style="font-size: 1.5rem; width: 100%; text-align: center;"> 
-                <i class="text-dark animate-wand fas fa-wand-magic-sparkles text-dark"></i> &nbsp; Sedang Memproses
-            </p>
-        </div>
+    <div class="bg-white p-4 rounded shadow">
+        <div class="spinner-border text-primary"></div>
+        <div class="mt-2">Processing, please wait...</div>
     </div>
+</div>
             <div class="mb-3">
                 <label>Images</label>
                 <input type="file" wire:model="images" multiple class="form-control">
@@ -35,22 +35,8 @@
             <button type="submit" wire:loading.attr="disabled" class="btn btn-primary mt-3">
                 Save
             </button>
-        
+        </div>
 
     </form>
 
 </div>
-
-@push('css')
-    <style>
-        @keyframes pulse-wand {
-            0%   { transform: scale(1);   opacity: 1; }
-            50%  { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(1);   opacity: 1; }
-        }
-
-        .animate-wand {
-            animation: pulse-wand 1s infinite ease-in-out;
-        }
-    </style>
-@endpush

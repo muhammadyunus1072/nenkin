@@ -1,19 +1,12 @@
 <div>
-
+    
     <form wire:submit.prevent="store">
-        
-    <div wire:loading wire:target="images, store"
-     class="position-fixed top-0 start-0 w-100 h-100 
-            bg-dark bg-opacity-50 
-            justify-content-center align-items-center"
-     style="z-index:9999;">
-
-        <div class="bg-white p-4 rounded shadow">
-            <p class="text-dark" style="font-size: 1.5rem; width: 100%; text-align: center;"> 
-                <i class="text-dark animate-wand fas fa-wand-magic-sparkles text-dark"></i> &nbsp; Sedang Memproses
-            </p>
-        </div>
-    </div>
+        <div class="position-relative">
+            <div class="position-absolute border border-danger">
+                    <span class="text-white indicator-progress" > 
+                        <i class="text-white indicator-progress animate-wand fas fa-wand-magic-sparkles text-white"></i> &nbsp; Sedang Memproses
+                </span>
+            </div>
             <div class="mb-3">
                 <label>Images</label>
                 <input type="file" wire:model="images" multiple class="form-control">
@@ -35,7 +28,7 @@
             <button type="submit" wire:loading.attr="disabled" class="btn btn-primary mt-3">
                 Save
             </button>
-        
+        </div>
 
     </form>
 

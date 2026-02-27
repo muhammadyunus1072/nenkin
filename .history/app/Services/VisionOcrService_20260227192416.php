@@ -89,6 +89,13 @@ class VisionOcrService
     }
     public function detectDocumentText($path, string $name)
     {
+        dd([
+            'path' => $path,
+            'exists' => file_exists($path),
+            'is_file' => is_file($path),
+            'is_dir' => is_dir($path),
+            base_path(env('GOOGLE_CLOUD_CREDENTIALS')),
+        ]);
         $client = new ImageAnnotatorClient([
             'credentials' => base_path('storage/app/google-credentials.json'),
         ]);

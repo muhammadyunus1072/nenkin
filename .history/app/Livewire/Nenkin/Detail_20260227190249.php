@@ -27,8 +27,11 @@ class Detail extends Component
 
     public function store()
     {
+        sleep(10);
         try {
             DB::transaction(function () {
+
+
                 foreach ($this->images as $image) {
                     $folder = 'nenkin/' . Str::uuid();
                     $path = $image->store($folder, 'public');
