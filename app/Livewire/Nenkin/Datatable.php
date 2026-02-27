@@ -74,7 +74,7 @@ class Datatable extends Component
 
                     $epath = explode('/', $item->image);
                     $folder = $epath[0] . '/' . $epath[1];
-                    $url = Storage::url($folder . '/labeled.pdf');
+                    $url = Storage::url($folder . '/labeled.jpg');
 
                     $destroyHtml = "<div class='col-auto mb-2'>
                             <a class='btn btn-success btn-sm' download href='" . $url . "'>
