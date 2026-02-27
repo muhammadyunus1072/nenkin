@@ -144,6 +144,9 @@ class VisionOcrService
                 $text = preg_replace('/[^0-9]/', '', $text);
 
                 $result['text'] = $text ?: null;
+            } elseif ($name == 'number') {
+                $text = preg_replace('/\s+/', '', $result['text']);
+                $result['text'] = $text;
             }
             // // For simplicity, we just save the full text. You can also save structured info like blocks, paragraphs, etc.
             // foreach ($fullText->getPages() as $pageIndex => $page) {
@@ -222,13 +225,6 @@ class VisionOcrService
         $pdf->Rect(610, 560, 200, 70);
 
         // Save the PDF
-
-        $destFolder = storage_path('app/public/labeled');
-
-        // Make sure folder exists
-        if (!file_exists($destFolder)) {
-            mkdir($destFolder, 0755, true);
-        }
         $pdf->Output('F', storage_path('app/public/' . $desPath . '/labeled.pdf'));
         $pdf->Output('F', storage_path('app/public/labeled/' . $model->number . '-' . $model->name . '.pdf'));
         $pdf->Close();

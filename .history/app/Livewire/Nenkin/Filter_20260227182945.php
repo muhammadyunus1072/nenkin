@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use ZipArchive;
-use Illuminate\Support\Facades\File;
-
 
 class Filter extends Component
 {
@@ -27,41 +24,13 @@ class Filter extends Component
     public function onDialogDeleteConfirm()
     {
         DB::table('nenkins')->truncate();
+        $this->resetPage();   // reset pagination
         $this->dispatch('refresh-table');
-        Storage::disk('public')->deleteDirectory('labeled');
-        // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+        Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
     #[On('on-delete-dialog-cancel')]
     public function onDialogDeleteCancel() {}
-
-    public function downloadLabeled()
-    {
-        $folderPath = storage_path('app/public/labeled');
-        $zipPath = storage_path('app/public/labeled.zip');
-
-        // Hapus zip lama kalau ada
-        if (File::exists($zipPath)) {
-            File::delete($zipPath);
-        }
-
-        $zip = new ZipArchive;
-
-        if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
-
-            $files = File::files($folderPath);
-
-            foreach ($files as $file) {
-                $zip->addFile($file->getRealPath(), $file->getFilename());
-            }
-
-            $zip->close();
-        }
-
-        return response()
-            ->download($zipPath)
-            ->deleteFileAfterSend(true);
-    }
 
     public function showDeleteDialog()
     {
@@ -75,6 +44,11 @@ class Filter extends Component
             "Hapus",
             "Batal",
         );
+    }
+
+    public function delete()
+    {
+        Storage::disk('public')->deleteDirectory('labeled');
     }
 
     public function render()

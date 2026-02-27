@@ -144,6 +144,9 @@ class VisionOcrService
                 $text = preg_replace('/[^0-9]/', '', $text);
 
                 $result['text'] = $text ?: null;
+            } elseif ($name == 'number') {
+                $text = preg_replace('/\s+/', '', $result['text']);
+                $result['text'] = $text;
             }
             // // For simplicity, we just save the full text. You can also save structured info like blocks, paragraphs, etc.
             // foreach ($fullText->getPages() as $pageIndex => $page) {

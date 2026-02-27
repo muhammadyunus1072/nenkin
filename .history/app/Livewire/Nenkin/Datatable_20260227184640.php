@@ -27,6 +27,7 @@ class Datatable extends Component
     #[On('refresh-table')]
     public function refreshTable()
     {
+        dd("rr");
         $this->resetPage();
     }
 

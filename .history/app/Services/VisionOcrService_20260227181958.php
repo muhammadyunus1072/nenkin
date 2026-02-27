@@ -47,7 +47,7 @@ class VisionOcrService
         $this->cropImage($path, $coord, $folder, 'date');
 
         // Crop Payment Top
-        $coord = ['x' => 610, 'y' => 50, 'width' => 165, 'height' => 50];
+        $coord = ['x' => 610, 'y' => 50, 'width' => 150, 'height' => 50];
         $this->cropImage($path, $coord, $folder, 'payment_top');
 
         // Crop Payment
@@ -74,7 +74,7 @@ class VisionOcrService
         $coord = ['x' => 400, 'y' => 1050, 'width' => 700, 'height' => 100];
         $this->cropImage($path, $coord, $folder, 'address');
 
-        $nenkin = NenkinRepository::update($model->id, [
+        NenkinRepository::update($model->id, [
             'date' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/date.png'), 'date')['text'] ?? null,
             'payment_top' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/payment_top.png'), 'payment_top')['text'] ?? null,
             'payment' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/payment.png'), 'payment')['text'] ?? null,
@@ -85,7 +85,7 @@ class VisionOcrService
             'address' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/address.png'), 'address')['text'] ?? null,
         ]);
 
-        $this->drawLabelPdf(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
+        $this->drawLabelPdf(storage_path('app/public/' . $path), $folder);
     }
     public function detectDocumentText($path, string $name)
     {
@@ -193,7 +193,7 @@ class VisionOcrService
         // return $result['pages'][0]['blocks'];
     }
 
-    public function drawLabelPdf($imagePath, $desPath, $model)
+    public function drawLabelPdf($imagePath, $desPath)
     {
         $pdf = new Fpdi();
         $pageWidth = 1130;
@@ -222,15 +222,8 @@ class VisionOcrService
         $pdf->Rect(610, 560, 200, 70);
 
         // Save the PDF
-
-        $destFolder = storage_path('app/public/labeled');
-
-        // Make sure folder exists
-        if (!file_exists($destFolder)) {
-            mkdir($destFolder, 0755, true);
-        }
         $pdf->Output('F', storage_path('app/public/' . $desPath . '/labeled.pdf'));
-        $pdf->Output('F', storage_path('app/public/labeled/' . $model->number . '-' . $model->name . '.pdf'));
+        $pdf->Output('F', storage_path('app/public/' . $desPath . '/labeled.pdf'));
         $pdf->Close();
     }
     public function drawBlocksOnPdf($imagePath, $blocks, $outputPath)

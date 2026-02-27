@@ -30,12 +30,6 @@
     Delete Data
             </button>
         </div>
-        <div class="col-auto">
-            <button class="btn btn-primary btn-sm" wire:click="downloadLabeled">
-<i class="fa fa-download"></i>
-    Download Labeled
-            </button>
-        </div>
     </div>
 
     {{-- Export Data --}}

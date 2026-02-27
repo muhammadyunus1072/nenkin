@@ -28,8 +28,7 @@ class Filter extends Component
     {
         DB::table('nenkins')->truncate();
         $this->dispatch('refresh-table');
-        Storage::disk('public')->deleteDirectory('labeled');
-        // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+        Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
     #[On('on-delete-dialog-cancel')]
@@ -58,9 +57,7 @@ class Filter extends Component
             $zip->close();
         }
 
-        return response()
-            ->download($zipPath)
-            ->deleteFileAfterSend(true);
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
     public function showDeleteDialog()
@@ -75,6 +72,11 @@ class Filter extends Component
             "Hapus",
             "Batal",
         );
+    }
+
+    public function delete()
+    {
+        Storage::disk('public')->deleteDirectory('labeled');
     }
 
     public function render()

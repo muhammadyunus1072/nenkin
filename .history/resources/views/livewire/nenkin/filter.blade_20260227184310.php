@@ -31,7 +31,7 @@
             </button>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary btn-sm" wire:click="downloadLabeled">
+            <button class="btn btn-primary btn-sm" wire:click="showDeleteDialog">
 <i class="fa fa-download"></i>
     Download Labeled
             </button>

@@ -16,7 +16,7 @@
             </button>
         </div>
         <div class="col-auto">
-            <button class="btn btn-warning btn-sm"
+            <button class="btn btn-danger btn-sm"
                  x-data
     @click="$dispatch('export', { type: '{{ App\Helpers\ExportHelper::TYPE_PDF }}' })"
 >
@@ -26,14 +26,8 @@
         </div>
         <div class="col-auto">
             <button class="btn btn-danger btn-sm" wire:click="showDeleteDialog">
-<i class="fa fa-trash"></i>
-    Delete Data
-            </button>
-        </div>
-        <div class="col-auto">
-            <button class="btn btn-primary btn-sm" wire:click="downloadLabeled">
-<i class="fa fa-download"></i>
-    Download Labeled
+<i class="fa fa-file-pdf"></i>
+    Export Pdf
             </button>
         </div>
     </div>

@@ -24,12 +24,6 @@ class Datatable extends Component
     // Delete Dialog
     public $targetDeleteId;
 
-    #[On('refresh-table')]
-    public function refreshTable()
-    {
-        $this->resetPage();
-    }
-
     #[On('export')]
     public function export($type)
     {

@@ -29,7 +29,7 @@ class Filter extends Component
         DB::table('nenkins')->truncate();
         $this->dispatch('refresh-table');
         Storage::disk('public')->deleteDirectory('labeled');
-        // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+        Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
     #[On('on-delete-dialog-cancel')]
