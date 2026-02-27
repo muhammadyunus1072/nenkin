@@ -9,7 +9,6 @@ use Google\Cloud\Vision\V1\BatchAnnotateImagesRequest;
 use Google\Cloud\Vision\V1\Client\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature;
 use Google\Cloud\Vision\V1\Image;
-use Illuminate\Log\Logger;
 use setasign\Fpdi\Fpdi;
 
 use function Symfony\Component\String\s;
@@ -179,8 +178,6 @@ class VisionOcrService
         // $this->drawBlocksOnPdf($path, $result['pages'][0]['blocks'], public_path('output.pdf'));
         // $this->drawBlocksOnPdf($path, $result['text'], public_path('output.pdf'));
 
-
-        Logger($name . " : " . $result['text']);
         return $result;
         // return $result['pages'][0]['blocks'];
     }
@@ -276,7 +273,6 @@ class VisionOcrService
 
     public function detectDocumentText1($path)
     {
-        log($path . "NEW");
         $client = new ImageAnnotatorClient([
             'credentials' => base_path(env('GOOGLE_CLOUD_CREDENTIALS')),
             'transport' => 'rest',
