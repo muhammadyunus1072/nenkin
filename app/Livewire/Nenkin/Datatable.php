@@ -111,7 +111,7 @@ class Datatable extends Component
             ],
             [
                 'key' => 'payment_top',
-                'name' => 'Kokumin',
+                'name' => 'Kokumin Nenkin',
                 'render' => function ($item) {
 
                     $epath = explode('/', $item->image);

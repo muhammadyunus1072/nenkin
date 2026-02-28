@@ -84,7 +84,7 @@ class VisionOcrService
             'address' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/address.png'), 'address')['text'] ?? null,
         ]);
 
-        // $this->drawLabelPdf(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
+        $this->drawLabelPdf(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
 
         $this->drawLabelImage(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
     }
@@ -197,26 +197,36 @@ class VisionOcrService
         // Thickness
         imagesetthickness($image, 6);
 
-        /*
-    === DRAW 100% LABEL ===
-    */
-        $label100 = imagecreatefrompng(public_path('100%.png'));
-        imagecopyresampled($image, $label100, 285, 370, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
-        imagerectangle($image, 610, 370, 610 + 200, 390 + 50, $blue);
+        if ($model->payment_top) {
+            /*
+        === DRAW 100% LABEL ===
+        */
+            $label100 = imagecreatefrompng(public_path('100%.png'));
+            imagecopyresampled($image, $label100, 285, 50, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
+            imagerectangle($image, 610, 50, 610 + 200, 70 + 50, $blue);
+        } elseif ($model->payment) {
 
-        /*
-    === DRAW 20% LABEL ===
-    */
-        $label20 = imagecreatefrompng(public_path('20%.png'));
-        imagecopyresampled($image, $label20, 285, 450, 0, 0, 200, 70, imagesx($label20), imagesy($label20));
-        imagerectangle($image, 610, 450, 610 + 200, 470 + 50, $red);
+            /*
+        === DRAW 100% LABEL ===
+        */
+            $label100 = imagecreatefrompng(public_path('100%.png'));
+            imagecopyresampled($image, $label100, 285, 370, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
+            imagerectangle($image, 610, 370, 610 + 200, 390 + 50, $blue);
 
-        /*
-    === DRAW 80% LABEL ===
-    */
-        $label80 = imagecreatefrompng(public_path('80%.png'));
-        imagecopyresampled($image, $label80, 285, 530, 0, 0, 200, 70, imagesx($label80), imagesy($label80));
-        imagerectangle($image, 610, 530, 610 + 200, 550 + 50, $orange);
+            /*
+        === DRAW 20% LABEL ===
+        */
+            $label20 = imagecreatefrompng(public_path('20%.png'));
+            imagecopyresampled($image, $label20, 285, 450, 0, 0, 200, 70, imagesx($label20), imagesy($label20));
+            imagerectangle($image, 610, 450, 610 + 200, 470 + 50, $red);
+
+            /*
+        === DRAW 80% LABEL ===
+        */
+            $label80 = imagecreatefrompng(public_path('80%.png'));
+            imagecopyresampled($image, $label80, 285, 530, 0, 0, 200, 70, imagesx($label80), imagesy($label80));
+            imagerectangle($image, 610, 530, 610 + 200, 550 + 50, $orange);
+        }
 
         // Destination folder
         $destFolder = storage_path('app/public/labeled');

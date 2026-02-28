@@ -38,8 +38,8 @@
             </tr>
 
             <tr>
-                <th >Tanggal</th>
-                <th >Pembayaran</th>
+                <th>Tanggal</th>
+                <th>Kokumin Nenkin</th>
                 <th>Pembayaran 100%</th>
                 <th>Pembayaran 20%</th>
                 <th>Pembayaran 80%</th>
