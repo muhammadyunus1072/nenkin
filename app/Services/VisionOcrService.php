@@ -66,7 +66,7 @@ class VisionOcrService
         $this->cropImage($path, $coord, $folder, 'number');
 
         // Crop Name
-        $coord = ['x' => 420, 'y' => 1000, 'width' => 700, 'height' => 50];
+        $coord = ['x' => 420, 'y' => 1000, 'width' => 700, 'height' => 70];
         $this->cropImage($path, $coord, $folder, 'name');
 
         // Crop Address
@@ -117,7 +117,7 @@ class VisionOcrService
         if ($annotations->hasFullTextAnnotation()) {
             $fullText = $annotations->getFullTextAnnotation();
             $result['text'] = $fullText->getText();
-            logger($result['text'] . " NYOO");
+
             if ($name == 'date') {
                 if (!$result['text']) return null;
 
@@ -137,7 +137,30 @@ class VisionOcrService
                 $text = preg_replace('/[^0-9]/', '', $text);
 
                 $result['text'] = $text ?: null;
+            } elseif ($name == 'name') {
+
+                $reconstructed = '';
+
+                foreach ($fullText->getPages() as $page) {
+                    foreach ($page->getBlocks() as $block) {
+                        foreach ($block->getParagraphs() as $paragraph) {
+
+                            foreach ($paragraph->getWords() as $word) {
+
+                                foreach ($word->getSymbols() as $symbol) {
+                                    $reconstructed .= $symbol->getText();
+                                }
+
+                                // Add space between words
+                                $reconstructed .= ' ';
+                            }
+                        }
+                    }
+                }
+
+                $result['text'] = trim($reconstructed) ?: null;
             }
+
             // // For simplicity, we just save the full text. You can also save structured info like blocks, paragraphs, etc.
             // foreach ($fullText->getPages() as $pageIndex => $page) {
             //     foreach ($page->getBlocks() as $blockIndex => $block) {
@@ -204,7 +227,7 @@ class VisionOcrService
             $label100 = imagecreatefrompng(public_path('100%.png'));
             imagecopyresampled($image, $label100, 285, 50, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
             imagerectangle($image, 610, 50, 610 + 200, 70 + 50, $blue);
-        } 
+        }
         if ($model->payment) {
 
             /*

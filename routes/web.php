@@ -24,8 +24,3 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('/', 'index')->name('index');
     });
 });
-Route::group(["controller" => NenkinController::class, "prefix" => "nenkin", "as" => "nenkin."], function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('create', 'create')->name('create');
-    Route::get('{id}/edit', 'edit')->name('edit');
-});
