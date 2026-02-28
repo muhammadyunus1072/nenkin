@@ -137,7 +137,7 @@ class VisionOcrService
                 $text = preg_replace('/[^0-9]/', '', $text);
 
                 $result['text'] = $text ?: null;
-            } elseif ($name == 'name') {
+            } elseif ($name == 'name' || $name == 'address') {
 
                 $reconstructed = '';
 
