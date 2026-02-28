@@ -204,7 +204,8 @@ class VisionOcrService
             $label100 = imagecreatefrompng(public_path('100%.png'));
             imagecopyresampled($image, $label100, 285, 50, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
             imagerectangle($image, 610, 50, 610 + 200, 70 + 50, $blue);
-        } elseif ($model->payment) {
+        } 
+        if ($model->payment) {
 
             /*
         === DRAW 100% LABEL ===
