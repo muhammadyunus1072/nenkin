@@ -194,17 +194,29 @@ class VisionOcrService
             $fullText = $annotations->getFullTextAnnotation();
             $result['text'] = $fullText->getText();
 
-            if ($name == 'date') {
+            if ($name === 'date') {
+
                 if (!$result['text']) return null;
 
-                $text = preg_replace('/\s+/', '', $result['text']);
+                $text = trim($result['text']);
 
-                if (preg_match('/(\d{4})年(\d{1,2})月(\d{1,2})日/u', $text, $m)) {
+                // Remove all whitespace including unicode spaces
+                $text = preg_replace('/\s+/u', '', $text);
+
+                if (preg_match('/(\d{4})\D{0,2}(\d{1,2})\D{0,2}(\d{1,2})/u', $text, $m)) {
                     try {
-                        $result['text'] = Carbon::createFromDate($m[1], $m[2], $m[3])->format('Y-m-d');
+                        $date = Carbon::createFromDate(
+                            (int)$m[1],
+                            (int)$m[2],
+                            (int)$m[3]
+                        );
+
+                        $result['text'] = $date->format('Y-m-d');
                     } catch (\Exception $e) {
                         return null;
                     }
+                } else {
+                    return null;
                 }
             } elseif (in_array($name, ['payment_top', 'payment', 'income', 'net'])) {
                 if (!$result['text']) return null;
