@@ -27,9 +27,9 @@ class Filter extends Component
     public function onDialogDeleteConfirm()
     {
         DB::table('nenkins')->truncate();
-        $this->dispatch('refresh-table');
         Storage::disk('public')->deleteDirectory('labeled');
         Storage::disk('public')->deleteDirectory('nenkin');
+        $this->dispatch('refresh-table');
         // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
