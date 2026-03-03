@@ -198,19 +198,22 @@ class VisionOcrService
 
                 if (!$result['text']) return null;
 
-                $text = trim($result['text']);
+                $text = preg_replace('/\s+/u', '', $result['text']);
 
-                // Remove all whitespace including unicode spaces
-                $text = preg_replace('/\s+/u', '', $text);
+                preg_match('/(\d{4})年/u', $text, $y);
+                preg_match_all('/(\d{1,2})月/u', $text, $m);
+                preg_match('/(\d{1,2})日/u', $text, $d);
 
-                if (preg_match('/(\d{4})\D{0,2}(\d{1,2})\D{0,2}(\d{1,2})/u', $text, $m)) {
+                if (!empty($y[1]) && !empty($m[1]) && !empty($d[1])) {
+
+                    $year  = (int) $y[1];
+
+                    // Ambil bulan yang paling dekat dengan 年
+                    $month = (int) end($m[1]);
+                    $day   = (int) $d[1];
+
                     try {
-                        $date = Carbon::createFromDate(
-                            (int)$m[1],
-                            (int)$m[2],
-                            (int)$m[3]
-                        );
-
+                        $date = Carbon::createFromDate($year, $month, $day);
                         $result['text'] = $date->format('Y-m-d');
                     } catch (\Exception $e) {
                         return null;
@@ -295,49 +298,189 @@ class VisionOcrService
         // return $result['pages'][0]['blocks'];
     }
 
+
+
     public function drawLabelImage($imagePath, $desPath, $model)
     {
-        // Load base image
+        // Load image
         $image = imagecreatefromjpeg($imagePath);
 
+        $currentWidth  = imagesx($image);
+        $currentHeight = imagesy($image);
+
+        // Blueprint size (acuan desain koordinat Anda)
+        $baseWidth  = 1131;
+        $baseHeight = 1600;
+
+        // Hitung rasio
+        $scaleX = $currentWidth / $baseWidth;
+        $scaleY = $currentHeight / $baseHeight;
+
         // Colors
-        $blue   = imagecolorallocate($image, 0, 2, 245);
-        $red    = imagecolorallocate($image, 245, 5, 1);
+        $blue = imagecolorallocate($image, 0, 2, 245);
+        $red = imagecolorallocate($image, 245, 5, 1);
         $orange = imagecolorallocate($image, 250, 100, 6);
 
-        // Thickness
         imagesetthickness($image, 6);
 
         if ($model->payment_top) {
-            /*
-        === DRAW 100% LABEL ===
-        */
-            $label100 = imagecreatefrompng(public_path('100%.png'));
-            imagecopyresampled($image, $label100, 285, 50, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
-            imagerectangle($image, 610, 50, 610 + 200, 70 + 50, $blue);
-        }
-        if ($model->payment) {
 
+            // === SCALE POSITION ===
+            $x = 285 * $scaleX;
+            $y = 50  * $scaleY;
+
+            $rectX1 = 610 * $scaleX;
+            $rectY1 = 50  * $scaleY;
+            $rectX2 = (610 + 200) * $scaleX;
+            $rectY2 = (70 + 50)  * $scaleY;
+
+            // Resize label
+            $label100 = imagecreatefrompng(public_path('100%.png'));
+
+            $labelWidth  = 200 * $scaleX;
+            $labelHeight = 70  * $scaleY;
+
+            imagecopyresampled(
+                $image,
+                $label100,
+                $x,
+                $y,
+                0,
+                0,
+                $labelWidth,
+                $labelHeight,
+                imagesx($label100),
+                imagesy($label100)
+            );
+
+            imagerectangle(
+                $image,
+                $rectX1,
+                $rectY1,
+                $rectX2,
+                $rectY2,
+                $blue
+            );
+        }
+
+        if ($model->payment) {
             /*
         === DRAW 100% LABEL ===
         */
+
+            // === SCALE POSITION ===
+            $x = 285 * $scaleX;
+            $y = 370  * $scaleY;
+
+            $rectX1 = 610 * $scaleX;
+            $rectY1 = 370  * $scaleY;
+            $rectX2 = (610 + 200) * $scaleX;
+            $rectY2 = (390 + 50)  * $scaleY;
+
+            // Resize label
             $label100 = imagecreatefrompng(public_path('100%.png'));
-            imagecopyresampled($image, $label100, 285, 370, 0, 0, 200, 70, imagesx($label100), imagesy($label100));
-            imagerectangle($image, 610, 370, 610 + 200, 390 + 50, $blue);
+
+            $labelWidth  = 200 * $scaleX;
+            $labelHeight = 70  * $scaleY;
+            imagecopyresampled(
+                $image,
+                $label100,
+                $x,
+                $y,
+                0,
+                0,
+                $labelWidth,
+                $labelHeight,
+                imagesx($label100),
+                imagesy($label100)
+            );
+
+            imagerectangle(
+                $image,
+                $rectX1,
+                $rectY1,
+                $rectX2,
+                $rectY2,
+                $blue
+            );
 
             /*
         === DRAW 20% LABEL ===
         */
-            $label20 = imagecreatefrompng(public_path('20%.png'));
-            imagecopyresampled($image, $label20, 285, 450, 0, 0, 200, 70, imagesx($label20), imagesy($label20));
-            imagerectangle($image, 610, 450, 610 + 200, 470 + 50, $red);
+            // === SCALE POSITION ===
+            $x = 285 * $scaleX;
+            $y = 450  * $scaleY;
+
+            $rectX1 = 610 * $scaleX;
+            $rectY1 = 450  * $scaleY;
+            $rectX2 = (610 + 200) * $scaleX;
+            $rectY2 = (470 + 50)  * $scaleY;
+
+            // Resize label
+            $label100 = imagecreatefrompng(public_path('20%.png'));
+
+            $labelWidth  = 200 * $scaleX;
+            $labelHeight = 70  * $scaleY;
+            imagecopyresampled(
+                $image,
+                $label100,
+                $x,
+                $y,
+                0,
+                0,
+                $labelWidth,
+                $labelHeight,
+                imagesx($label100),
+                imagesy($label100)
+            );
+
+            imagerectangle(
+                $image,
+                $rectX1,
+                $rectY1,
+                $rectX2,
+                $rectY2,
+                $red
+            );
 
             /*
         === DRAW 80% LABEL ===
         */
-            $label80 = imagecreatefrompng(public_path('80%.png'));
-            imagecopyresampled($image, $label80, 285, 530, 0, 0, 200, 70, imagesx($label80), imagesy($label80));
-            imagerectangle($image, 610, 530, 610 + 200, 550 + 50, $orange);
+            // === SCALE POSITION ===
+            $x = 285 * $scaleX;
+            $y = 530  * $scaleY;
+
+            $rectX1 = 610 * $scaleX;
+            $rectY1 = 530  * $scaleY;
+            $rectX2 = (610 + 200) * $scaleX;
+            $rectY2 = (550 + 50)  * $scaleY;
+
+            // Resize label
+            $label100 = imagecreatefrompng(public_path('80%.png'));
+
+            $labelWidth  = 200 * $scaleX;
+            $labelHeight = 70  * $scaleY;
+            imagecopyresampled(
+                $image,
+                $label100,
+                $x,
+                $y,
+                0,
+                0,
+                $labelWidth,
+                $labelHeight,
+                imagesx($label100),
+                imagesy($label100)
+            );
+
+            imagerectangle(
+                $image,
+                $rectX1,
+                $rectY1,
+                $rectX2,
+                $rectY2,
+                $orange
+            );
         }
 
         // Destination folder

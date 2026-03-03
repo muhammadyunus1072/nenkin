@@ -27,6 +27,7 @@ class Filter extends Component
     public function onDialogDeleteConfirm()
     {
         DB::table('nenkins')->truncate();
+        DB::table('_history_nenkins')->truncate();
         Storage::disk('public')->deleteDirectory('labeled');
         Storage::disk('public')->deleteDirectory('nenkin');
         $this->dispatch('refresh-table');
@@ -58,10 +59,7 @@ class Filter extends Component
 
             $zip->close();
         }
-
-        return response()
-            ->download($zipPath)
-            ->deleteFileAfterSend(true);
+        return redirect(asset('storage/labeled.zip'));
     }
 
     public function showDeleteDialog()
