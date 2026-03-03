@@ -19,21 +19,97 @@ class VisionOcrService
     {
         $srcPath = storage_path('app/public/' . $path);
 
-        $src = imagecreatefromjpeg($srcPath); // supports PNG, JPEG: use imagecreatefromjpeg()
-        $dst = imagecreatetruecolor($coords['width'], $coords['height']);
+        if (!file_exists($srcPath)) {
+            throw new \Exception("Image not found: " . $srcPath);
+        }
 
-        // Copy and crop
-        imagecopy($dst, $src, 0, 0, $coords['x'], $coords['y'], $coords['width'], $coords['height']);
+        // Load image (JPEG only as per your original code)
+        $src = imagecreatefromjpeg($srcPath);
 
+        // ==============================
+        // 1️⃣ FIX EXIF ORIENTATION
+        // ==============================
+        $exif = @exif_read_data($srcPath);
+
+        if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+                case 3:
+                    $src = imagerotate($src, 180, 0);
+                    break;
+                case 6:
+                    $src = imagerotate($src, -90, 0);
+                    break;
+                case 8:
+                    $src = imagerotate($src, 90, 0);
+                    break;
+            }
+        }
+
+        // ==============================
+        // 2️⃣ GET ORIGINAL SIZE
+        // ==============================
+        $srcWidth  = imagesx($src);
+        $srcHeight = imagesy($src);
+
+        // Reference size (size used when defining coordinates)
+        $referenceWidth  = 1131;
+        $referenceHeight = 1600;
+
+        // ==============================
+        // 3️⃣ CALCULATE SCALE FACTOR
+        // ==============================
+        $scaleX = $srcWidth  / $referenceWidth;
+        $scaleY = $srcHeight / $referenceHeight;
+
+        // ==============================
+        // 4️⃣ SCALE COORDINATES
+        // ==============================
+        $x      = (int) round($coords['x'] * $scaleX);
+        $y      = (int) round($coords['y'] * $scaleY);
+        $width  = (int) round($coords['width'] * $scaleX);
+        $height = (int) round($coords['height'] * $scaleY);
+
+        // Safety boundary check
+        $x = max(0, min($x, $srcWidth - 1));
+        $y = max(0, min($y, $srcHeight - 1));
+
+        if ($x + $width > $srcWidth) {
+            $width = $srcWidth - $x;
+        }
+
+        if ($y + $height > $srcHeight) {
+            $height = $srcHeight - $y;
+        }
+
+        // ==============================
+        // 5️⃣ CROP
+        // ==============================
+        $dst = imagecreatetruecolor($width, $height);
+
+        imagecopy(
+            $dst,
+            $src,
+            0,
+            0,
+            $x,
+            $y,
+            $width,
+            $height
+        );
+
+        // ==============================
+        // 6️⃣ SAVE RESULT
+        // ==============================
         $destFolder = storage_path('app/public/' . $des);
-        $destPath = $destFolder . "/$name.png";
+        $destPath   = $destFolder . "/$name.png";
 
-        // Make sure folder exists
         if (!file_exists($destFolder)) {
             mkdir($destFolder, 0755, true);
         }
-        // Save
+
         imagepng($dst, $destPath);
+
+        return $destPath;
     }
 
     public function handleDocument($model, $path)
