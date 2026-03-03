@@ -23,3 +23,7 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('/', 'index')->name('index');
     });
 });
+
+Route::get('/phpinfo', function () {
+    phpinfo();
+});
