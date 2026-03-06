@@ -15,19 +15,6 @@
             </li> --}}
         </ul>
         <!--end::Breadcrumb-->
-
-            <div class='row'>
-                <div class="col-md-auto mt-2">
-                    <a class="btn btn-success" href="{{ route('vehicle-usage.create') }}">
-                        <i class="ki-duotone ki-plus fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                        </i>
-                        Tambah Baru
-                    </a>
-                </div>
-            </div>
         
     </div>
 @stop
