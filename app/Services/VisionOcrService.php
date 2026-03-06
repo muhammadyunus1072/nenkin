@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\Nenkin\NenkinRepository;
+use App\Repositories\ConvertDataIchijikin\ConvertDataIchijikinRepository;
 use Carbon\Carbon;
 use Google\Cloud\Vision\V1\AnnotateImageRequest;
 use Google\Cloud\Vision\V1\BatchAnnotateImagesRequest;
@@ -149,7 +149,7 @@ class VisionOcrService
         $coord = ['x' => 400, 'y' => 1050, 'width' => 700, 'height' => 100];
         $this->cropImage($path, $coord, $folder, 'address');
 
-        $nenkin = NenkinRepository::update($model->id, [
+        $nenkin = ConvertDataIchijikinRepository::update($model->id, [
             'date' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/date.png'), 'date')['text'] ?? null,
             'payment_top' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/payment_top.png'), 'payment_top')['text'] ?? null,
             'payment' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/payment.png'), 'payment')['text'] ?? null,
@@ -160,9 +160,9 @@ class VisionOcrService
             'address' => $this->detectDocumentText(storage_path('app/public/' . $folder . '/address.png'), 'address')['text'] ?? null,
         ]);
 
-        $this->drawLabelPdf(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
+        $this->drawLabelPdf(storage_path('app/public/' . $path), $folder, ConvertDataIchijikinRepository::find($model->id));
 
-        $this->drawLabelImage(storage_path('app/public/' . $path), $folder, NenkinRepository::find($model->id));
+        $this->drawLabelImage(storage_path('app/public/' . $path), $folder, ConvertDataIchijikinRepository::find($model->id));
     }
     public function detectDocumentText($path, string $name)
     {
@@ -484,7 +484,7 @@ class VisionOcrService
         }
 
         // Destination folder
-        $destFolder = storage_path('app/public/labeled');
+        $destFolder = storage_path('app/public/convert-data-ichijikin-labeled');
 
         if (!file_exists($destFolder)) {
             mkdir($destFolder, 0755, true);

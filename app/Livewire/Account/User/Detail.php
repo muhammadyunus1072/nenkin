@@ -20,6 +20,7 @@ class Detail extends Component
 
     #[Validate('required', message: 'Nama Harus Diisi', onUpdate: false)]
     public $name;
+    public $phone;
 
     #[Validate('required', message: 'Email Harus Diisi', onUpdate: false)]
     #[Validate('email', message: "Format Email Tidak Sesuai", onUpdate: false)]
@@ -63,7 +64,10 @@ class Detail extends Component
     public function store()
     {
         $this->validate();
-
+        $phone = preg_replace('/[^\d]/', '', $this->phone);
+        if (!preg_match("/^8[0-9]{9,11}$/", $phone) || (strlen($phone) < 9 || strlen($phone) > 11)) {
+            throw new \Exception("Format No Telp tidak sesuai,<br>Contoh: +62 8XX-XXXX-XXXX");
+        }
         $otherUser = UserRepository::findByEmail($this->email);
         if (!empty($otherUser) && $otherUser->id != $this->objId) {
             Alert::fail($this, "Gagal", "Email telah digunakan pada akun yang lainnya. Silahkan gunakan email lain.");

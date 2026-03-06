@@ -27,9 +27,25 @@ return [
 
     'menu' => [
         [
-            'text' => 'Dashboard',
-            'route'  => 'nenkin.index',
+            'text' => 'Convert Data Ichijikin',
+            'route'  => 'convert-data-ichijikin.index',
             'icon' => 'ki-duotone ki-element-11',
+        ],
+        [
+            'text' => 'Kendaraan',
+            'icon' => 'ki-duotone ki-shield-tick',
+            'submenu' => [
+                [
+                    'text' => 'Data Kendaraan',
+                    'route' => 'vehicle.index',
+                    'icon_color' => 'success',
+                ],
+                [
+                    'text' => 'Penggunaan Kendaraan',
+                    'route' => 'vehicle-usage.index',
+                    'icon_color' => 'primary',
+                ],
+            ],
         ],
         [
             'text' => 'Admin',

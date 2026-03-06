@@ -12,6 +12,15 @@
         </div>
 
         <div class="col-md-6 mb-4">
+            <label>No Whatsapp</label>
+            <div class="input-group" wire:ignore>
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input type="text" class="form-control phone @error('phone') is-invalid @enderror" name="phone" model-name="phone" min="1" placeholder="8XX-XXXX-XXXX" aria-label="phone" aria-describedby="basic-addon1" wire:model="phone">
+            </div>
+            <div class="form-text" id="basic-addon4">Contoh +62 8XX-XXXX-XXXX</div>
+        </div>
+
+        <div class="col-md-6 mb-4">
             <label>Email</label>
             <input type="email" class="form-control" wire:model.blur="email" disabled />
         </div>
@@ -69,3 +78,4 @@
         Simpan Perubahan
     </button>
 </form>
+@include('js.imask')

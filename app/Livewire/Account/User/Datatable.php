@@ -118,6 +118,13 @@ class Datatable extends Component
                 }
             ],
             [
+                'key' => 'phone',
+                'name' => 'No Telp',
+                'render' => function ($item) {
+                    return $item->phone;
+                }
+            ],
+            [
                 'key' => 'email',
                 'name' => 'Email',
                 'render' => function ($item) {

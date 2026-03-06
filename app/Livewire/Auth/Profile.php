@@ -15,6 +15,7 @@ class Profile extends Component
     #[Validate('required', message: 'Nama Harus Diisi', onUpdate: false)]
     public $name;
 
+    public $phone;
     public $email;
     public $role;
 
@@ -25,6 +26,7 @@ class Profile extends Component
     public function mount()
     {
         $user = UserRepository::authenticatedUser();
+        $this->phone = $user->phone;
         $this->name = $user->name;
         $this->email = $user->email;
         $this->role = $user->roles[0]->name;
@@ -33,11 +35,15 @@ class Profile extends Component
     public function store()
     {
         $this->validate();
-
+        $phone = preg_replace('/[^\d]/', '', $this->phone);
+        if (!preg_match("/^8[0-9]{9,11}$/", $phone) || (strlen($phone) < 9 || strlen($phone) > 11)) {
+            throw new \Exception("Format No Telp tidak sesuai,<br>Contoh: +62 8XX-XXXX-XXXX");
+        }
         $user = UserRepository::authenticatedUser();
 
         $validatedData = [
             'name' => $this->name,
+            'phone' => $phone,
         ];
 
         if (!empty($this->oldPassword) || !empty($this->password) || !empty($this->retypePassword)) {

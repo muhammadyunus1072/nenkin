@@ -23,7 +23,9 @@ class RolesAndPermissionsSeeder extends Seeder
             PermissionHelper::ACCESS_DASHBOARD => [PermissionHelper::TYPE_READ],
             PermissionHelper::ACCESS_USER => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_ROLE => PermissionHelper::TYPE_ALL,
-            PermissionHelper::ACCESS_NENKIN => PermissionHelper::TYPE_ALL,
+            PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
+            PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
+            PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_PERMISSION => PermissionHelper::TYPE_ALL,
         ];
         foreach ($permissions as $access => $types) {
@@ -39,7 +41,9 @@ class RolesAndPermissionsSeeder extends Seeder
                 PermissionHelper::ACCESS_USER => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_PERMISSION => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_ROLE => PermissionHelper::TYPE_ALL,
-                PermissionHelper::ACCESS_NENKIN => PermissionHelper::TYPE_ALL,
+                PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
+                PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
+                PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
             ],
             "Member" => [
                 PermissionHelper::ACCESS_DASHBOARD => [PermissionHelper::TYPE_READ]

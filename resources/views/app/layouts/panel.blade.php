@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <!--begin::Head-->
 
 <head>
-    <title>@yield('title')</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', env('APP_NAME'))</title>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -11,15 +14,19 @@
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
     <!--end::Vendor Stylesheets-->
 
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
-    @stack('css')
+
     @livewireStyles
+
+    @stack('css')
+    
 </head>
 <!--end::Head-->
 
@@ -149,7 +156,7 @@
                     <!--end::Header wrapper-->
                 </div>
                 <!--end::Header container-->
-            </div>
+            </div>            
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -186,6 +193,8 @@
                     <!--end::Logo-->
                     @include('app.layouts.panel-sidebar')
                 </div>
+                
+                <!--end::sidebar menu-->
                 <!--end::Sidebar-->
 
                 <!--begin::Main-->
@@ -241,14 +250,15 @@
             Swal.fire({
                 icon: event[0],
                 title: event[1],
-                text: event[2],
+                html: event[2],
             });
         });
+
         Livewire.on("{{ Alert::EVENT_CONFIRMATION }}", (event) => {
             Swal.fire({
                 icon: event[0],
                 title: event[1],
-                text: event[2],
+                html: event[2],
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
@@ -261,6 +271,10 @@
                     Livewire.dispatch(event[6]);
                 }
             });
+        });
+
+        Livewire.on('refresh-page', (data) => {
+            location.reload();
         });
 
         Livewire.on('consoleLog', (data) => {

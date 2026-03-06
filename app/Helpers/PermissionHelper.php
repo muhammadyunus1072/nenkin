@@ -30,13 +30,17 @@ class PermissionHelper
     const ACCESS_USER = "user";
     const ACCESS_PERMISSION = "permission";
     const ACCESS_ROLE = "role";
-    const ACCESS_NENKIN = "nenkin";
+    const ACCESS_CONVERT_DATA_ICHIJIKIN = "convert-data-ichijikin";
+    const ACCESS_VEHICLE = "vehicle";
+    const ACCESS_VEHICLE_USAGE = "vehicle-usage";
     const ACCESS_ALL = [
         self::ACCESS_DASHBOARD,
         self::ACCESS_USER,
         self::ACCESS_PERMISSION,
         self::ACCESS_ROLE,
-        self::ACCESS_NENKIN,
+        self::ACCESS_CONVERT_DATA_ICHIJIKIN,
+        self::ACCESS_VEHICLE,
+        self::ACCESS_VEHICLE_USAGE,
     ];
 
     const TRANSLATE_ACCESS = [
@@ -44,7 +48,9 @@ class PermissionHelper
         self::ACCESS_USER => "Pengguna",
         self::ACCESS_PERMISSION => "Akses",
         self::ACCESS_ROLE => "Jabatan",
-        self::ACCESS_NENKIN => "Nenkin",
+        self::ACCESS_CONVERT_DATA_ICHIJIKIN => "Convert Data Ichijikin",
+        self::ACCESS_VEHICLE => "Data Kendaraan",
+        self::ACCESS_VEHICLE_USAGE => "Data Penggunaan Kendaraan",
     ];
 
 
