@@ -167,7 +167,7 @@ class Datatable extends Component
             ],
             [
                 'key' => 'current_odometer',
-                'name' => 'Odometer Awal (Km)',
+                'name' => 'Odometer Saat Ini (Km)',
                 'render' => function ($item) {
                     return number_format($item->current_odometer, 0, ',', '.') . " Km";
                 }
