@@ -44,8 +44,7 @@ class Vehicle extends Model
     public function vehicleBookingActives()
     {
         return $this->hasMany(VehicleBooking::class, 'vehicle_id', 'id')
-            ->where('start_time', '<=', now())
-            ->where('estimated_end_time', '>=', now());
+            ->where('start_time', '>=', now());
     }
 
     public function vehicleUsageOngoing()
