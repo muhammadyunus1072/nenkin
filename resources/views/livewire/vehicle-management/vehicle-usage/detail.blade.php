@@ -46,13 +46,12 @@
                             </div>
                         </div>
 
-                    @foreach ($vehicle->vehicleMaintenanceByIntervals as $maintenance)
-                        @if ($maintenance->is_show || $maintenance->isMaintenance())
-                            <div class="row bg-danger mb-1 rounded text-dark">
-                                <div class="col-auto">
+                    <div class="row d-flex justify-content-center">
+                        @foreach ($vehicle->vehicleMaintenanceByIntervals as $maintenance)
+                            @if ($maintenance->is_show || $maintenance->isMaintenance())
+                                <div class="col-8 d-flex align-items-center gap-2 py-1 bg-danger mb-1 rounded text-dark">
                                     <i class="fas text-white fa-gear"></i>
-                                </div>
-                                <div class="col-10 d-flex align-items-center px-0">
+                                
                                     <div class="maintenance-info mb-0 mt-0">
                                         @php
                                             $oil_change = $maintenance->notif_interval - $maintenance->current_interval;
@@ -61,16 +60,12 @@
                                         <span class="text-white">@currency($oil) Penggunaan lagi {{$maintenance->message}} </span>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
-                    @foreach ($vehicle->vehicleMaintenanceByOdometers as $maintenance)
-                        @if ($maintenance->is_show || $maintenance->isMaintenance())
-                            <div class="row bg-danger mb-1 rounded text-dark">
-                                <div class="col-auto">
+                            @endif
+                        @endforeach
+                        @foreach ($vehicle->vehicleMaintenanceByOdometers as $maintenance)
+                            @if ($maintenance->is_show || $maintenance->isMaintenance())
+                                <div class="col-8 d-flex align-items-center gap-2 py-1 bg-danger mb-1 rounded text-dark">
                                     <i class="fas text-white fa-gear"></i>
-                                </div>
-                                <div class="col-10 d-flex align-items-center px-0">
                                     <div class="maintenance-info mb-0 mt-0">
                                         @php
                                             $oil_change = $maintenance->notif_odometer - ($vehicle->current_odometer - $maintenance->latest_odometer);
@@ -79,9 +74,9 @@
                                         <span class="text-white">@currency($oil) Km Lagi {{$maintenance->message}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
+                            @endif
+                        @endforeach
+                    </div>
 
                     @if ($vehicle->vehicleBookingActives->toArray())
                     <div class="card bg-light rounded p-3">
