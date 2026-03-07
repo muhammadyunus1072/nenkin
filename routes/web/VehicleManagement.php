@@ -18,3 +18,6 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('{id}/edit', 'edit')->name('edit');
     });
 });
+Route::group(["controller" => VehicleUsageController::class, "prefix" => "pricing", "as" => "pricing."], function () {
+    Route::get('/', 'pricing')->name('pricing');
+});

@@ -48,6 +48,22 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="col-md-6 mb-3">
+                <label>Bensin Saat Ini (Km)</label>
+                <input placeholder="Bensin Saat Ini (Km)" type="text" wire:model="current_fuel" class="form-control">
+
+                @error('current_fuel')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Saldo E Toll Saat Ini</label>
+                <input placeholder="Saldo E Toll Saat Ini" type="text" wire:model="current_etoll_balance" class="form-control">
+
+                @error('current_etoll_balance')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="col-md-6 mb-3">
                 <label>Foto Kendaraan</label>
@@ -131,6 +147,14 @@
                     </div>
                     <div class="row col-md-2">
 
+                        <div class="col-auto d-flex align-items-end">
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" wire:model="maintenance_by_intervals.{{$index}}.is_show">
+                                <label class="form-label ms-2 mb-2">
+                                    Penanda Terlihat
+                                </label>
+                            </div>
+                        </div>
                         <div class="col-auto mb-3 mt-3">
                             <button type="button" wire:loading.attr="disabled" class="btn btn-danger mt-3" wire:click="removeMaintenanceByInterval('{{$index}}')">
                                 <i class="ki-duotone ki-trash fs-1">
@@ -191,6 +215,14 @@
                     </div>
                     <div class="row col-md-2">
 
+                        <div class="col-auto d-flex align-items-end">
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" wire:model="maintenance_by_odometers.{{$index}}.is_show">
+                                <label class="form-label ms-2 mb-2">
+                                    Penanda Terlihat
+                                </label>
+                            </div>
+                        </div>
                         <div class="col-auto mb-3 mt-3">
                             <button type="button" wire:loading.attr="disabled" class="btn btn-danger mt-3" wire:click="removeMaintenanceByOdometer('{{$index}}')">
                                 <i class="ki-duotone ki-trash fs-1">

@@ -61,8 +61,13 @@ class VehicleUsage extends Model
             $model->user_name = auth()->user()->name;
         });
         self::updated(function ($model) {
+            $current_odometer = ($model->end_odometer == null) ? $model->start_odometer : $model->end_odometer;
+            $current_fuel = ($model->end_fuel == null) ? $model->start_fuel : $model->end_fuel;
+            $current_etoll_balance = ($model->end_etoll_balance == null) ? $model->start_etoll_balance : $model->end_etoll_balance;
             $model->vehicle()->update([
-                'current_odometer' => $model->end_odometer
+                'current_odometer' => $current_odometer,
+                'current_fuel' => $current_fuel,
+                'current_etoll_balance' => $current_etoll_balance,
             ]);
             $model->vehicle->vehicleMaintenanceByIntervals->each(function ($maintenance) {
                 $maintenance->increment('current_interval');

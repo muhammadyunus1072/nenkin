@@ -27,6 +27,8 @@ class Detail extends Component
     public $number_plate;
     public $max_range;
     public $current_odometer;
+    public $current_fuel;
+    public $current_etoll_balance;
     public $is_active;
 
     // Maintenance By Interval
@@ -46,6 +48,8 @@ class Detail extends Component
             $this->number_plate = $vehicle->number_plate;
             $this->max_range = $vehicle->max_range;
             $this->current_odometer = $vehicle->current_odometer;
+            $this->current_fuel = $vehicle->current_fuel;
+            $this->current_etoll_balance = $vehicle->current_etoll_balance;
             $this->is_active = $vehicle->is_active ? true : false;
 
             $vehicle_maintenance_by_intervals = VehicleMaintenanceByIntervalRepository::getBy([
@@ -58,6 +62,7 @@ class Detail extends Component
                     'message' => $service->message,
                     'notif_interval' => $service->notif_interval,
                     'current_interval' => $service->current_interval,
+                    'is_show' => $service->is_show ? true : false,
                 ];
             }
 
@@ -71,6 +76,7 @@ class Detail extends Component
                     'message' => $service->message,
                     'notif_odometer' => $service->notif_odometer,
                     'latest_odometer' => $service->latest_odometer,
+                    'is_show' => $service->is_show ? true : false,
                 ];
             }
         }
@@ -105,6 +111,7 @@ class Detail extends Component
             'message' => '',
             'notif_interval' => 0,
             'current_interval' => 0,
+            'is_show' => false,
         ];
     }
 
@@ -123,8 +130,9 @@ class Detail extends Component
             'id' => null,
             'name' => '',
             'message' => '',
-            'notif_odometer' => '',
-            'latest_odometer' => '',
+            'notif_odometer' => 0,
+            'latest_odometer' => 0,
+            'is_show' => false,
         ];
     }
 
@@ -147,6 +155,8 @@ class Detail extends Component
                     'number_plate' => $this->number_plate,
                     'max_range' => $this->max_range,
                     'current_odometer' => $this->current_odometer,
+                    'current_fuel' => $this->current_fuel,
+                    'current_etoll_balance' => $this->current_etoll_balance,
                 ];
                 $vehicle_id = null;
                 if ($this->image) {
@@ -173,6 +183,7 @@ class Detail extends Component
                         'message' => $service['message'],
                         'notif_interval' => $service['notif_interval'],
                         'current_interval' => $service['current_interval'],
+                        'is_show' => $service['is_show'],
                     ];
 
                     if ($service['id']) {
@@ -198,6 +209,7 @@ class Detail extends Component
                         'message' => $service['message'],
                         'notif_odometer' => $service['notif_odometer'],
                         'latest_odometer' => $service['latest_odometer'],
+                        'is_show' => $service['is_show'],
                     ];
 
                     if ($service['id']) {

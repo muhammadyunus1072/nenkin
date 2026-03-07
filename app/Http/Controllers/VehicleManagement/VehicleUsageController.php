@@ -15,4 +15,8 @@ class VehicleUsageController extends Controller
     {
         return view('app.vehicle-management.vehicle-usage.detail', ["objId" => null]);
     }
+    public function pricing()
+    {
+        return view('app.pricing', ["objId" => null]);
+    }
 }

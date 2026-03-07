@@ -17,6 +17,7 @@ class VehicleMaintenanceByInterval extends Model
         'message',
         'notif_interval',
         'current_interval',
+        'is_show',
     ];
 
     protected $guarded = ['id'];
@@ -29,6 +30,10 @@ class VehicleMaintenanceByInterval extends Model
     public function isEditable()
     {
         return true;
+    }
+    public function isMaintenance(): bool
+    {
+        return ($this->current_interval >= $this->notif_interval);
     }
 
     protected static function onBoot() {}

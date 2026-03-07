@@ -21,12 +21,6 @@
 
 @section('content')
 
-    <div class="card">
-        <div class="card-header">
-            {{-- <livewire:vehicle-usage.filter> --}}
-        </div>
-        <div class="card-body">
-            <livewire:vehicle-management.vehicle-usage.detail>
-        </div>
-    </div>
+<livewire:vehicle-management.vehicle-usage.detail>
+
 @stop

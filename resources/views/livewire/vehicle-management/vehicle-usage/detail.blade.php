@@ -1,109 +1,279 @@
-<div>
+<div class="card">
+
+    <ul class="row d-flex justify-content-evenly">
         @foreach ($vehicles as $index => $vehicle)
-                <div class="car-image-container">
+            <li class="col-md-4 mx-0 px-0 card mb-3">
+                <div class="featured-car-card">
+                <figure class="card-banner">
+                    <img src="{{Storage::url($vehicle->image)}}" alt="{{$vehicle->name}}" class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                </figure>
+                <div class="card-content">
+                    <div class="card-title-wrapper my-0 d-flex align-items-end mb-4">
+                            <h2 class="card-title mb-0">
+                                <i class="fa fa-car me-2" aria-hidden="true"></i>
+                                {{$vehicle->name}}
+                            </h2>
+
+                            @if ($vehicle->vehicleUsageOngoing)
+                                <data class="year">
+                                    <p class="my-0">
+                                        Dipakai Oleh :
+                                        <strong>{{$vehicle->vehicleUsageOngoing->user_name}}</strong>
+                                    </p>
+                                </data>
+                            @endif
+                    </div>
                     
-                    <img src="{{Storage::url($vehicle->image)}}" alt="" class="img w-100 h-100">
-                </div>
-                <div class="car-header"><i class="fas fa-car-side fa-lg text-primary"></i><h2>{{$vehicle->name}}</h2></div>
-                <div class="car-header">
-                    <a target="_blank" href="https://www.google.com/maps?q={{$vehicle->lat}},{{$vehicle->lng}}">
-                        <p class="card-meta text-primary mb-5 mb-xl-0 mb-md-0"><i class="fa-solid fa-location-dot text-primary pe-3"></i>Lihat Lokasi Terkini</p>
-                    </a>
-                </div>
-                {{-- <h2>{{dd($vehicle->lastVehicleUsageEnd->user_name)}}</h2> --}}
-                {{-- @if ($vehicle->lastVehicleUsage)
-                    <div class="fuel-container">
-                        <i class="fas fa-gas-pump fuel-icon text-primary"></i>
-                        <div class="fuel-bar-background">
-                            <div class="fuel-bar-percentage" 
-                            style="width: {{App\Helpers\VehicleHelper::fuelPercentage($vehicle->max_range, $vehicle->lastVehicleUsage->end_fuel)}}%;">
-                            {{number_format(App\Helpers\VehicleHelper::fuelPercentage($vehicle->max_range, $vehicle->lastVehicleUsageEnd->end_fuel), 2, ',', '.')}}%
+                        <div class="row">
+                            <div class="col-auto">
+                                <i class="fas fa-gas-pump"></i>
+                            </div>
+                            <div class="col-10 d-flex align-items-center px-0">
+                                <div class="progress w-100" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    @php
+                                        $fuel = ($vehicle->current_fuel/$vehicle->max_range)*100;
+                                    @endphp
+                                    <div class="progress-bar" style="width: {{$fuel}}%">@currency($fuel)%</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif --}}
-
-                @foreach ($vehicle->vehicleMaintenanceByIntervals as $maintenance)
-                    @if ($maintenance->notif_interval <= $maintenance->current_interval)
-                        <div class="maintenance-info mb-0 mt-0">
-                            <span class="text-white">{{$maintenance->message}}</span>
+                        <div class="row">
+                            <div class="col-auto py-0 my-0">
+                                <i class="fa fa-credit-card"></i>
+                            </div>
+                            <div class="col-10 d-flex align-items-center px-0 py-0 my-0">
+                                <p>Rp. @currency($vehicle->current_etoll_balance)</p>
+                            </div>
                         </div>
-                    @endif
-                @endforeach
-                @foreach ($vehicle->vehicleMaintenanceByOdometers as $maintenance)
-                    @if ($maintenance->notif_odometer <= ($vehicle->current_odometer - $maintenance->latest_odometer))
-                        <div class="maintenance-info mb-0 mt-0">
-                            <span class="text-white">{{$maintenance->message}}</span>
-                        </div>
-                    @endif
-                @endforeach
-                
 
-                <div class="status-section">
-                    @if ($vehicle->vehicleUsageOngoing)
-                        <div class="fs-1 text-danger">Dipakai oleh: {{$vehicle->vehicleUsageOngoing->user_name}}</div>
-                    @endif
+                    @foreach ($vehicle->vehicleMaintenanceByIntervals as $maintenance)
+                        @if ($maintenance->is_show || $maintenance->isMaintenance())
+                            <div class="row bg-danger mb-1 rounded text-dark">
+                                <div class="col-auto">
+                                    <i class="fas text-white fa-gear"></i>
+                                </div>
+                                <div class="col-10 d-flex align-items-center px-0">
+                                    <div class="maintenance-info mb-0 mt-0">
+                                        @php
+                                            $oil_change = $maintenance->notif_interval - $maintenance->current_interval;
+                                            $oil = $oil_change < 0 ? 0 : $oil_change;
+                                        @endphp
+                                        <span class="text-white">@currency($oil) Penggunaan lagi {{$maintenance->message}} </span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                    @foreach ($vehicle->vehicleMaintenanceByOdometers as $maintenance)
+                        @if ($maintenance->is_show || $maintenance->isMaintenance())
+                            <div class="row bg-danger mb-1 rounded text-dark">
+                                <div class="col-auto">
+                                    <i class="fas text-white fa-gear"></i>
+                                </div>
+                                <div class="col-10 d-flex align-items-center px-0">
+                                    <div class="maintenance-info mb-0 mt-0">
+                                        @php
+                                            $oil_change = $maintenance->notif_odometer - ($vehicle->current_odometer - $maintenance->latest_odometer);
+                                            $oil = $oil_change < 0 ? 0 : $oil_change;
+                                        @endphp
+                                        <span class="text-white">@currency($oil) Km Lagi {{$maintenance->message}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+
                     @if ($vehicle->vehicleBookingActives->toArray())
+                    <div class="card bg-light rounded p-3">
                         <div class="booking-list-title">Jadwal Booking:</div>
-                        <ul class="booking-list">
-                            @foreach ($vehicle->vehicleBookingActives as $ibooking => $booking)
-                                <li>
-                                    <span class="user-name" style="font-weight:600;">
-                                        {{$booking->user_name}}
-                                    </span>
-                                    <span class="time-info" style="text-align:right; font-size:0.8rem;">
+
+                        <ul class="card-list">
+                            @foreach ($vehicle->vehicleBookingActives as $ibooking => $booking)   
+                                <li class="card-list-item">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span class="card-item-text ">{{$booking->user_name}}</span>
+                                </li>
+                                <li class="card-list-item">
+                                    <span class="card-item-text" style="font-size: 7pt;">
                                         {{ \Carbon\Carbon::parse($booking->start_time)->format('d/m/Y') }}
-                                        Jam {{ \Carbon\Carbon::parse($booking->start_time)->format('H:i') }} 
+                                        {{ \Carbon\Carbon::parse($booking->start_time)->format('H:i') }} 
                                         @if ($booking->estimated_end_time)
-                                            - 
+                                            - <br>
                                             {{ \Carbon\Carbon::parse($booking->estimated_end_time)->format('d/m/Y') }}
-                                            Jam {{ \Carbon\Carbon::parse($booking->estimated_end_time)->format('H:i') }} 
+                                            {{ \Carbon\Carbon::parse($booking->estimated_end_time)->format('H:i') }} 
                                         @endif
                                     </span>
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
                     @else
-                        <p class="no-booking">Belum ada jadwal booking.</p>
+                    <div class="row">
+                        <p class="bg-light rounded p-3">Belum ada jadwal booking.</p>
+                    </div>
                     @endif
+                    <div class="row d-flex justify-content-center gap-2">
+                        <div class="col-10 row d-flex justify-content-center gap-2">
+                            <div class="mx-0 px-0 col-auto">
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bookingModal" wire:click="openBooking('{{$vehicle->id}}')">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Booking
+                                </button>
+                            </div>
+                            @if (!$vehicle->vehicleUsageOngoing && !$ongoing_vehicle)
+                                <div class="mx-0 px-0 col-auto">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#startModal" wire:click="openStart('{{$vehicle->id}}')">
+                                        <i class="fas fa-play"></i>
+                                        Mulai
+                                    </button>
+                                </div>
+                            @endif
+                            @if ($vehicle->vehicleUsageOngoing)
+                                @if ($vehicle->vehicleUsageOngoing->user_id === auth()->user()->id)
+                                    <div class="mx-0 px-0 col-auto">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#endModal" wire:click="openDone('{{$vehicle->id}}', '{{$vehicle->vehicleUsageOngoing->id}}')">
+                                            <i class="fas fa-stop"></i> 
+                                            Selesai
+                                        </button>
+                                    </div>
+                                @else
+                                <div class="mx-0 px-0 col-auto">
+                                    
+                                    <a target="_BLANK" href="https://wa.me/62{{$vehicle->vehicleUsageOngoing->user->phone}}" class="btn btn-success" >
+                                        <i class="fas fa-mail"></i> 
+                                        Kirim WA
+                                    </a>
+                                    <a href="https://www.google.com/maps?q={{$vehicle->lat}},{{$vehicle->lng}}" target="_BLANK" class="btn btn-success">
+                                        <i class="fa fa-map-marker"></i>
+                                        Map
+                                    </a>
+                                </div>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row row mt-3 d-flex justify-content-center px-2">
+                        <div class="col-10 mx-0 px-0 row d-flex justify-content-center gap-2">
+                            <div class="mx-0 px-0 col-auto">
+                                <button type="button" class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#maintenanceModal" wire:click="openMaintenance('{{$vehicle->id}}')">
+                                    <i class="fas fa-gear"></i>
+                                    Maintenance
+                                </button>
+                            </div>
+                            @if ($vehicle->isNeedMaintenance())
+                                <div class="mx-0 px-0 col-auto">
+                                    <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#serviceModal" wire:click="openMaintenance('{{$vehicle->id}}')">
+                                        Servis
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-                <div class="button-group d-flex justify-content-center">
-                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bookingModal" wire:click="openBooking('{{$vehicle->id}}')">
-                        <i class="fas fa-calendar-plus"></i>
-                         Booking
-                    </button>
-                    @if (!$vehicle->vehicleUsageOngoing && !$ongoing_vehicle)
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#startModal" wire:click="openStart('{{$vehicle->id}}')">
-                            <i class="fas fa-play"></i>
-                            Mulai Pakai
-                        </button>
-                    @endif
-                    @if ($vehicle->vehicleUsageOngoing)
-                        @if ($vehicle->vehicleUsageOngoing->user_id === auth()->user()->id)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#endModal" wire:click="openDone('{{$vehicle->id}}', '{{$vehicle->vehicleUsageOngoing->id}}')">
-                                <i class="fas fa-stop"></i> 
-                                Selesai
-                            </button>
-                        @else
-                            <a target="_BLANK" href="https://wa.me/62{{$vehicle->vehicleUsageOngoing->user->phone}}" class="btn btn-success" >
-                                <i class="fas fa-mail"></i> 
-                                Kirim Pesan
-                            </a>
-                        @endif
-                    @else
-                    @endif
                 </div>
-                <div class="row mt-3 d-flex justify-content-center">
-                    <button type="button" class="btn btn-info w-75" data-bs-toggle="modal" data-bs-target="#maintenanceModal" wire:click="openMaintenance('{{$vehicle->id}}')">
-                        <i class="fas fa-gear"></i>
-                         Maintenance
-                    </button>
-                </div>
-            
+            </li>
         @endforeach
+    </ul>
 
-    </form>
-
+    <!-- Service Modal -->
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="serviceModalLabel">Service</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if ($vehicle_maintenance)
+                    <div class="row px-0 mx-0">
+                        <div class="row px-0 mx-0">
+                            <div class="col-5 d-flex align-items-center">
+                                {{-- Preview --}}
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($vehicle_maintenance->image) }}" class="img-fluid rounded">
+                            </div>
+                            <div class="col-7 row px-0 mx-0">
+                                <div class="col-6 mb-3">
+                                    <label>Nama Mobil</label>
+                                    <p class="form-control">{{$vehicle_maintenance->name}}</p>
+                                </div>
+    
+                                <div class="col-6 mb-3">
+                                    <label>Nomor Polisi</label>
+                                    <p class="form-control">{{$vehicle_maintenance->number_plate}}</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label>Jarak Tempuh (Km)</label>
+                                    <p class="form-control">{{$vehicle_maintenance->max_range}}</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label>Odometer Terakhir (Km)</label>
+                                    <p class="form-control">{{$vehicle_maintenance->current_odometer}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Km Awal</th>
+                                    <th scope="col">Km Servis</th>
+                                    <th scope="col">Km Sekarang</th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($vehicle_maintenance_odometers)
+                                        @foreach ($vehicle_maintenance_odometers as $odo_index => $odomain)
+                                            <tr wire:key="interval-{{$odomain['id']}}">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <td>{{$odomain['name']}}</td>
+                                                <td>{{$odomain['latest_odometer']}}</td>
+                                                <td>{{$odomain['notif_odometer']}}</td>
+                                                <td>{{$maintenance_current_odometer}}</td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Interval Servis</th>
+                                    <th scope="col">Interval Sekarang</th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($vehicle_maintenance_intervals)
+                                        @foreach ($vehicle_maintenance_intervals as $int_index => $intmain)
+                                            <tr wire:key="interval-{{$intmain['id']}}">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <td>{{$intmain['name']}}</td>
+                                                <td>{{$intmain['notif_interval']}}</td>
+                                                <td>{{$intmain['current_interval']}}</td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- Maintenance Modal -->
     <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-md">
@@ -114,40 +284,37 @@
             </div>
             <div class="modal-body">
                 @if ($vehicle_maintenance)
-                    <div class="row">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Nama Kendaraan</label>
-                                <p class="form-control">{{$vehicle_maintenance->name}}</p>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Nomor Polisi</label>
-                                <p class="form-control">{{$vehicle_maintenance->number_plate}}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Jarak Tempuh Maksimal (Km)</label>
-                                <p class="form-control">{{$vehicle_maintenance->max_range}}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Odometer Saat Ini (Km)</label>
-                                <p class="form-control">{{$vehicle_maintenance->current_odometer}}</p>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Foto Kendaraan</label>
+                    <div class="row px-0 mx-0">
+                        <div class="row px-0 mx-0">
+                            <div class="col-5 d-flex align-items-center">
                                 {{-- Preview --}}
-                                <div class="row">
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($vehicle_maintenance->image) }}" class="img-fluid rounded">
-                                    
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($vehicle_maintenance->image) }}" class="img-fluid rounded">
+                            </div>
+                            <div class="col-7 row px-0 mx-0">
+                                <div class="col-6 mb-3">
+                                    <label>Nama Mobil</label>
+                                    <p class="form-control">{{$vehicle_maintenance->name}}</p>
+                                </div>
+    
+                                <div class="col-6 mb-3">
+                                    <label>Nomor Polisi</label>
+                                    <p class="form-control">{{$vehicle_maintenance->number_plate}}</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label>Jarak Tempuh (Km)</label>
+                                    <p class="form-control">{{$vehicle_maintenance->max_range}}</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label>Odometer Terakhir (Km)</label>
+                                    <p class="form-control">{{$vehicle_maintenance->current_odometer}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
 
                             <div class="col-md-6">
-                                <label>Odometer Saat Ini (Km)</label>
-                                <input type="text" class="form-control" placeholder="Odometer Saat Ini (Km)" wire:model="maintenance_current_odometer" required>
+                                <label>Input Odometer Saat Ini (Km)</label>
+                                <input type="text" class="form-control" placeholder="Input Odometer Saat Ini (Km)" wire:model.live="maintenance_current_odometer" required>
                                 
                                 @error('maintenance_current_odometer')
                                     <div class="text-danger">{{ $message }}</div>
@@ -159,24 +326,28 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Nama Maintenance</th>
-                                    <th scope="col">Notif Interval</th>
-                                    <th scope="col">Interval Saat Ini</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Km Awal</th>
+                                    <th scope="col">Km Servis</th>
+                                    <th scope="col">Km Sekarang</th>
                                     <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vehicle_maintenance_intervals as $int_index => $maintenance)
-                                        <tr>
-                                            <th scope="row">{{$index+=1}}</th>
-                                            <td>{{$maintenance['name']}}</td>
-                                            <td>{{$maintenance['notif_interval']}}</td>
-                                            <td>{{$maintenance['current_interval']}}</td>
-                                            <td>
-                                                <input type="checkbox" wire:model="vehicle_maintenance_intervals.{{$int_index}}.is_checked">
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if ($vehicle_maintenance_odometers)
+                                        @foreach ($vehicle_maintenance_odometers as $odo_index => $odomain)
+                                            <tr wire:key="interval-{{$odomain['id']}}">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <td>{{$odomain['name']}}</td>
+                                                <td>{{$odomain['latest_odometer']}}</td>
+                                                <td>{{$odomain['notif_odometer']}}</td>
+                                                <td>{{$maintenance_current_odometer}}</td>
+                                                <td>
+                                                    <input type="checkbox" wire:model="vehicle_maintenance_odometers.{{$odo_index}}.is_checked">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -185,24 +356,26 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Nama Maintenance</th>
-                                    <th scope="col">Notif Odometer</th>
-                                    <th scope="col">Servis Terakhir</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Interval Servis</th>
+                                    <th scope="col">Interval Sekarang</th>
                                     <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vehicle_maintenance_odometers as $odo_index => $maintenance)
-                                        <tr>
-                                            <th scope="row">{{$index+=1}}</th>
-                                            <td>{{$maintenance['name']}}</td>
-                                            <td>{{$maintenance['notif_odometer']}}</td>
-                                            <td>{{$maintenance['latest_odometer']}}</td>
-                                            <td>
-                                                <input type="checkbox" wire:model="vehicle_maintenance_odometers.{{$odo_index}}.is_checked">
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if ($vehicle_maintenance_intervals)
+                                        @foreach ($vehicle_maintenance_intervals as $int_index => $intmain)
+                                            <tr wire:key="interval-{{$intmain['id']}}">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <td>{{$intmain['name']}}</td>
+                                                <td>{{$intmain['notif_interval']}}</td>
+                                                <td>{{$intmain['current_interval']}}</td>
+                                                <td>
+                                                    <input type="checkbox" wire:model="vehicle_maintenance_intervals.{{$int_index}}.is_checked">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -452,124 +625,124 @@
 </div>
 
 @push('css')
-<style>
-    input[type=checkbox] {
-            /* Double-sized Checkboxes */
-            -ms-transform: scale(1.2);
-            /* IE */
-            -moz-transform: scale(1.2);
-            /* FF */
-            -webkit-transform: scale(1.2);
-            /* Safari and Chrome */
-            -o-transform: scale(1.2);
-            /* Opera */
-            padding: 10px;
-        }
-        :root {
-            --primary-blue: #005A9C; 
-            --accent-blue: #3498db; 
-            --accent-green: #2ecc71;
-            --light-gray: #f4f7f6; /* Latar abu-abu sangat terang */
-            --dark-gray: #7f8c8d; 
-            --bg-white: #ffffff; /* Latar utama putih */
-            --text-color: #2c3e50; /* Teks warna gelap */
-            --border-color: #e0e0e0;
-            --shadow-soft: 0 8px 25px rgba(0, 90, 156, 0.08);
-            --shadow-hover: 0 12px 30px rgba(0, 90, 156, 0.15);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--light-gray); color: var(--text-color); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
-
-        #login-section { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 80vh; width: 100%; max-width: 400px; margin: 0 auto; }
-        .login-card { background: var(--bg-white); padding: 40px 30px; border-radius: 20px; box-shadow: var(--shadow-soft); width: 100%; text-align: center; border: 1px solid var(--border-color); }
-        .login-card h2 { color: var(--primary-blue); margin-bottom: 25px; font-weight: 700; font-size: 1rem;}
-		.login-logo {
-            width: 100px; 
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px; 
-            object-fit: contain;
-        }
-        .password-wrapper { position: relative; }
-        .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--dark-gray); transition: color 0.3s; }
-        .password-toggle:hover { color: var(--primary-blue); }
+    {{-- CARD  --}}
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans:wght@400;600&display=swap');
         
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; }
-        .loader-spinner { width: 50px; height: 50px; border: 5px solid var(--light-gray); border-top: 5px solid var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .main-container { width: 100%; max-width: 500px; opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
-        header h1 { color: var(--primary-blue); font-size: 1.8rem; font-weight: 700; margin: 0; }
-		.header-logo {
-		    height: 20px; /* Anda bisa mengubah angka ini (misal 30px atau 50px) sesuai selera */
-		    width: auto;
-		    object-fit: contain;
-		}
-        .btn-logout { background: none; border: none; color: #e74c3c; cursor: pointer; font-weight: 600; font-size: 1rem; font-family: 'Poppins', sans-serif; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
-        .btn-logout:hover { color: #c0392b; }
-
-        .car-card { background-color: var(--bg-white); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-soft); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .car-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-        .car-image-container {
-            <img src="" alt=""> height: 120px; border-radius: 10px; margin-bottom: 15px; background-size: cover; background-position: center; border: 1px solid var(--border-color); }
-        .car-card[data-car-name="Avanza KZU"] .car-image-container { background-image: url('https://yanoshijapan.github.io/asetonline/kzu.jpg'); }
-        .car-card[data-car-name="Innova KFV"] .car-image-container { background-image: url('https://yanoshijapan.github.io/asetonline/kfv.jpg'); }
-        .car-header { display: flex; align-items: center; gap: 15px; font-size: 1.5rem; font-weight: 600; color: var(--primary-blue); }
-        .car-header i { color: var(--accent-blue); }
-        
-        .fuel-container { margin-top: 15px; display: flex; align-items: center; gap: 10px; }
-        .fuel-icon { font-size: 1.5rem; color: var(--accent-blue); }
-        .fuel-bar-background { flex-grow: 1; height: 20px; background-color: var(--border-color); border-radius: 10px; overflow: hidden; }
-        .fuel-bar-percentage { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-blue), var(--primary-blue)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.8rem; transition: width 1s cubic-bezier(0.25, 1, 0.5, 1); }
-        
-        .maintenance-info { margin-top: 15px; padding: 10px; background-color: #c84132; border-radius: 8px; text-align: center; font-size: 0.9rem; font-weight: 600; color: var(--primary-blue); display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #d1eaf5; }
-        .status-section { margin-top: 15px; }
-        .current-status { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-        .status-available { color: var(--accent-green); }
-        .status-in-use { color: #e74c3c; }
-        .status-booked { color: #f39c12; }
-        
-        .booking-list-title { font-size: 0.9rem; font-weight: 600; color: var(--dark-gray); margin-bottom: 5px; }
-        .booking-list { list-style: none; padding-left: 5px; max-height: 150px; overflow-y: auto; }
-        .booking-list li { font-size: 0.9rem; padding: 8px 5px; border-bottom: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: center; color: var(--text-color); }
-        .no-booking { font-style: italic; color: #aaa; font-size: 0.9rem; }
-        
-        .button-group { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .btn { text-decoration: none; color: white; padding: 12px 5px; border-radius: 8px; text-align: center; font-weight: 600; border: none; cursor: pointer; font-size: 0.8rem; transition: opacity 0.3s ease, transform 0.1s; }
-        .btn:active { transform: scale(0.95); }
-        .btn-booking { background-color: var(--primary-blue); }
-        .btn-start { background-color: var(--accent-green); }
-        .btn-finish { background-color: var(--dark-gray); }        
-        
-        @keyframes zoomIn { to { transform: scale(1); } }
-        
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; color: var(--primary-blue); }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; transition: border-color 0.3s, box-shadow 0.3s; background-color: var(--bg-white); color: var(--text-color); }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); }
-        
-        .radio-group input[type="radio"] { opacity: 0; position: fixed; width: 0; }
-        .radio-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
-        .radio-group label { display: inline-block; padding: 10px; background-color: var(--bg-white); border: 2px solid var(--border-color); border-radius: 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--text-color); transition: all 0.3s ease; -webkit-tap-highlight-color: transparent; }
-        .radio-group label:hover { border-color: var(--accent-blue); }
-        .radio-group input[type="radio"]:checked + label { background-color: #e8f4f8; color: var(--primary-blue); border-color: var(--primary-blue); }
-        
-        .photo-preview { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .photo-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; border: 1px solid var(--border-color); }
-        
-        .history-button-container { text-align: center; margin-top: 25px; margin-bottom: 20px; }
-        .btn-history { background-color: var(--dark-gray); padding: 12px 25px; font-size: 1rem; color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; width: 100%; transition: background-color 0.3s; }
-        .btn-history:hover { background-color: #5d6d7e; }
-        
-        #history-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        #history-table th, #history-table td { border: 1px solid var(--border-color); padding: 10px; text-align: left; font-size: 0.9rem; }
-        #history-table th { background-color: var(--primary-blue); color: white; }
-        #history-table tr:nth-child(even) { background-color: var(--light-gray); }
+         /* layout */
+         .featured-car-list{
+         display:grid;
+         grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+         gap:25px;
+         list-style:none;
+         }
+         /* card */
+         .featured-car-card{
+         background:var(--gradient);
+         border-radius:var(--radius-18);
+         padding:10px;
+         box-shadow:var(--shadow-1);
+         }
+         .card-banner{
+         aspect-ratio:3/2;
+         border-radius:var(--radius-18);
+         overflow:hidden;
+         }
+         .card-banner img{
+         width:100%;
+         height:100%;
+         object-fit:cover;
+         }
+         .card-content{
+         padding:20px 10px 10px;
+         }
+         .card-title-wrapper{
+         display:flex;
+         justify-content:space-between;
+         align-items:center;
+         margin-bottom:15px;
+         }
+         .card-title{
+         font-family:var(--ff-nunito);
+         color:var(--space-cadet);
+         }
+         .card-title a{
+         text-decoration:none;
+         color:inherit;
+         }
+         .year{
+         font-size:12px;
+         padding:3px 12px;
+         border:2px dashed rgba(0,0,0,0.2);
+         border-radius:var(--radius-14);
+         }
+         .card-list{
+         display:grid;
+         grid-template-columns:1fr 1fr;
+         gap:10px;
+         padding-bottom:15px;
+         border-bottom:1px solid rgba(0,0,0,0.1);
+         margin-bottom:15px;
+         list-style:none;
+         }
+         .card-list-item{
+         display:flex;
+         align-items:center;
+         gap:6px;
+         font-size:13px;
+         color:var(--independence);
+         }
+         .card-list-item ion-icon{
+         font-size:18px;
+         color:var(--carolina-blue);
+         }
+         .card-price-wrapper{
+         display:flex;
+         justify-content:space-between;
+         align-items:center;
+         gap:10px;
+         }
+         .card-price{
+         font-size:14px;
+         }
+         .card-price strong{
+         font-size:20px;
+         }
+         .btn{
+         border:none;
+         background:var(--carolina-blue);
+         color:white;
+         padding:8px 16px;
+         border-radius:10px;
+         cursor:pointer;
+         }
+         .fav-btn{
+         border:0;
+         border-radius: 15px;
+         background:var(--beau-blue);
+         color:var(--carolina-blue);
+         width:36px;
+         height:36px;
+         display:flex;
+         align-items:center;
+         justify-content:center;
+         }
+         .fav-btn:hover{
+         background:var(--lavender-blush);
+         color:var(--red-salsa);
+         }
+         
     </style>
     <style>
+        .btn.btn-icon{
+            background-color: white;
+        }
+        .progress{
+            background-color: rgb(202, 220, 220);
+        }
+        .progress-bar{
+            border-radius: 6px;
+        }
         @keyframes pulse-wand {
             0%   { transform: scale(1);   opacity: 1; }
             50%  { transform: scale(1.2); opacity: 0.7; }
@@ -591,11 +764,11 @@ setInterval(() => {
             let lat = position.coords.latitude;
             let lng = position.coords.longitude;
 
-            @this.call('setLocation', lat, lng);
+            // @this.call('setLocation', lat, lng);
 
         },
         function(error) {
-            @this.call('showDeniedLocation');
+            // @this.call('showDeniedLocation');
         },
         {
             enableHighAccuracy: true,

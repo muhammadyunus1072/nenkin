@@ -18,6 +18,8 @@ class Vehicle extends Model
         'number_plate',
         'max_range',
         'current_odometer',
+        'current_fuel',
+        'current_etoll_balance',
         'lat',
         'lng',
     ];
@@ -36,15 +38,19 @@ class Vehicle extends Model
 
     protected static function onBoot() {}
 
-    public function vehicleMaintenanceByIntervals()
+    public function isNeedMaintenance(): bool
     {
-        return $this->hasMany(VehicleMaintenanceByInterval::class, 'vehicle_id', 'id');
+        return ($this->vehicleMaintenanceByOdometers->contains(function ($maintenance) {
+            return ($this->current_odometer - $maintenance->latest_odometer) >= $maintenance->notif_odometer;
+        }) || $this->vehicleMaintenanceByIntervals->contains(function ($maintenance) {
+            return ($maintenance->current_interval >= $maintenance->notif_interval);
+        }));
     }
-
     public function vehicleBookingActives()
     {
         return $this->hasMany(VehicleBooking::class, 'vehicle_id', 'id')
-            ->where('start_time', '>=', now());
+            ->where('start_time', '>=', now())
+            ->orderBy('start_time', 'ASC');
     }
 
     public function vehicleUsageOngoing()
@@ -57,6 +63,11 @@ class Vehicle extends Model
     public function vehicleMaintenanceByOdometers()
     {
         return $this->hasMany(VehicleMaintenanceByOdometer::class, 'vehicle_id', 'id');
+    }
+
+    public function vehicleMaintenanceByIntervals()
+    {
+        return $this->hasMany(VehicleMaintenanceByInterval::class, 'vehicle_id', 'id');
     }
 
     public function lastVehicleUsage()

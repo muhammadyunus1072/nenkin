@@ -77,7 +77,7 @@ class Detail extends Component
 
     // Maintenance
 
-    public $maintenance_current_odometer;
+    public $maintenance_current_odometer = 0;
     public $vehicle_maintenance;
     public $vehicle_maintenance_intervals = [];
     public $vehicle_maintenance_odometers = [];
@@ -116,21 +116,31 @@ class Detail extends Component
         $this->vehicle_id = $vehicle_id;
         $vehicle_maintenance = VehicleRepository::find($vehicle_id);
         $this->vehicle_maintenance = $vehicle_maintenance;
-        $this->vehicle_maintenance_intervals = $vehicle_maintenance
-            ->vehicleMaintenanceByIntervals
-            ->map(function ($item) {
-                $item->is_checked = false;
-                return $item;
-            })
-            ->toArray();
-
-        $this->vehicle_maintenance_odometers = $vehicle_maintenance
-            ->vehicleMaintenanceByOdometers
-            ->map(function ($item) {
-                $item->is_checked = false;
-                return $item;
-            })
-            ->toArray();
+        $this->maintenance_current_odometer = $vehicle_maintenance->current_odometer;
+        $this->vehicle_maintenance_intervals = [];
+        $vehicle_maintenance_intervals = $vehicle_maintenance
+            ->vehicleMaintenanceByIntervals;
+        foreach ($vehicle_maintenance_intervals as $maintenance) {
+            $this->vehicle_maintenance_intervals[] = [
+                'id' => $maintenance->id,
+                'name' => $maintenance->name,
+                'current_interval' => $maintenance->current_interval,
+                'notif_interval' => $maintenance->notif_interval,
+                'is_checked' => false
+            ];
+        }
+        $this->vehicle_maintenance_odometers = [];
+        $vehicle_maintenance_odometers = $vehicle_maintenance
+            ->vehicleMaintenanceByodometers;
+        foreach ($vehicle_maintenance_odometers as $maintenance) {
+            $this->vehicle_maintenance_odometers[] = [
+                'id' => $maintenance->id,
+                'name' => $maintenance->name,
+                'latest_odometer' => $maintenance->latest_odometer,
+                'notif_odometer' => $maintenance->notif_odometer,
+                'is_checked' => false
+            ];
+        }
     }
 
     public function setLocation($lat, $lng)
@@ -143,7 +153,7 @@ class Detail extends Component
             ];
             $this->lat = $lat;
             $this->lng = $lng;
-            $vehicle = VehicleRepository::update($this->ongoing_vehicle->vehicle_id, $validateData);
+            VehicleRepository::update($this->ongoing_vehicle->vehicle_id, $validateData);
         }
     }
     public function showDeniedLocation() {}
@@ -161,6 +171,7 @@ class Detail extends Component
         $this->vehicle_id = $vehicle_id;
         $this->vehicle_usage_ongoing_id = $vehicle_usage_ongoing_id;
     }
+
     public function saveMaintenance()
     {
         try {
@@ -182,6 +193,7 @@ class Detail extends Component
                         $vehicle = VehicleMaintenanceByIntervalRepository::update($maintenance['id'], $validateData);
                     }
                 }
+                $this->vehicle_maintenance_intervals = [];
                 foreach ($this->vehicle_maintenance_odometers as $maintenance) {
                     if ($maintenance['is_checked']) {
                         $validateData = [
@@ -191,6 +203,7 @@ class Detail extends Component
                         $vehicle = VehicleMaintenanceByOdometerRepository::update($maintenance['id'], $validateData);
                     }
                 }
+                $this->vehicle_maintenance_odometers = [];
             });
 
             DB::commit();

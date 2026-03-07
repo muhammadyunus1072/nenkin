@@ -17,6 +17,7 @@ class VehicleMaintenanceByOdometer extends Model
         'message',
         'notif_odometer',
         'latest_odometer',
+        'is_show',
     ];
 
     protected $guarded = ['id'];
@@ -30,6 +31,13 @@ class VehicleMaintenanceByOdometer extends Model
     {
         return true;
     }
-
+    public function isMaintenance(): bool
+    {
+        return ($this->vehicle->current_odometer - $this->latest_odometer) >= $this->notif_odometer;
+    }
     protected static function onBoot() {}
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
+    }
 }

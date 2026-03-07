@@ -43,6 +43,8 @@ return new class extends Migration
         $table->string('number_plate')->comment('Vehicle Number Plate');
         $table->double('max_range')->comment('Vehicle Max Range (Km)');
         $table->double('current_odometer', 10, 2)->comment('Vehicle Current Odometer (Km)');
+        $table->double('current_fuel', 10, 2)->comment('Vehicle Current Fuel (Km)');
+        $table->double('current_etoll_balance', 10, 2)->comment('Vehicle Current E-Toll Balance');
 
         $table->string('lat')->nullable()->comment('Vehicle Latitude');
         $table->string('lng')->nullable()->comment('Vehicle Longitude');
