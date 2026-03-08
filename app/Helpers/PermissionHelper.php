@@ -33,6 +33,11 @@ class PermissionHelper
     const ACCESS_CONVERT_DATA_ICHIJIKIN = "convert-data-ichijikin";
     const ACCESS_VEHICLE = "vehicle";
     const ACCESS_VEHICLE_USAGE = "vehicle-usage";
+
+    // EXATA
+    const ACCESS_EXATA = 'exata';
+    const ACCESS_EXATA_PERMISSION = 'permission_exata';
+
     const ACCESS_ALL = [
         self::ACCESS_DASHBOARD,
         self::ACCESS_USER,
@@ -41,6 +46,10 @@ class PermissionHelper
         self::ACCESS_CONVERT_DATA_ICHIJIKIN,
         self::ACCESS_VEHICLE,
         self::ACCESS_VEHICLE_USAGE,
+
+        // EXATA
+        self::ACCESS_EXATA,
+        self::ACCESS_EXATA_PERMISSION,
     ];
 
     const TRANSLATE_ACCESS = [
@@ -51,6 +60,10 @@ class PermissionHelper
         self::ACCESS_CONVERT_DATA_ICHIJIKIN => "Convert Data Ichijikin",
         self::ACCESS_VEHICLE => "Data Kendaraan",
         self::ACCESS_VEHICLE_USAGE => "Data Penggunaan Kendaraan",
+
+        // EXATA
+        self::ACCESS_EXATA => "Data Exata",
+        self::ACCESS_EXATA_PERMISSION => "Data Ijin Exata",
     ];
 
 

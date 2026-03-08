@@ -12,7 +12,7 @@
         </div>
 
         @foreach ($accesses as $keyAccess => $access)
-            @if (!str_starts_with($access['name'], 'exata_'))
+        @if (str_starts_with($access['name'], 'exata_'))
                 <div class="col-md-4 mb-2" wire:key='access_{{ $keyAccess }}'>
                     <div class='card'>
                         <div class='card-body'>

@@ -32,6 +32,11 @@ return [
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
+            'text' => 'Exata',
+            'route'  => 'exata.index',
+            'icon' => 'ki-duotone ki-element-11',
+        ],
+        [
             'text' => 'Kendaraan',
             'icon' => 'ki-duotone ki-shield-tick',
             'submenu' => [

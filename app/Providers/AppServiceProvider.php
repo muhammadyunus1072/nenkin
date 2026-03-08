@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
             database_path('migrations/other'),
             database_path('migrations/convert-data-ichijikin'),
             database_path('migrations/vehicle-management'),
+            database_path('migrations/exata'),
         ]);
 
         Blade::directive('currency', function ($expression) {

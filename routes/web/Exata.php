@@ -1,0 +1,20 @@
+<?php
+
+use App\Http\Controllers\Exata\ExataController;
+use App\Http\Controllers\Exata\ExataPermissionController;
+use Illuminate\Support\Facades\Route;
+
+
+Route::middleware(['auth', 'access_permission'])->group(function () {
+
+    Route::group(["controller" => ExataController::class, "prefix" => "exata", "as" => "exata."], function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::get('{id}/edit', 'edit')->name('edit');
+    });
+    Route::group(["controller" => ExataPermissionController::class, "prefix" => "exata_permission", "as" => "exata_permission."], function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::get('{id}/edit', 'edit')->name('edit');
+    });
+});

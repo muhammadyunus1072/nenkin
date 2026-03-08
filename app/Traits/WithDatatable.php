@@ -22,9 +22,7 @@ trait WithDatatable
     abstract public function getQuery();
     abstract public function getView(): string;
 
-    public function onMount()
-    {
-    }
+    public function onMount() {}
 
     public function mount()
     {
