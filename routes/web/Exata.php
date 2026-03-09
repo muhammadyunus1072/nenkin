@@ -12,7 +12,7 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('create', 'create')->name('create');
         Route::get('{id}/edit', 'edit')->name('edit');
     });
-    Route::group(["controller" => ExataPermissionController::class, "prefix" => "exata_permission", "as" => "exata_permission."], function () {
+    Route::group(["controller" => ExataPermissionController::class, "prefix" => "permission_exata", "as" => "permission_exata."], function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::get('{id}/edit', 'edit')->name('edit');

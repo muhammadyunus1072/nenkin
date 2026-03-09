@@ -12,25 +12,23 @@
         </div>
 
         @foreach ($accesses as $keyAccess => $access)
-        @if (str_starts_with($access['name'], 'exata_'))
-                <div class="col-md-4 mb-2" wire:key='access_{{ $keyAccess }}'>
-                    <div class='card'>
-                        <div class='card-body'>
-                            <div class='fw-bold'>
-                                {{ $access['name'] }}
+            @if (str_starts_with($access['name'], 'exata_'))
+                <div class="col-md-3 mb-2" wire:key='access_{{ $keyAccess }}'>
+                    <div class='col d-flex justify-content-start gap-2'>
+                        @foreach ($access['permissions'] as $keyPermission => $permission)
+                            <div class="form-check mb-2 col-auto">
+                                <input class="form-check-input" type="checkbox" value="1"
+                                    id="permission_{{ $keyAccess }}_{{ $keyPermission }}"
+                                    wire:model='accesses.{{ $keyAccess }}.permissions.{{ $keyPermission }}.is_checked'>
+                                <label class="form-check-label" for="permission_{{ $keyAccess }}_{{ $keyPermission }}">
+                                    Ijinkan
+                                </label>
                             </div>
-                            <hr>
-                            @foreach ($access['permissions'] as $keyPermission => $permission)
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="1"
-                                        id="permission_{{ $keyAccess }}_{{ $keyPermission }}"
-                                        wire:model='accesses.{{ $keyAccess }}.permissions.{{ $keyPermission }}.is_checked'>
-                                    <label class="form-check-label" for="permission_{{ $keyAccess }}_{{ $keyPermission }}">
-                                        {{ $permission['translated_name'] }}
-                                    </label>
-                                </div>
-                            @endforeach
+                        @endforeach
+                        <div class='fw-bold col-auto'>
+                            {{ str_replace('exata_','',$access['name']) }}
                         </div>
+                        <hr>
                     </div>
                 </div>
             @endif

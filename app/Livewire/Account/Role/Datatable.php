@@ -89,7 +89,7 @@ class Datatable extends Component
 
                     $exataPermissionHtml = "";
                     if ($this->isCanExataPermission) {
-                        $exataPermissionUrl = route('exata_permission.edit', $item->id);
+                        $exataPermissionUrl = route('permission_exata.edit', $item->id);
                         $exataPermissionHtml = "<div class='col-auto mb-2'>
                             <a class='btn btn-primary btn-sm' href='$exataPermissionUrl'>
                                <i class='ki-duotone ki-key fs-1'>

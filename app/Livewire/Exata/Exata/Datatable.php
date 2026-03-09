@@ -23,6 +23,37 @@ class Datatable extends Component
     public $isCanUpdateBookingTime;
     public $isCanUpdateDetail;
 
+    public $no;
+    public $tgl_input;
+    public $habis_kontrak;
+    public $kembali_ke_jepang;
+    public $nama_lengkap;
+    public $tgl_pulang;
+    public $pic;
+    public $nama_lpk;
+    public $lama_di_jepang;
+    public $referensi_kerja;
+    public $jenis_kelamin;
+    public $pendidikan;
+    public $tahun_terbit;
+    public $level_bahasa;
+    public $sensei;
+    public $dokumen;
+    public $penerjemah;
+    public $bidang_kerja_di_jepang;
+    public $bidang_kerja_pilihan;
+    public $senmongkyu;
+    public $bidang_senmongkyu;
+    public $jenis_visa;
+    public $nama_tiktok;
+    public $nama_instagram;
+    public $no_telp_indonesia;
+    public $no_telp_jepang;
+    public $email;
+    public $provinsi;
+    public $kota;
+    public $available;
+
     // Delete Dialog
     public $targetDeleteId;
 
@@ -75,14 +106,14 @@ class Datatable extends Component
     #[On('export')]
     public function export($type)
     {
-        $fileName = "Data Nenkin";
+        $fileName = "Data Exata";
         return ExportHelper::export(
             $type,
             $fileName,
             $this->getQuery()->get()->toArray(),
-            'app.convert-data-ichijikin.export',
+            'app.exata.exata.export',
             [
-                'title' => 'Data Nenkin',
+                'title' => 'Data Exata',
                 'type' => $type,
             ],
             [
@@ -97,9 +128,40 @@ class Datatable extends Component
     public function getColumns(): array
     {
         $authUser = UserRepository::authenticatedUser();
-        $role = $authUser->roles;
+        // $role = $authUser->roles;
 
-        $role = RoleRepository::find($role[0]->id);
+        // $role = RoleRepository::find($role[0]->id);
+        $data = [
+            'no',
+            'tgl_input',
+            'habis_kontrak',
+            'kembali_ke_jepang',
+            'nama_lengkap',
+            'tgl_pulang',
+            'pic',
+            'nama_lpk',
+            'lama_di_jepang',
+            'referensi_kerja',
+            'jenis_kelamin',
+            'pendidikan',
+            'tahun_terbit',
+            'level_bahasa',
+            'sensei',
+            'dokumen',
+            'penerjemah',
+            'bidang_kerja_di_jepang',
+            'bidang_kerja_pilihan',
+            'senmongkyu',
+            'bidang_senmongkyu',
+            'jenis_visa',
+            'nama_tiktok',
+            'nama_instagram',
+            'no_telp_indonesia',
+            'no_telp_jepang',
+            'email',
+            'provinsi',
+            'kota',
+        ];
 
         $columns = [
             [
@@ -112,22 +174,58 @@ class Datatable extends Component
                 }
             ]
         ];
-        foreach ($role->permissions as $rolePermission) {
-            if (str_starts_with($rolePermission->name, 'exata_')) {
-                $name = explode('.', $rolePermission->name);
-                $name = str_replace('exata_', '', $name[0]);
+        foreach ($data as $access) {
+            if ($authUser->hasPermissionTo("exata_" . $access . ".read")) {
                 $columns[] = [
-                    'key' => $name,
-                    'name' => $name,
+                    'key' => $access,
+                    'name' => $access,
                 ];
             }
         }
+        $columns[] = [
+            'key' => 'available',
+            'name' => 'available',
+            'render' => function ($item) {
+                return $item->available ? 'Ya' : 'Tidak';
+            }
+        ];
         return $columns;
     }
 
     public function getQuery(): Builder
     {
-        return ExataRepository::datatable();
+        return ExataRepository::datatable(
+            $this->no,
+            $this->tgl_input,
+            $this->habis_kontrak,
+            $this->kembali_ke_jepang,
+            $this->nama_lengkap,
+            $this->tgl_pulang,
+            $this->pic,
+            $this->nama_lpk,
+            $this->lama_di_jepang,
+            $this->referensi_kerja,
+            $this->jenis_kelamin,
+            $this->pendidikan,
+            $this->tahun_terbit,
+            $this->level_bahasa,
+            $this->sensei,
+            $this->dokumen,
+            $this->penerjemah,
+            $this->bidang_kerja_di_jepang,
+            $this->bidang_kerja_pilihan,
+            $this->senmongkyu,
+            $this->bidang_senmongkyu,
+            $this->jenis_visa,
+            $this->nama_tiktok,
+            $this->nama_instagram,
+            $this->no_telp_indonesia,
+            $this->no_telp_jepang,
+            $this->email,
+            $this->provinsi,
+            $this->kota,
+            $this->available,
+        );
     }
 
     public function getView(): string
