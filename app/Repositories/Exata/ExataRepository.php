@@ -131,7 +131,7 @@ class ExataRepository extends MasterDataRepository
             ->when($kota, function ($query) use ($kota) {
                 $query->where('kota', 'like', '%' . $kota . '%');
             })
-            ->when($available !== null, function ($query) use ($available) {
+            ->when($available, function ($query) use ($available) {
                 $query->where('available', $available == 'y' ? true : false);
             });
     }
