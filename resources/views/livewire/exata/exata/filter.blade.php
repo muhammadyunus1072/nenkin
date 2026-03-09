@@ -282,8 +282,8 @@
             <label class="form-label">available</label>
             <select class="form-select" wire:model.live="available">
                 <option value="">Semua</option>
-                <option value="1">Ya</option>
-                <option value="0">Tidak</option>
+                <option value="y">Ya</option>
+                <option value="t">Tidak</option>
             </select>
         </div>
     </div>
