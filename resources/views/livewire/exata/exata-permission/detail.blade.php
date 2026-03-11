@@ -29,7 +29,7 @@
                             </div>
                         @endforeach
                         <div class='fw-bold col-auto'>
-                            {{ str_replace('exata_FILTER_','',$access['name']) }}
+                            {{App\Models\Exata\Exata::EXATA_FILTER_CHOICE[str_replace('exata_','',$access['name'])]}}
                         </div>
                         <hr>
                     </div>
@@ -55,7 +55,7 @@
                             </div>
                         @endforeach
                         <div class='fw-bold col-auto'>
-                            {{ str_replace('exata_DATATABLE_','',$access['name']) }}
+                            {{App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE[str_replace('exata_','',$access['name'])]}}
                         </div>
                         <hr>
                     </div>
