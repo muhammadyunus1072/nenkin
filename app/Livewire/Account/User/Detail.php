@@ -42,6 +42,7 @@ class Detail extends Component
 
             $this->name = $user->name;
             $this->email = $user->email;
+            $this->phone = $user->phone;
             $this->role = $user->roles[0]->name;
         }
     }
@@ -51,6 +52,7 @@ class Detail extends Component
     {
         $this->name = "";
         $this->email = "";
+        $this->phone = "";
         $this->role = $this->roles[0];
         $this->password = "";
     }

@@ -61,12 +61,8 @@ class Detail extends Component
     #[On('on-dialog-confirm')]
     public function onDialogConfirm()
     {
-        $this->name = "";
-        foreach ($this->accesses as $keyAccess => $access) {
-            foreach ($access['permissions'] as $keyPermission => $permission) {
-                $this->accesses[$keyAccess]['permissions'][$keyPermission]['is_checked'] = false;
-            }
-        }
+
+        $this->redirectRoute('role.index');
     }
 
     #[On('on-dialog-cancel')]
