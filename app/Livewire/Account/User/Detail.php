@@ -84,6 +84,7 @@ class Detail extends Component
 
         $validatedData = [
             'name' => $this->name,
+            'phone' => $phone,
             'email' => $this->email,
         ];
         if (!empty($this->password)) {
