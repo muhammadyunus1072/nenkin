@@ -11,8 +11,11 @@
             @enderror
         </div>
 
+        <h3>
+            Filter
+        </h3>
         @foreach ($accesses as $keyAccess => $access)
-            @if (str_starts_with($access['name'], 'exata_'))
+            @if (str_starts_with($access['name'], 'exata_FILTER_'))
                 <div class="col-md-3 mb-2" wire:key='access_{{ $keyAccess }}'>
                     <div class='col d-flex justify-content-start gap-2'>
                         @foreach ($access['permissions'] as $keyPermission => $permission)
@@ -26,7 +29,59 @@
                             </div>
                         @endforeach
                         <div class='fw-bold col-auto'>
-                            {{ str_replace('exata_','',$access['name']) }}
+                            {{ str_replace('exata_FILTER_','',$access['name']) }}
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+
+        <h3>
+            Datatable
+        </h3>
+        @foreach ($accesses as $keyAccess => $access)
+            @if (str_starts_with($access['name'], 'exata_DATATABLE_'))
+                <div class="col-md-3 mb-2" wire:key='access_{{ $keyAccess }}'>
+                    <div class='col d-flex justify-content-start gap-2'>
+                        @foreach ($access['permissions'] as $keyPermission => $permission)
+                            <div class="form-check mb-2 col-auto">
+                                <input class="form-check-input" type="checkbox" value="1"
+                                    id="permission_{{ $keyAccess }}_{{ $keyPermission }}"
+                                    wire:model='accesses.{{ $keyAccess }}.permissions.{{ $keyPermission }}.is_checked'>
+                                <label class="form-check-label" for="permission_{{ $keyAccess }}_{{ $keyPermission }}">
+                                    Ijinkan
+                                </label>
+                            </div>
+                        @endforeach
+                        <div class='fw-bold col-auto'>
+                            {{ str_replace('exata_DATATABLE_','',$access['name']) }}
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+
+        <h3>
+            Pipeline
+        </h3>
+        @foreach ($accesses as $keyAccess => $access)
+            @if (str_starts_with($access['name'], 'exata_PIPELINE_'))
+                <div class="col-md-3 mb-2" wire:key='access_{{ $keyAccess }}'>
+                    <div class='col d-flex justify-content-start gap-2'>
+                        @foreach ($access['permissions'] as $keyPermission => $permission)
+                            <div class="form-check mb-2 col-auto">
+                                <input class="form-check-input" type="checkbox" value="1"
+                                    id="permission_{{ $keyAccess }}_{{ $keyPermission }}"
+                                    wire:model='accesses.{{ $keyAccess }}.permissions.{{ $keyPermission }}.is_checked'>
+                                <label class="form-check-label" for="permission_{{ $keyAccess }}_{{ $keyPermission }}">
+                                    Ijinkan
+                                </label>
+                            </div>
+                        @endforeach
+                        <div class='fw-bold col-auto'>
+                            {{ str_replace('exata_PIPELINE_','',$access['name']) }}
                         </div>
                         <hr>
                     </div>

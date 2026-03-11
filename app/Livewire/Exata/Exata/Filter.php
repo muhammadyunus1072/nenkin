@@ -17,36 +17,27 @@ class Filter extends Component
 
     public $inputFile;
 
-    public $no;
-    public $tgl_input;
-    public $habis_kontrak;
-    public $kembali_ke_jepang;
     public $nama_lengkap;
-    public $tgl_pulang;
-    public $pic;
+    public $no_whatsapp;
+    public $estimasi_gaji;
+    public $domisili;
+    public $penempatan_kerja;
     public $nama_lpk;
-    public $lama_di_jepang;
-    public $referensi_kerja;
-    public $jenis_kelamin;
+    public $instagram;
+    public $tiktok;
+    public $keterangan;
+
+    public $date_type;
+    public $start_date;
+    public $end_date;
+    public $pipeline;
+    public $gender;
     public $pendidikan;
-    public $tahun_terbit;
     public $level_bahasa;
-    public $sensei;
-    public $dokumen;
-    public $penerjemah;
-    public $bidang_kerja_di_jepang;
-    public $bidang_kerja_pilihan;
-    public $senmongkyu;
-    public $bidang_senmongkyu;
-    public $jenis_visa;
-    public $nama_tiktok;
-    public $nama_instagram;
-    public $no_telp_indonesia;
-    public $no_telp_jepang;
-    public $email;
-    public $provinsi;
-    public $kota;
-    public $available;
+    public $job;
+    public $bidang_kerja_japan;
+    public $pilihan_kerja_indonesia;
+    public $pic_sales;
 
 
     public function mount() {}
@@ -82,36 +73,26 @@ class Filter extends Component
     public function updated()
     {
         $this->dispatch('datatable-add-filter', [
-            'no' => $this->no,
-            'tgl_input' => $this->tgl_input,
-            'habis_kontrak' => $this->habis_kontrak,
-            'kembali_ke_jepang' => $this->kembali_ke_jepang,
             'nama_lengkap' => $this->nama_lengkap,
-            'tgl_pulang' => $this->tgl_pulang,
-            'pic' => $this->pic,
+            'no_whatsapp' => $this->no_whatsapp,
+            'estimasi_gaji' => $this->estimasi_gaji,
+            'domisili' => $this->domisili,
+            'penempatan_kerja' => $this->penempatan_kerja,
             'nama_lpk' => $this->nama_lpk,
-            'lama_di_jepang' => $this->lama_di_jepang,
-            'referensi_kerja' => $this->referensi_kerja,
-            'jenis_kelamin' => $this->jenis_kelamin,
+            'instagram' => $this->instagram,
+            'tiktok' => $this->tiktok,
+            'keterangan' => $this->keterangan,
+            'date_type' => $this->date_type,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'pipeline' => $this->pipeline,
+            'gender' => $this->gender,
             'pendidikan' => $this->pendidikan,
-            'tahun_terbit' => $this->tahun_terbit,
             'level_bahasa' => $this->level_bahasa,
-            'sensei' => $this->sensei,
-            'dokumen' => $this->dokumen,
-            'penerjemah' => $this->penerjemah,
-            'bidang_kerja_di_jepang' => $this->bidang_kerja_di_jepang,
-            'bidang_kerja_pilihan' => $this->bidang_kerja_pilihan,
-            'senmongkyu' => $this->senmongkyu,
-            'bidang_senmongkyu' => $this->bidang_senmongkyu,
-            'jenis_visa' => $this->jenis_visa,
-            'nama_tiktok' => $this->nama_tiktok,
-            'nama_instagram' => $this->nama_instagram,
-            'no_telp_indonesia' => $this->no_telp_indonesia,
-            'no_telp_jepang' => $this->no_telp_jepang,
-            'email' => $this->email,
-            'provinsi' => $this->provinsi,
-            'kota' => $this->kota,
-            'available' => $this->available,
+            'job' => $this->job,
+            'bidang_kerja_japan' => $this->bidang_kerja_japan,
+            'pilihan_kerja_indonesia' => $this->pilihan_kerja_indonesia,
+            'pic_sales' => $this->pic_sales,
         ]);
     }
 

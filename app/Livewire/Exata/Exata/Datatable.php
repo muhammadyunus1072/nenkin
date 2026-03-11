@@ -5,7 +5,7 @@ namespace App\Livewire\Exata\Exata;
 use App\Helpers\Alert;
 use App\Helpers\ExportHelper;
 use App\Helpers\PermissionHelper;
-use App\Repositories\Account\RoleRepository;
+use App\Models\Exata\Exata;
 use App\Repositories\Account\UserRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
@@ -23,36 +23,26 @@ class Datatable extends Component
     public $isCanUpdateBookingTime;
     public $isCanUpdateDetail;
 
-    public $no;
-    public $tgl_input;
-    public $habis_kontrak;
-    public $kembali_ke_jepang;
     public $nama_lengkap;
-    public $tgl_pulang;
-    public $pic;
+    public $no_whatsapp;
+    public $estimasi_gaji;
+    public $domisili;
+    public $penempatan_kerja;
     public $nama_lpk;
-    public $lama_di_jepang;
-    public $referensi_kerja;
-    public $jenis_kelamin;
+    public $instagram;
+    public $tiktok;
+    public $keterangan;
+    public $date_type;
+    public $start_date;
+    public $end_date;
+    public $pipeline;
+    public $gender;
     public $pendidikan;
-    public $tahun_terbit;
     public $level_bahasa;
-    public $sensei;
-    public $dokumen;
-    public $penerjemah;
-    public $bidang_kerja_di_jepang;
-    public $bidang_kerja_pilihan;
-    public $senmongkyu;
-    public $bidang_senmongkyu;
-    public $jenis_visa;
-    public $nama_tiktok;
-    public $nama_instagram;
-    public $no_telp_indonesia;
-    public $no_telp_jepang;
-    public $email;
-    public $provinsi;
-    public $kota;
-    public $available;
+    public $job;
+    public $bidang_kerja_japan;
+    public $pilihan_kerja_indonesia;
+    public $pic_sales;
 
     // Delete Dialog
     public $targetDeleteId;
@@ -131,37 +121,6 @@ class Datatable extends Component
         // $role = $authUser->roles;
 
         // $role = RoleRepository::find($role[0]->id);
-        $data = [
-            'no',
-            'tgl_input',
-            'habis_kontrak',
-            'kembali_ke_jepang',
-            'nama_lengkap',
-            'tgl_pulang',
-            'pic',
-            'nama_lpk',
-            'lama_di_jepang',
-            'referensi_kerja',
-            'jenis_kelamin',
-            'pendidikan',
-            'tahun_terbit',
-            'level_bahasa',
-            'sensei',
-            'dokumen',
-            'penerjemah',
-            'bidang_kerja_di_jepang',
-            'bidang_kerja_pilihan',
-            'senmongkyu',
-            'bidang_senmongkyu',
-            'jenis_visa',
-            'nama_tiktok',
-            'nama_instagram',
-            'no_telp_indonesia',
-            'no_telp_jepang',
-            'email',
-            'provinsi',
-            'kota',
-        ];
 
         $columns = [
             [
@@ -174,57 +133,40 @@ class Datatable extends Component
                 }
             ]
         ];
-        foreach ($data as $access) {
-            if ($authUser->hasPermissionTo("exata_" . $access . ".read")) {
+        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $access) {
+            if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
                 $columns[] = [
-                    'key' => $access,
+                    'key' => str_replace('DATATABLE_', '', $key),
                     'name' => $access,
                 ];
             }
         }
-        $columns[] = [
-            'key' => 'available',
-            'name' => 'available',
-            'render' => function ($item) {
-                return $item->available ? 'Ya' : 'Tidak';
-            }
-        ];
         return $columns;
     }
 
     public function getQuery(): Builder
     {
         return ExataRepository::datatable(
-            $this->no,
-            $this->tgl_input,
-            $this->habis_kontrak,
-            $this->kembali_ke_jepang,
             $this->nama_lengkap,
-            $this->tgl_pulang,
-            $this->pic,
+            $this->no_whatsapp,
+            $this->estimasi_gaji,
+            $this->domisili,
+            $this->penempatan_kerja,
             $this->nama_lpk,
-            $this->lama_di_jepang,
-            $this->referensi_kerja,
-            $this->jenis_kelamin,
+            $this->instagram,
+            $this->tiktok,
+            $this->keterangan,
+            $this->date_type,
+            $this->start_date,
+            $this->end_date,
+            $this->pipeline,
+            $this->gender,
             $this->pendidikan,
-            $this->tahun_terbit,
             $this->level_bahasa,
-            $this->sensei,
-            $this->dokumen,
-            $this->penerjemah,
-            $this->bidang_kerja_di_jepang,
-            $this->bidang_kerja_pilihan,
-            $this->senmongkyu,
-            $this->bidang_senmongkyu,
-            $this->jenis_visa,
-            $this->nama_tiktok,
-            $this->nama_instagram,
-            $this->no_telp_indonesia,
-            $this->no_telp_jepang,
-            $this->email,
-            $this->provinsi,
-            $this->kota,
-            $this->available,
+            $this->job,
+            $this->bidang_kerja_japan,
+            $this->pilihan_kerja_indonesia,
+            $this->pic_sales,
         );
     }
 

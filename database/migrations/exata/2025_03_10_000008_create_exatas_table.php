@@ -34,37 +34,92 @@ return new class extends Migration
             $table->bigInteger('obj_id')->unsigned();
         } else {
         }
+        // Data Baru
+        $table->string('No')->nullable();
+        $table->date('TglInput')->nullable();
+        $table->date('TanggalPulang')->nullable();
+        $table->string('pipeline')->nullable();
+        $table->string('NamaLengkap')->nullable();
+        $table->string('Gender')->nullable();
+        $table->string('Pendidikan')->nullable();
+        $table->string('LevelBahasa')->nullable();
+        $table->string('Sensei')->nullable();
+        $table->string('Dokumen')->nullable();
+        $table->string('Penerjemah')->nullable();
+        $table->string('BidangKerjadiJepang')->nullable();
+        $table->string('BidangKerjaPilihan')->nullable();
+        $table->string('EstimasiGaji')->nullable();
+        $table->string('EstimasiGajiTop')->nullable();
+        $table->string('Domisili')->nullable();
+        $table->string('Penempatankerja')->nullable();
+        $table->date('tglSiapkerja')->nullable();
+        $table->string('NamaTikTok')->nullable();
+        $table->string('NamaInstagram')->nullable();
+        $table->string('NoTelpIndonesia')->nullable();
+        $table->string('NoTelpJepang')->nullable();
+        $table->string('email')->nullable();
+        $table->string('PICSales')->nullable();
+        $table->string('NamaLPK')->nullable();
+        $table->string('Keterangan')->nullable();
 
-        $table->string('no')->nullable()->comment('Exata no');
-        $table->date('tgl_input')->nullable()->comment('Exata tgl_input');
-        $table->string('habis_kontrak')->nullable()->comment('Exata habis_kontrak');
-        $table->date('kembali_ke_jepang')->nullable()->comment('Exata kembali_ke_jepang');
-        $table->string('nama_lengkap')->nullable()->comment('Exata nama_lengkap');
-        $table->date('tgl_pulang')->nullable()->comment('Exata tgl_pulang');
-        $table->string('pic')->nullable()->comment('Exata pic');
-        $table->string('nama_lpk')->nullable()->comment('Exata nama_lpk');
-        $table->string('lama_di_jepang')->nullable()->comment('Exata lama_di_jepang');
-        $table->string('referensi_kerja')->nullable()->comment('Exata referensi_kerja');
-        $table->string('jenis_kelamin')->nullable()->comment('Exata jenis_kelamin');
-        $table->string('pendidikan')->nullable()->comment('Exata pendidikan');
-        $table->string('tahun_terbit')->nullable()->comment('Exata tahun_terbit');
-        $table->string('level_bahasa')->nullable()->comment('Exata level_bahasa');
-        $table->string('sensei')->nullable()->comment('Exata sensei');
-        $table->string('dokumen')->nullable()->comment('Exata dokumen');
-        $table->string('penerjemah')->nullable()->comment('Exata penerjemah');
-        $table->string('bidang_kerja_di_jepang')->nullable()->comment('Exata bidang_kerja_di_jepang');
-        $table->string('bidang_kerja_pilihan')->nullable()->comment('Exata bidang_kerja_pilihan');
-        $table->string('senmongkyu')->nullable()->comment('Exata senmongkyu');
-        $table->string('bidang_senmongkyu')->nullable()->comment('Exata bidang_senmongkyu');
-        $table->string('jenis_visa')->nullable()->comment('Exata jenis_visa');
-        $table->string('nama_tiktok')->nullable()->comment('Exata nama_tiktok');
-        $table->string('nama_instagram')->nullable()->comment('Exata nama_instagram');
-        $table->string('no_telp_indonesia')->nullable()->comment('Exata no_telp_indonesia');
-        $table->string('no_telp_jepang')->nullable()->comment('Exata no_telp_jepang');
-        $table->string('email')->nullable()->comment('Exata email');
-        $table->string('provinsi')->nullable()->comment('Exata provinsi');
-        $table->string('kota')->nullable()->comment('Exata kota');
-        $table->boolean('available')->nullable()->comment('Exata available');
+        // No	
+        // Tgl. Input	
+        // Tanggal Pulang	
+        // pipeline	
+        // Nama Lengkap	
+        // L / P	
+        // Pendidikan	
+        // Level Bahasa	
+        // Sensei	
+        // Dokumen	
+        // Penerjemah	
+        // Bidang Kerja di Jepang	
+        // Bidang Kerja Pilihan	
+        // Estimasi Gaji	
+        // Domisili	
+        // Penempatan kerja	
+        // tgl Siap kerja	
+        // Nama TikTok	
+        // Nama Instagram	
+        // No. Telp Indonesia	
+        // No. Telp Jepang	
+        // email	
+        // PIC / Sales	
+        // Nama LPK	
+        // Keterangan
+
+        // Data Lama
+        // $table->string('no')->nullable()->comment('Exata no');
+        // $table->date('tgl_input')->nullable()->comment('Exata tgl_input');
+        // $table->string('habis_kontrak')->nullable()->comment('Exata habis_kontrak');
+        // $table->date('kembali_ke_jepang')->nullable()->comment('Exata kembali_ke_jepang');
+        // $table->string('nama_lengkap')->nullable()->comment('Exata nama_lengkap');
+        // $table->date('tgl_pulang')->nullable()->comment('Exata tgl_pulang');
+        // $table->string('pic')->nullable()->comment('Exata pic');
+        // $table->string('nama_lpk')->nullable()->comment('Exata nama_lpk');
+        // $table->string('lama_di_jepang')->nullable()->comment('Exata lama_di_jepang');
+        // $table->string('referensi_kerja')->nullable()->comment('Exata referensi_kerja');
+        // $table->string('jenis_kelamin')->nullable()->comment('Exata jenis_kelamin');
+        // $table->string('pendidikan')->nullable()->comment('Exata pendidikan');
+        // $table->string('tahun_terbit')->nullable()->comment('Exata tahun_terbit');
+        // $table->string('level_bahasa')->nullable()->comment('Exata level_bahasa');
+        // $table->string('sensei')->nullable()->comment('Exata sensei');
+        // $table->string('dokumen')->nullable()->comment('Exata dokumen');
+        // $table->string('penerjemah')->nullable()->comment('Exata penerjemah');
+        // $table->string('bidang_kerja_di_jepang')->nullable()->comment('Exata bidang_kerja_di_jepang');
+        // $table->string('bidang_kerja_pilihan')->nullable()->comment('Exata bidang_kerja_pilihan');
+        // $table->string('senmongkyu')->nullable()->comment('Exata senmongkyu');
+        // $table->string('bidang_senmongkyu')->nullable()->comment('Exata bidang_senmongkyu');
+        // $table->string('jenis_visa')->nullable()->comment('Exata jenis_visa');
+        // $table->string('nama_tiktok')->nullable()->comment('Exata nama_tiktok');
+        // $table->string('nama_instagram')->nullable()->comment('Exata nama_instagram');
+        // $table->string('no_telp_indonesia')->nullable()->comment('Exata no_telp_indonesia');
+        // $table->string('no_telp_jepang')->nullable()->comment('Exata no_telp_jepang');
+        // $table->string('email')->nullable()->comment('Exata email');
+        // $table->string('provinsi')->nullable()->comment('Exata provinsi');
+        // $table->string('kota')->nullable()->comment('Exata kota');
+
+        $table->string('available')->nullable()->comment('Exata available');
 
         $table->bigInteger("created_by")->unsigned()->nullable();
         $table->bigInteger("updated_by")->unsigned()->nullable();

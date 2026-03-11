@@ -66,7 +66,8 @@ class Detail extends Component
         $this->validate();
         $phone = preg_replace('/[^\d]/', '', $this->phone);
         if (!preg_match("/^8[0-9]{9,11}$/", $phone) || (strlen($phone) < 9 || strlen($phone) > 11)) {
-            throw new \Exception("Format No Telp tidak sesuai,<br>Contoh: +62 8XX-XXXX-XXXX");
+            Alert::fail($this, "Gagal", "Format No Telp tidak sesuai,<br>Contoh: +62 8XX-XXXX-XXXX");
+            return;
         }
         $otherUser = UserRepository::findByEmail($this->email);
         if (!empty($otherUser) && $otherUser->id != $this->objId) {

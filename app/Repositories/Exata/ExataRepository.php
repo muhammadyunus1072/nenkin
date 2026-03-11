@@ -13,126 +13,122 @@ class ExataRepository extends MasterDataRepository
     }
 
     public static function datatable(
-        $no,
-        $tgl_input,
-        $habis_kontrak,
-        $kembali_ke_jepang,
         $nama_lengkap,
-        $tgl_pulang,
-        $pic,
+        $no_whatsapp,
+        $estimasi_gaji,
+        $domisili,
+        $penempatan_kerja,
         $nama_lpk,
-        $lama_di_jepang,
-        $referensi_kerja,
-        $jenis_kelamin,
+        $instagram,
+        $tiktok,
+        $keterangan,
+        $date_type,
+        $start_date,
+        $end_date,
+        $pipeline,
+        $gender,
         $pendidikan,
-        $tahun_terbit,
         $level_bahasa,
-        $sensei,
-        $dokumen,
-        $penerjemah,
-        $bidang_kerja_di_jepang,
-        $bidang_kerja_pilihan,
-        $senmongkyu,
-        $bidang_senmongkyu,
-        $jenis_visa,
-        $nama_tiktok,
-        $nama_instagram,
-        $no_telp_indonesia,
-        $no_telp_jepang,
-        $email,
-        $provinsi,
-        $kota,
-        $available,
+        $job,
+        $bidang_kerja_japan,
+        $pilihan_kerja_indonesia,
+        $pic_sales,
     ) {
-        return Exata::when($no, function ($query) use ($no) {
-            $query->where('no', 'like', '%' . $no . '%');
+        if ($date_type) {
+
+            // dd([
+            //     $nama_lengkap,
+            //     $no_whatsapp,
+            //     $estimasi_gaji,
+            //     $domisili,
+            //     $penempatan_kerja,
+            //     $nama_lpk,
+            //     $instagram,
+            //     $tiktok,
+            //     $keterangan,
+            //     $date_type,
+            //     $start_date,
+            //     $end_date,
+            //     $pipeline,
+            //     $gender,
+            //     $pendidikan,
+            //     $level_bahasa,
+            //     $job,
+            //     $bidang_kerja_japan,
+            //     $pilihan_kerja_indonesia,
+            //     $pic_sales
+            // ]);
+        }
+        return Exata::when($nama_lengkap, function ($query) use ($nama_lengkap) {
+            $query->where('NamaLengkap', 'like', '%' . $nama_lengkap . '%');
         })
-            ->when($tgl_input, function ($query) use ($tgl_input) {
-                $query->where('tgl_input', 'like', '%' . $tgl_input . '%');
+            ->when($no_whatsapp, function ($query) use ($no_whatsapp) {
+                $query->where('NoTelpIndonesia', 'like', '%' . $no_whatsapp . '%')
+                    ->orWhere('NoTelpJepang', 'like', '%' . $no_whatsapp . '%');
             })
-            ->when($habis_kontrak, function ($query) use ($habis_kontrak) {
-                $query->where('habis_kontrak', 'like', '%' . $habis_kontrak . '%');
+            ->when($estimasi_gaji, function ($query) use ($estimasi_gaji) {
+                $query->where('EstimasiGaji', '<=', $estimasi_gaji)
+                    ->where(function ($q) use ($estimasi_gaji) {
+                        $q->whereNull('EstimasiGajiTop')
+                            ->orWhere('EstimasiGajiTop', '>=', $estimasi_gaji);
+                    });
             })
-            ->when($kembali_ke_jepang, function ($query) use ($kembali_ke_jepang) {
-                $query->where('kembali_ke_jepang', 'like', '%' . $kembali_ke_jepang . '%');
+            ->when($domisili, function ($query) use ($domisili) {
+                $query->where('Domisili', 'like', '%' . $domisili . '%');
             })
-            ->when($nama_lengkap, function ($query) use ($nama_lengkap) {
-                $query->where('nama_lengkap', 'like', '%' . $nama_lengkap . '%');
-            })
-            ->when($tgl_pulang, function ($query) use ($tgl_pulang) {
-                $query->where('tgl_pulang', 'like', '%' . $tgl_pulang . '%');
-            })
-            ->when($pic, function ($query) use ($pic) {
-                $query->where('pic', 'like', '%' . $pic . '%');
+            ->when($penempatan_kerja, function ($query) use ($penempatan_kerja) {
+                $query->where('Penempatankerja', 'like', '%' . $penempatan_kerja . '%');
             })
             ->when($nama_lpk, function ($query) use ($nama_lpk) {
-                $query->where('nama_lpk', 'like', '%' . $nama_lpk . '%');
+                $query->where('NamaLPK', 'like', '%' . $nama_lpk . '%');
             })
-            ->when($lama_di_jepang, function ($query) use ($lama_di_jepang) {
-                $query->where('lama_di_jepang', 'like', '%' . $lama_di_jepang . '%');
+            ->when($instagram, function ($query) use ($instagram) {
+                $query->where('NamaInstagram', 'like', '%' . $instagram . '%');
             })
-            ->when($referensi_kerja, function ($query) use ($referensi_kerja) {
-                $query->where('referensi_kerja', 'like', '%' . $referensi_kerja . '%');
+            ->when($tiktok, function ($query) use ($tiktok) {
+                $query->where('NamaTikTok', 'like', '%' . $tiktok . '%');
             })
-            ->when($jenis_kelamin, function ($query) use ($jenis_kelamin) {
-                $query->where('jenis_kelamin', 'like', '%' . $jenis_kelamin . '%');
+            ->when($keterangan, function ($query) use ($keterangan) {
+                $query->where('Keterangan', 'like', '%' . $keterangan . '%');
+            })
+            ->when(($start_date && $end_date) && $date_type == 'Tanggal Input', function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('TglInput', [$start_date, $end_date]);
+            })
+            ->when(($start_date && $end_date) && $date_type == 'Tanggal Pulang', function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('TanggalPulang', [$start_date, $end_date]);
+            })
+            ->when(($start_date && $end_date) && $date_type == 'Tanggal Siap Kerja', function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('tglSiapkerja', [$start_date, $end_date]);
+            })
+            ->when($pipeline, function ($query) use ($pipeline) {
+                $query->where('pipeline', 'like', '%' . $pipeline . '%');
+            })
+            ->when($gender, function ($query) use ($gender) {
+                $query->where('Gender', 'like', '%' .   $gender . '%');
             })
             ->when($pendidikan, function ($query) use ($pendidikan) {
-                $query->where('pendidikan', 'like', '%' . $pendidikan . '%');
-            })
-            ->when($tahun_terbit, function ($query) use ($tahun_terbit) {
-                $query->where('tahun_terbit', 'like', '%' . $tahun_terbit . '%');
+                $query->where('Pendidikan', 'like', '%' .   $pendidikan . '%');
             })
             ->when($level_bahasa, function ($query) use ($level_bahasa) {
-                $query->where('level_bahasa', 'like', '%' . $level_bahasa . '%');
+                $query->where('LevelBahasa', 'like', '%' .   $level_bahasa . '%');
             })
-            ->when($sensei, function ($query) use ($sensei) {
-                $query->where('sensei', 'like', '%' . $sensei . '%');
+            ->when($job == 'Sensei', function ($query) {
+                $query->where('Sensei', 'Ya');
             })
-            ->when($dokumen, function ($query) use ($dokumen) {
-                $query->where('dokumen', 'like', '%' . $dokumen . '%');
+            ->when($job == 'Staff Dokumen', function ($query) {
+                $query->where('Dokumen', 'Ya');
             })
-            ->when($penerjemah, function ($query) use ($penerjemah) {
-                $query->where('penerjemah', 'like', '%' . $penerjemah . '%');
+            ->when($job == 'Penerjemah', function ($query) {
+                $query->where('Penerjemah', 'Ya');
             })
-            ->when($bidang_kerja_di_jepang, function ($query) use ($bidang_kerja_di_jepang) {
-                $query->where('bidang_kerja_di_jepang', 'like', '%' . $bidang_kerja_di_jepang . '%');
+            ->when($bidang_kerja_japan, function ($query) use ($bidang_kerja_japan) {
+                $query->where('BidangKerjadiJepang', 'like', '%' . $bidang_kerja_japan . '%');
             })
-            ->when($bidang_kerja_pilihan, function ($query) use ($bidang_kerja_pilihan) {
-                $query->where('bidang_kerja_pilihan', 'like', '%' . $bidang_kerja_pilihan . '%');
+            ->when($pilihan_kerja_indonesia, function ($query) use ($pilihan_kerja_indonesia) {
+                $query->where('BidangKerjaPilihan', 'like', '%' .   $pilihan_kerja_indonesia . '%');
             })
-            ->when($senmongkyu, function ($query) use ($senmongkyu) {
-                $query->where('senmongkyu', 'like', '%' . $senmongkyu . '%');
-            })
-            ->when($bidang_senmongkyu, function ($query) use ($bidang_senmongkyu) {
-                $query->where('bidang_senmongkyu', 'like', '%' . $bidang_senmongkyu . '%');
-            })
-            ->when($jenis_visa, function ($query) use ($jenis_visa) {
-                $query->where('jenis_visa', 'like', '%' . $jenis_visa . '%');
-            })
-            ->when($nama_tiktok, function ($query) use ($nama_tiktok) {
-                $query->where('nama_tiktok', 'like', '%' . $nama_tiktok . '%');
-            })
-            ->when($nama_instagram, function ($query) use ($nama_instagram) {
-                $query->where('nama_instagram', 'like', '%' . $nama_instagram . '%');
-            })
-            ->when($no_telp_indonesia, function ($query) use ($no_telp_indonesia) {
-                $query->where('no_telp_indonesia', 'like', '%' . $no_telp_indonesia . '%');
-            })
-            ->when($no_telp_jepang, function ($query) use ($no_telp_jepang) {
-                $query->where('no_telp_jepang', 'like', '%' . $no_telp_jepang . '%');
-            })
-            ->when($email, function ($query) use ($email) {
-                $query->where('email', 'like', '%' . $email . '%');
-            })
-            ->when($provinsi, function ($query) use ($provinsi) {
-                $query->where('provinsi', 'like', '%' . $provinsi . '%');
-            })
-            ->when($kota, function ($query) use ($kota) {
-                $query->where('kota', 'like', '%' . $kota . '%');
-            })
-            ->when($available, function ($query) use ($available) {
-                $query->where('available', $available == 'y' ? true : false);
+            ->when($pic_sales, function ($query) use ($pic_sales) {
+                $query->where('PICSales', 'like', '%' .  $pic_sales . '%');
             });
     }
 }
