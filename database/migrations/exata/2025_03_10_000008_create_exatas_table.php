@@ -35,39 +35,39 @@ return new class extends Migration
         } else {
         }
         // Data Baru
-        $table->string('No')->nullable();
+        $table->text('No')->nullable();
         $table->date('TglInput')->nullable();
         $table->date('TanggalPulang')->nullable();
-        $table->string('pipeline')->nullable();
-        $table->string('NamaLengkap')->nullable();
-        $table->string('Gender')->nullable();
-        $table->string('Pendidikan')->nullable();
-        $table->string('TahunTerbit')->nullable();
-        $table->string('LevelBahasa')->nullable();
-        $table->string('LamaDiJepang')->nullable();
-        $table->string('Sensei')->nullable();
-        $table->string('Dokumen')->nullable();
-        $table->string('Penerjemah')->nullable();
-        $table->string('BidangKerjadiJepang')->nullable();
-        $table->string('BidangKerjaPilihan')->nullable();
-        $table->string('EstimasiGaji')->nullable();
-        $table->string('EstimasiGajiTop')->nullable();
-        $table->string('Domisili')->nullable();
-        $table->string('Penempatankerja')->nullable();
+        $table->text('pipeline')->nullable();
+        $table->text('NamaLengkap')->nullable();
+        $table->text('Gender')->nullable();
+        $table->text('Pendidikan')->nullable();
+        $table->text('TahunTerbit')->nullable();
+        $table->text('LevelBahasa')->nullable();
+        $table->text('LamaDiJepang')->nullable();
+        $table->text('Sensei')->nullable();
+        $table->text('Dokumen')->nullable();
+        $table->text('Penerjemah')->nullable();
+        $table->text('BidangKerjadiJepang')->nullable();
+        $table->text('BidangKerjaPilihan')->nullable();
+        $table->text('EstimasiGaji')->nullable();
+        $table->text('EstimasiGajiTop')->nullable();
+        $table->text('Domisili')->nullable();
+        $table->text('Penempatankerja')->nullable();
         $table->date('tglSiapkerja')->nullable();
-        $table->string('Senmongkyu')->nullable();
-        $table->string('BidangSenmongkyu')->nullable();
-        $table->string('JenisVisa')->nullable();
-        $table->string('Provinsi')->nullable();
-        $table->string('Kota')->nullable();
-        $table->string('NamaTikTok')->nullable();
-        $table->string('NamaInstagram')->nullable();
-        $table->string('NoTelpIndonesia')->nullable();
-        $table->string('NoTelpJepang')->nullable();
-        $table->string('email')->nullable();
-        $table->string('PICSales')->nullable();
-        $table->string('NamaLPK')->nullable();
-        $table->string('Keterangan')->nullable();
+        $table->text('Senmongkyu')->nullable();
+        $table->text('BidangSenmongkyu')->nullable();
+        $table->text('JenisVisa')->nullable();
+        $table->text('Provinsi')->nullable();
+        $table->text('Kota')->nullable();
+        $table->text('NamaTikTok')->nullable();
+        $table->text('NamaInstagram')->nullable();
+        $table->text('NoTelpIndonesia')->nullable();
+        $table->text('NoTelpJepang')->nullable();
+        $table->text('email')->nullable();
+        $table->text('PICSales')->nullable();
+        $table->text('NamaLPK')->nullable();
+        $table->text('Keterangan')->nullable();
 
         // No	
         // Tgl. Input	
