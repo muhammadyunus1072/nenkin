@@ -38,6 +38,7 @@ class Filter extends Component
     public $bidang_kerja_japan;
     public $pilihan_kerja_indonesia;
     public $pic_sales;
+    public $jenis_visa;
 
 
     public function mount() {}
@@ -93,6 +94,7 @@ class Filter extends Component
             'bidang_kerja_japan' => $this->bidang_kerja_japan,
             'pilihan_kerja_indonesia' => $this->pilihan_kerja_indonesia,
             'pic_sales' => $this->pic_sales,
+            'jenis_visa' => $this->jenis_visa,
         ]);
     }
 

@@ -33,6 +33,7 @@ class ExataRepository extends MasterDataRepository
         $bidang_kerja_japan,
         $pilihan_kerja_indonesia,
         $pic_sales,
+        $jenis_visa,
     ) {
         if ($date_type) {
 
@@ -131,6 +132,9 @@ class ExataRepository extends MasterDataRepository
             })
             ->when($pic_sales, function ($query) use ($pic_sales) {
                 $query->where('PICSales', 'like', '%' .  $pic_sales . '%');
+            })
+            ->when($jenis_visa, function ($query) use ($jenis_visa) {
+                $query->where('JenisVisa', 'like', '%' .  $jenis_visa . '%');
             });
     }
 }

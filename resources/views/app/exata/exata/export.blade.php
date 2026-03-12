@@ -26,23 +26,17 @@
 
     <table class="table-border" style="width: 100%">
         <thead>
-
             <tr>
-                <td colspan="8" style="text-align: center; font-weight: bold;">
-                    {{ $request['title'] }}
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="8" style="border: 0px; padding:8px">
-            </tr>
-
-            <tr>
-                <th>#</th>
                 @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
-                    @can("exata_" . $key . ".read")
-                        <th>{{$access}}</th>
-                    @endCan
+                    @switch($access)
+                        @case('Estimasi Gaji Top')
+                            
+                            @break
+                        @default
+                            @can("exata_" . $key . ".read")
+                                <th>{{$access}}</th>
+                            @endCan
+                    @endswitch
                 @endForeach
             </tr>
         </thead>
@@ -54,11 +48,21 @@
             @foreach ($collection as $index => $data)
                 
                 <tr>
-                    <td>{{$loop->iteration}}</td>
                     @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
-                        @can("exata_" . $key . ".read")
-                            <td>{{$data[str_replace('DATATABLE_','',$key)]}}</td>
-                        @endCan
+                    @switch($access)
+                        @case('Estimasi Gaji')
+                            @can("exata_" . $key . ".read")
+                                <td>{{$data[str_replace('DATATABLE_','',$key)] . ($data[str_replace('DATATABLE_','',$key.'Top')] ? '-' . $data[str_replace('DATATABLE_','',$key.'Top')] : '');}}</td>
+                            @endCan
+                            @break
+                        @case('Estimasi Gaji Top')
+                            
+                            @break
+                        @default
+                            @can("exata_" . $key . ".read")
+                                <td>{{$data[str_replace('DATATABLE_','',$key)]}}</td>
+                            @endCan
+                    @endswitch
                     @endForeach
                 </tr>
             @endforeach

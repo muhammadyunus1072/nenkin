@@ -197,6 +197,18 @@
                 </select>
             </div>
         @endCan
+
+        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_JenisVisa.'.read')
+            <div class="col-auto mb-2">
+                <label class="form-label">Jenis Visa</label>
+                <select class="form-select" wire:model.live="jenis_visa">
+                    <option value="">-- Pilih --</option>
+                    @foreach (App\Models\Exata\Exata::FILTER_JENIS_VISA_CHOICE as $key => $name)    
+                        <option value="{{$name}}">{{$name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endCan
     </div>
     {{-- Import Modal --}}
     <div class="modal fade" id="importModal" data-backdrop="static" data-keyboard="false" tabindex="-1"

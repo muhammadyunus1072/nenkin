@@ -18,7 +18,9 @@ class Exata extends Model
     const PERMISSION_NamaLengkap = 'NamaLengkap';
     const PERMISSION_Gender = 'Gender';
     const PERMISSION_Pendidikan = 'Pendidikan';
+    const PERMISSION_TahunTerbit = 'TahunTerbit';
     const PERMISSION_LevelBahasa = 'LevelBahasa';
+    const PERMISSION_LamaDiJepang = 'LamaDiJepang';
     const PERMISSION_Sensei = 'Sensei';
     const PERMISSION_Dokumen = 'Dokumen';
     const PERMISSION_Penerjemah = 'Penerjemah';
@@ -29,6 +31,11 @@ class Exata extends Model
     const PERMISSION_Domisili = 'Domisili';
     const PERMISSION_Penempatankerja = 'Penempatankerja';
     const PERMISSION_tglSiapkerja = 'tglSiapkerja';
+    const PERMISSION_Senmongkyu = 'Senmongkyu';
+    const PERMISSION_BidangSenmongkyu = 'BidangSenmongkyu';
+    const PERMISSION_JenisVisa = 'JenisVisa';
+    const PERMISSION_Provinsi = 'Provinsi';
+    const PERMISSION_Kota = 'Kota';
     const PERMISSION_NamaTikTok = 'NamaTikTok';
     const PERMISSION_NamaInstagram = 'NamaInstagram';
     const PERMISSION_NoTelpIndonesia = 'NoTelpIndonesia';
@@ -59,6 +66,11 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_Domisili => 'Domisili',
         'FILTER_' . self::PERMISSION_Penempatankerja => 'Penempatan Kerja',
         'FILTER_' . self::PERMISSION_tglSiapkerja => 'tgl Siap kerja',
+        // 'FILTER_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
+        // 'FILTER_' . self::PERMISSION_BidangSenmongkyu => 'Bidang Senmongkyu',
+        'FILTER_' . self::PERMISSION_JenisVisa => 'Jenis Visa',
+        // 'FILTER_' . self::PERMISSION_Provinsi => 'Provinsi',
+        // 'FILTER_' . self::PERMISSION_Kota => 'Kota',
         'FILTER_' . self::PERMISSION_NamaTikTok => 'Nama TikTok',
         'FILTER_' . self::PERMISSION_NamaInstagram => 'Nama Instagram',
         'FILTER_' . self::PERMISSION_NoTelpIndonesia => 'No Telp Indonesia',
@@ -79,7 +91,9 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'DATATABLE_' . self::PERMISSION_Gender => 'Gender',
         'DATATABLE_' . self::PERMISSION_Pendidikan => 'Pendidikan',
+        'DATATABLE_' . self::PERMISSION_TahunTerbit => 'Tahun Terbit',
         'DATATABLE_' . self::PERMISSION_LevelBahasa => 'Level Bahasa',
+        'DATATABLE_' . self::PERMISSION_LamaDiJepang => 'Lama Di Jepang',
         'DATATABLE_' . self::PERMISSION_Sensei => 'Sensei',
         'DATATABLE_' . self::PERMISSION_Dokumen => 'Dokumen',
         'DATATABLE_' . self::PERMISSION_Penerjemah => 'Penerjemah',
@@ -90,6 +104,11 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_Domisili => 'Domisili',
         'DATATABLE_' . self::PERMISSION_Penempatankerja => 'Penempatan Kerja',
         'DATATABLE_' . self::PERMISSION_tglSiapkerja => 'tgl Siap kerja',
+        'DATATABLE_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
+        'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => 'Bidang Senmongkyu',
+        'DATATABLE_' . self::PERMISSION_JenisVisa => 'Jenis Visa',
+        'DATATABLE_' . self::PERMISSION_Provinsi => 'Provinsi',
+        'DATATABLE_' . self::PERMISSION_Kota => 'Kota',
         'DATATABLE_' . self::PERMISSION_NamaTikTok => 'Nama TikTok',
         'DATATABLE_' . self::PERMISSION_NamaInstagram => 'Nama Instagram',
         'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => 'No Telp Indonesia',
@@ -112,6 +131,33 @@ class Exata extends Model
     const FILTER_GENDER_CHOICE = [
         self::FILTER_GENDER_L => 'L',
         self::FILTER_GENDER_P => 'P',
+    ];
+
+
+    const FILTER_JENIS_VISA_Specified_Skilled_Worker_I = 'Specified Skilled Worker (I)';
+    const FILTER_JENIS_VISA_Technical_Intern_Training_I_B = 'Technical Intern Training (I) (B)';
+    const FILTER_JENIS_VISA_Technical_Intern_Training_II_B = 'Technical Intern Training (II) (B)';
+    const FILTER_JENIS_VISA_Technical_Intern_Training_III_B = 'Technical Intern Training (III) (B)';
+    const FILTER_JENIS_VISA_Designated_Activities = 'Designated Activities';
+    const FILTER_JENIS_VISA_Dependent = 'Dependent';
+    const FILTER_JENIS_VISA_Engineering = 'Engineering';
+    const FILTER_JENIS_VISA_Medical_Services = 'Medical Services';
+    const FILTER_JENIS_VISA_Intra_Company_Transferee = 'Intra Company Transferee';
+    const FILTER_JENIS_VISA_Skilled_Labor = 'Skilled Labor';
+    const FILTER_JENIS_VISA_Nursing_Care = 'Nursing Care';
+
+    const FILTER_JENIS_VISA_CHOICE = [
+        self::FILTER_JENIS_VISA_Specified_Skilled_Worker_I => 'Specified Skilled Worker (I)',
+        self::FILTER_JENIS_VISA_Technical_Intern_Training_I_B => 'Technical Intern Training (I) (B)',
+        self::FILTER_JENIS_VISA_Technical_Intern_Training_II_B => 'Technical Intern Training (II) (B)',
+        self::FILTER_JENIS_VISA_Technical_Intern_Training_III_B => 'Technical Intern Training (III) (B)',
+        self::FILTER_JENIS_VISA_Designated_Activities => 'Designated Activities',
+        self::FILTER_JENIS_VISA_Dependent => 'Dependent',
+        self::FILTER_JENIS_VISA_Engineering => 'Engineering',
+        self::FILTER_JENIS_VISA_Medical_Services => 'Medical Services',
+        self::FILTER_JENIS_VISA_Intra_Company_Transferee => 'Intra Company Transferee',
+        self::FILTER_JENIS_VISA_Skilled_Labor => 'Skilled Labor',
+        self::FILTER_JENIS_VISA_Nursing_Care => 'Nursing Care',
     ];
 
     const FILTER_SALES_AINUL = 'AINUL_EXATA';
@@ -229,7 +275,7 @@ class Exata extends Model
         self::PIPELINE_INTERVIEW_PERUSAHAAN => 'INTERVIEW PERUSAHAAN',
         self::PIPELINE_REFUND_DEPOSIT => 'REFUND DEPOSIT',
         self::PIPELINE_LOLOS_TIDAK => 'LOLOS/TIDAK',
-        self::PIPELINE_MASA_PROBATION => 'LOLOS PROBATION',
+        self::PIPELINE_MASA_PROBATION => 'MASA PROBATION',
         self::PIPELINE_FEEDBACK => 'FEEDBACK',
     ];
 
@@ -271,7 +317,9 @@ class Exata extends Model
         'NamaLengkap',
         'Gender',
         'Pendidikan',
+        'TahunTerbit',
         'LevelBahasa',
+        'LamaDiJepang',
         'Sensei',
         'Dokumen',
         'Penerjemah',
@@ -282,6 +330,11 @@ class Exata extends Model
         'Domisili',
         'Penempatankerja',
         'tglSiapkerja',
+        'Senmongkyu',
+        'BidangSenmongkyu',
+        'JenisVisa',
+        'Provinsi',
+        'Kota',
         'NamaTikTok',
         'NamaInstagram',
         'NoTelpIndonesia',

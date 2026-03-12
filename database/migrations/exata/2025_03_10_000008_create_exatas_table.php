@@ -42,7 +42,9 @@ return new class extends Migration
         $table->string('NamaLengkap')->nullable();
         $table->string('Gender')->nullable();
         $table->string('Pendidikan')->nullable();
+        $table->string('TahunTerbit')->nullable();
         $table->string('LevelBahasa')->nullable();
+        $table->string('LamaDiJepang')->nullable();
         $table->string('Sensei')->nullable();
         $table->string('Dokumen')->nullable();
         $table->string('Penerjemah')->nullable();
@@ -53,6 +55,11 @@ return new class extends Migration
         $table->string('Domisili')->nullable();
         $table->string('Penempatankerja')->nullable();
         $table->date('tglSiapkerja')->nullable();
+        $table->string('Senmongkyu')->nullable();
+        $table->string('BidangSenmongkyu')->nullable();
+        $table->string('JenisVisa')->nullable();
+        $table->string('Provinsi')->nullable();
+        $table->string('Kota')->nullable();
         $table->string('NamaTikTok')->nullable();
         $table->string('NamaInstagram')->nullable();
         $table->string('NoTelpIndonesia')->nullable();

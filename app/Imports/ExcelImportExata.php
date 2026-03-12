@@ -13,31 +13,76 @@ class ExcelImportExata implements ToCollection
         $rows = $rows->skip(1);
 
         foreach ($rows as $row) {
-            $no = $row[0];
-            $tgl_input = $row[1];
-            $tgl_pulang = $row[2];
-            $pipeline = $row[3];
-            $nama_lengkap = $row[4];
-            $gender = $row[5];
-            $pendidikan = $row[6];
-            $level_bahasa = $row[7];
-            $sensei = $row[8];
-            $dokumen = $row[9];
-            $penerjemah = $row[10];
-            $bidang_kerja_jepang = $row[11];
-            $bidang_kerja_pilihan = $row[12];
-            $estimasi_gaji = $row[13];
-            $domisili = $row[14];
-            $penempatan_kerja = $row[15];
-            $tgl_siap_kerja = $row[16];
-            $nama_tiktok = $row[17];
-            $nama_instagram = $row[18];
-            $no_telp_indonesia = $row[19];
-            $no_telp_jepang = $row[20];
-            $email = $row[21];
-            $pic_sales = $row[22];
-            $nama_lpk = $row[23];
-            $keterangan = $row[24];
+            $no = '';
+            $tgl_input = '';
+            $tgl_pulang = '';
+            $pipeline = '';
+            $nama_lengkap = '';
+            $gender = '';
+            $pendidikan = '';
+            $tahun_terbit = '';
+            $level_bahasa = '';
+            $lama_di_jepang = '';
+            $sensei = '';
+            $dokumen = '';
+            $penerjemah = '';
+            $bidang_kerja_jepang = '';
+            $bidang_kerja_pilihan = '';
+            $estimasi_gaji = '';
+            $domisili = '';
+            $penempatan_kerja = '';
+            $tgl_siap_kerja = '';
+            $senmongkyu = '';
+            $bidang_senmongkyu = '';
+            $jenis_visa = '';
+            $provinsi = '';
+            $kota = '';
+            $nama_tiktok = '';
+            $nama_instagram = '';
+            $no_telp_indonesia = '';
+            $no_telp_jepang = '';
+            $email = '';
+            $pic_sales = '';
+            $nama_lpk = '';
+            $keterangan = '';
+            $data_import = [
+                'no',
+                'tgl_input',
+                'tgl_pulang',
+                'pipeline',
+                'nama_lengkap',
+                'gender',
+                'pendidikan',
+                'tahun_terbit',
+                'level_bahasa',
+                'lama_di_jepang',
+                'sensei',
+                'dokumen',
+                'penerjemah',
+                'bidang_kerja_jepang',
+                'bidang_kerja_pilihan',
+                'estimasi_gaji',
+                'domisili',
+                'penempatan_kerja',
+                'tgl_siap_kerja',
+                'senmongkyu',
+                'bidang_senmongkyu',
+                'jenis_visa',
+                'provinsi',
+                'kota',
+                'nama_tiktok',
+                'nama_instagram',
+                'no_telp_indonesia',
+                'no_telp_jepang',
+                'email',
+                'pic_sales',
+                'nama_lpk',
+                'keterangan',
+            ];
+
+            foreach ($data_import as $index => $data_name) {
+                $$data_name = $row[$index];
+            }
 
             $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $estimasi_gaji));
             $estimasi_gaji_bottom = $estimasi_gaji[0];
@@ -50,7 +95,9 @@ class ExcelImportExata implements ToCollection
                 'NamaLengkap' => strtoupper($nama_lengkap),
                 'Gender' => strtoupper(preg_replace('/\s+/u', '', trim($gender))) ? strtoupper(preg_replace('/\s+/u', '', trim($gender))) : null,
                 'Pendidikan' => strtoupper($pendidikan),
+                'TahunTerbit' => strtoupper($tahun_terbit),
                 'LevelBahasa' => strtoupper($level_bahasa),
+                'LamaDiJepang' => strtoupper($lama_di_jepang),
                 'Sensei' => strtoupper(preg_replace('/\s+/u', '', trim($sensei))) ? strtoupper(preg_replace('/\s+/u', '', trim($sensei))) : null,
                 'Dokumen' => strtoupper(preg_replace('/\s+/u', '', trim($dokumen))) ? strtoupper(preg_replace('/\s+/u', '', trim($dokumen))) : null,
                 'Penerjemah' => strtoupper(preg_replace('/\s+/u', '', trim($penerjemah))) ? strtoupper(preg_replace('/\s+/u', '', trim($penerjemah))) : null,
@@ -61,6 +108,11 @@ class ExcelImportExata implements ToCollection
                 'Domisili' => strtoupper($domisili),
                 'Penempatankerja' => strtoupper($penempatan_kerja),
                 'tglSiapkerja' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) : null,
+                'Senmongkyu' => strtoupper($senmongkyu),
+                'BidangSenmongkyu' => strtoupper($bidang_senmongkyu),
+                'JenisVisa' => strtoupper($jenis_visa),
+                'Provinsi' => strtoupper($provinsi),
+                'Kota' => strtoupper($kota),
                 'NamaTikTok' => strtoupper($nama_tiktok),
                 'NamaInstagram' => strtoupper($nama_instagram),
                 'NoTelpIndonesia' => strtoupper($no_telp_indonesia),

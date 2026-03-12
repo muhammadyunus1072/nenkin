@@ -43,6 +43,7 @@ class Datatable extends Component
     public $bidang_kerja_japan;
     public $pilihan_kerja_indonesia;
     public $pic_sales;
+    public $jenis_visa;
 
     // Delete Dialog
     public $targetDeleteId;
@@ -135,10 +136,22 @@ class Datatable extends Component
         ];
         foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
-                $columns[] = [
-                    'key' => str_replace('DATATABLE_', '', $key),
-                    'name' => $access,
-                ];
+                if ($access == 'Estimasi Gaji') {
+                    $columns[] = [
+                        'key' => str_replace('DATATABLE_', '', $key),
+                        'name' => $access,
+                        'render' => function ($item) {
+                            return $item->EstimasiGaji . ($item->EstimasiGajiTop ? '-' . $item->EstimasiGajiTop : '');
+                        }
+                    ];
+                } else if ($access == 'Estimasi Gaji Top') {
+                } else {
+
+                    $columns[] = [
+                        'key' => str_replace('DATATABLE_', '', $key),
+                        'name' => $access,
+                    ];
+                }
             }
         }
         return $columns;
@@ -167,6 +180,7 @@ class Datatable extends Component
             $this->bidang_kerja_japan,
             $this->pilihan_kerja_indonesia,
             $this->pic_sales,
+            $this->jenis_visa,
         );
     }
 
