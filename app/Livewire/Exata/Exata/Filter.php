@@ -7,6 +7,7 @@ use App\Imports\ExcelImportExata;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,6 +43,32 @@ class Filter extends Component
 
 
     public function mount() {}
+
+    public function showDeleteDialog()
+    {
+        Alert::confirmation(
+            $this,
+            Alert::ICON_QUESTION,
+            "Hapus Data",
+            "Apakah Anda Yakin Ingin Menghapus Data Ini ?",
+            "on-delete-dialog-confirm",
+            "on-delete-dialog-cancel",
+            "Hapus",
+            "Batal",
+        );
+    }
+
+    #[On('on-delete-dialog-confirm')]
+    public function onDialogDeleteConfirm()
+    {
+        DB::table('exatas')->truncate();
+        DB::table('_history_exatas')->truncate();
+        $this->dispatch('refresh-table');
+        // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+    }
+
+    #[On('on-delete-dialog-cancel')]
+    public function onDialogDeleteCancel() {}
 
     public function storeImport()
     {
