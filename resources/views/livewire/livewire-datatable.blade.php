@@ -28,7 +28,7 @@
                 <thead>
                     <tr>
                         @foreach ($columns as $index => $col)
-                            <th wire:key='datatable_header_{{ $index }}'>
+                            <th wire:key='datatable_header_{{ $index }}' style="max-width:400px;">
                                 @if (!isset($col['sortable']) || $col['sortable'])
                                     @php $isSortAscending = $col['key'] == $sortBy && $sortDirection == 'asc'@endphp
                                     <button type="button" class='btn p-0 m-0'
@@ -61,9 +61,9 @@
                         <tr wire:key='datatable_row_{{ $index }}'>
                             @foreach ($columns as $col)
                                 @if (isset($col['render']) && is_callable($col['render']))
-                                    <td>{!! call_user_func($col['render'], $item, $index) !!}</td>
+                                    <td style="max-width:400px; overflow:scroll;">{!! call_user_func($col['render'], $item, $index) !!}</td>
                                 @elseif (isset($col['key']))
-                                    <td>{{ $item->{$col['key']} }}</td>
+                                    <td style="max-width:400px; overflow:scroll;">{{ $item->{$col['key']} }}</td>
                                 @endif
                             @endforeach
                         </tr>
