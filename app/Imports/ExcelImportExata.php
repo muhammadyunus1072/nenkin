@@ -77,7 +77,7 @@ class ExcelImportExata implements ToCollection
                 'email',
                 'pic_sales',
                 'nama_lpk',
-                'keterangan',
+                // 'keterangan',
             ];
 
             foreach ($data_import as $index => $data_name) {
@@ -120,7 +120,7 @@ class ExcelImportExata implements ToCollection
                 'email' => strtoupper($email),
                 'PICSales' => strtoupper($pic_sales),
                 'NamaLPK' => strtoupper($nama_lpk),
-                'Keterangan' => strtoupper($keterangan),
+                // 'Keterangan' => strtoupper($keterangan),
 
                 'available' => 'YA',
             ]);
