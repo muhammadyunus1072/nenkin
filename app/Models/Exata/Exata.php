@@ -88,6 +88,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_TglInput => 'Tgl Input',
         'DATATABLE_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
         'DATATABLE_' . self::PERMISSION_pipeline => 'Pipeline',
+        'DATATABLE_' . self::PERMISSION_available => 'available',
         'DATATABLE_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'DATATABLE_' . self::PERMISSION_Gender => 'Gender',
         'DATATABLE_' . self::PERMISSION_Pendidikan => 'Pendidikan',
@@ -117,7 +118,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_PICSales => 'PIC Sales',
         'DATATABLE_' . self::PERMISSION_NamaLPK => 'Nama LPK',
         'DATATABLE_' . self::PERMISSION_Keterangan => 'Keterangan',
-        'DATATABLE_' . self::PERMISSION_available => 'available',
+
     ];
 
     const FILTER_TGL_CHOICE = [
