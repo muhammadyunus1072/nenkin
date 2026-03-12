@@ -20,13 +20,13 @@ class Login extends Component
     public $password;
 
     #[Validate('required', message: 'Captcha Harus Diisi', onUpdate: false)]
-    #[Validate('captcha', message: 'Captcha Tidak Sesuai', onUpdate: false)]
-    public $captcha;
+    // #[Validate('captcha', message: 'Captcha Tidak Sesuai', onUpdate: false)]
+    // public $captcha;
 
     public function store()
     {
-        $this->dispatch('reload-captcha');
-        $this->validate();
+        // $this->dispatch('reload-captcha');
+        // $this->validate();
 
         $user = UserRepository::findByEmail($this->email);
         if (empty($user)) {

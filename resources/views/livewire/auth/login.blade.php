@@ -38,7 +38,7 @@
         @enderror
         <!--end::Password-->
     </div>
-    <div class="fv-row mb-8">
+    {{-- <div class="fv-row mb-8">
         <div class="captcha" wire:ignore>
             <span>{!! captcha_img() !!}</span>
             <button type="button" class="btn btn-danger" class="reload" id="reload">
@@ -53,7 +53,7 @@
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
-        @enderror
+        @enderror --}}
     </div>
     <!--end::Input group=-->
 

@@ -19,10 +19,10 @@
     </div>
 
     {{-- Filter --}}
-    <div class="row mt-4 d-flex gap-4">
+    <div class="row mt-4 d-flex justify-content-start gap-0">
     {{-- Singgle Filter --}}
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaLengkap.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 15%;">
                 <label class="form-label">Nama Lengkap</label>
                 <input type="text" class="form-control" wire:model.live="nama_lengkap" placeholder="nama_lengkap" />
             </div>
@@ -31,49 +31,49 @@
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NoTelpJepang.'.read',
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NoTelpIndonesia.'.read'
         ])
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">No Whatsapp</label>
                 <input type="text" class="form-control" wire:model.live="no_whatsapp" placeholder="no_whatsapp" />
             </div>
         @endCanany
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_EstimasiGaji.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">Estimasi Gaji</label>
-                <input type="text" class="form-control" wire:model.live="estimasi_gaji" placeholder="estimasi_gaji" />
+                <input type="text" class="form-control" wire:model.live="estimasi_gaji" placeholder="gaji" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Domisili.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">Dimisili</label>
                 <input type="text" class="form-control" wire:model.live="domisili" placeholder="domisili" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Penempatankerja.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 12%;">
                 <label class="form-label">Penempatan Kerja</label>
-                <input type="text" class="form-control" wire:model.live="penempatan_kerja" placeholder="penempatan_kerja" />
+                <input type="text" class="form-control" wire:model.live="penempatan_kerja" placeholder="Penempatan" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaLPK.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">Nama LPK</label>
                 <input type="text" class="form-control" wire:model.live="nama_lpk" placeholder="nama_lpk" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaInstagram.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">Instagram</label>
                 <input type="text" class="form-control" wire:model.live="instagram" placeholder="instagram" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaTikTok.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 10%;">
                 <label class="form-label">Tiktok</label>
                 <input type="text" class="form-control" wire:model.live="tiktok" placeholder="tiktok" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Keterangan.'.read')
-            <div class="col-auto mb-2">
+            <div style="flex:0 0 13%;">
                 <label class="form-label">Keterangan</label>
                 <input type="text" class="form-control" wire:model.live="keterangan" placeholder="keterangan" />
             </div>
@@ -86,7 +86,7 @@
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TanggalPulang.'.read',
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_tglSiapkerja.'.read'
         ])
-            <div class="col-auto mb-2">
+            <div class="col-auto mb-2"  style="scale: 1;">
                 <label class="form-label">Filter Tanggal</label>
                 <select class="form-select" wire:model.live="date_type">
                     <option value="">-- Pilih --</option>
@@ -99,11 +99,11 @@
             </div>
         @endcanany
         
-        <div class="col-auto mb-2">
+        <div class="col-auto mb-2"  style="scale: 1;">
             <label class="form-label">Tanggal Dari</label>
             <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="start_date"  />
         </div>
-        <div class="col-auto mb-2">
+        <div class="col-auto mb-2"  style="scale: 1;">
             <label class="form-label">Tanggal Sampai</label>
             <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="end_date"  />
         </div>
