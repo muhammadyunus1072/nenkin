@@ -63,8 +63,10 @@ class ExataRepository extends MasterDataRepository
             $query->where('NamaLengkap', 'like', '%' . $nama_lengkap . '%');
         })
             ->when($no_whatsapp, function ($query) use ($no_whatsapp) {
-                $query->where('NoTelpIndonesia', 'like', '%' . $no_whatsapp . '%')
-                    ->orWhere('NoTelpJepang', 'like', '%' . $no_whatsapp . '%');
+                $query->where(function ($q) use ($no_whatsapp) {
+                    $q->where('NoTelpIndonesia', 'like', '%' . $no_whatsapp . '%')
+                        ->orWhere('NoTelpJepang', 'like', '%' . $no_whatsapp . '%');
+                });
             })
             ->when($estimasi_gaji, function ($query) use ($estimasi_gaji) {
                 $query->where('EstimasiGaji', '<=', $estimasi_gaji)
