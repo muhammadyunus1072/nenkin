@@ -84,7 +84,7 @@ class Exata extends Model
     ];
 
     const EXATA_DATATABLE_CHOICE = [
-        'DATATABLE_' . self::PERMISSION_No => 'No',
+        'DATATABLE_' . self::PERMISSION_No => 'Ref',
         'DATATABLE_' . self::PERMISSION_TglInput => 'Tgl Input',
         'DATATABLE_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
         'DATATABLE_' . self::PERMISSION_pipeline => 'Pipeline',
@@ -118,7 +118,6 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_PICSales => 'PIC Sales',
         'DATATABLE_' . self::PERMISSION_NamaLPK => 'Nama LPK',
         'DATATABLE_' . self::PERMISSION_Keterangan => 'Keterangan',
-
     ];
 
     const FILTER_TGL_CHOICE = [
