@@ -78,6 +78,12 @@ class Filter extends Component
     #[On('on-delete-dialog-cancel')]
     public function onDialogDeleteCancel() {}
 
+    #[On('editData')]
+    public function editData($id)
+    {
+        $this->dispatch('consoleLog', $id);
+    }
+
     public function updatedInputFile()
     {
         $import = new ExcelImportExataPreview();

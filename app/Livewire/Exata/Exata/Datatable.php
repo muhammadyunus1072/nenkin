@@ -134,15 +134,23 @@ class Datatable extends Component
 
                     $id = Crypt::encrypt($item->id);
                     if ($this->isCanUpdate) {
-                        $editHtml = "<div class='col-auto mb-2'>
-                            <button class='btn btn-primary btn-sm' href=''>
+                        $editHtml = "
+                        <div class='col-auto mb-2'>
+                            <button 
+                                class='btn btn-primary btn-sm'
+                                data-bs-toggle='modal'
+                                data-bs-target='#editModal'
+                                x-data
+                                @click=\"\$dispatch('editData', { id: '" . $id . "' })\"
+                            >
                                 <i class='ki-duotone ki-notepad-edit fs-1'>
                                     <span class='path1'></span>
                                     <span class='path2'></span>
                                 </i>
                                 Ubah
-                            </butt>
-                        </div>";
+                            </button>
+                        </div>
+                        ";
                     }
                     $html = "<div class='row'>
                         $editHtml 
