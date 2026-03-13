@@ -1,4 +1,17 @@
 <form wire:submit="store">
+
+    <div wire:loading wire:target="filter_all, datatable_all, pipeline_all"
+     class="position-fixed top-0 start-0 w-100 h-100 
+            bg-dark bg-opacity-50 
+            justify-content-center align-items-center"
+     style="z-index:9999;">
+
+        <div class="bg-white p-4 rounded shadow">
+            <p class="text-dark" style="font-size: 1.5rem; width: 100%; text-align: center;"> 
+                <i class="text-dark animate-wand fas fa-wand-magic-sparkles text-dark"></i> &nbsp; Sedang Memproses
+            </p>
+        </div>
+    </div>
     <div class='row'>
         <div class="col-md-12 mb-4">
             <label>Nama</label>
