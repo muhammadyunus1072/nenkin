@@ -61,9 +61,9 @@
                         <tr wire:key='datatable_row_{{ $index }}'>
                             @foreach ($columns as $col)
                                 @if (isset($col['render']) && is_callable($col['render']))
-                                    <td>{!! call_user_func($col['render'], $item, $index) !!}</td>
+                                    <td class="{{isset($col['class']) ? $col['class'] : '' }}">{!! call_user_func($col['render'], $item, $index) !!}</td>
                                 @elseif (isset($col['key']))
-                                    <td>{{ $item->{$col['key']} }}</td>
+                                    <td class="{{isset($col['class']) ? $col['class'] : '' }}">{{ $item->{$col['key']} }}</td>
                                 @endif
                             @endforeach
                         </tr>

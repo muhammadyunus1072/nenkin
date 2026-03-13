@@ -4,6 +4,8 @@ namespace App\Livewire\Exata\Exata;
 
 use App\Helpers\Alert;
 use App\Imports\ExcelImportExata;
+use App\Imports\ExcelImportExataPreview;
+use App\Models\Exata\Exata;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +13,8 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+
 
 class Filter extends Component
 {
@@ -41,6 +45,10 @@ class Filter extends Component
     public $pic_sales;
     public $jenis_visa;
 
+    // Import
+    public $previewRows;
+    public $errorRows = [];
+
 
     public function mount() {}
 
@@ -69,6 +77,62 @@ class Filter extends Component
 
     #[On('on-delete-dialog-cancel')]
     public function onDialogDeleteCancel() {}
+
+    public function updatedInputFile()
+    {
+        $import = new ExcelImportExataPreview();
+
+        Excel::import($import, $this->inputFile);
+
+        $this->previewRows = [];
+        $this->errorRows = [];
+
+        $data_import = [];
+        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $value) {
+            if (!isset($value['isNotImport'])) {
+                $data_import[] = [
+                    $value['name'] => [
+                        'render' => function ($item) use ($value) {
+                            return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
+                        }
+                    ]
+                ];
+            }
+        }
+        $val = [];
+        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $value) {
+            if (!isset($value['isNotImport'])) {
+                $val[$value['name']] =  $value['isDate'] ? 'nullable|date' : '';
+            }
+        }
+        foreach ($import->rows as $index => $row) {
+
+            $d = [];
+
+            foreach ($data_import as $indexData => $value) {
+                foreach ($value as $keyName => $v) {
+                    $d[$keyName] = call_user_func($v['render'], $row[$indexData]);
+                }
+            }
+
+            $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d['Estimasi Gaji']));
+            $d['Estimasi Gaji'] = $estimasi_gaji[0];
+            $d['Estimasi Gaji Top'] = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
+
+            $validator = Validator::make($d, $val, [
+                'date' => 'Format Tanggal Tidak Sesuai'
+            ]);
+
+            $this->previewRows[] = [
+                'data' => $d,
+                'error' => $validator->errors()->toArray()
+            ];
+
+            if ($validator->fails()) {
+                $this->errorRows[] = $index;
+            }
+        }
+    }
 
     public function storeImport()
     {
@@ -104,7 +168,7 @@ class Filter extends Component
             'nama_lengkap' => $this->nama_lengkap,
             'no_whatsapp' => $this->no_whatsapp,
             'estimasi_gaji' => $this->estimasi_gaji,
-            'domisili' => $this->domisili,
+            'item' => $this->domisili,
             'penempatan_kerja' => $this->penempatan_kerja,
             'nama_lpk' => $this->nama_lpk,
             'instagram' => $this->instagram,

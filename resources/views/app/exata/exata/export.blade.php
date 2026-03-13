@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
-                    @switch($access)
+                    @switch($access['name'])
                         @case('Estimasi Gaji Top')
                             
                             @break
@@ -49,14 +49,11 @@
                 
                 <tr>
                     @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
-                    @switch($access)
+                    @switch($access['name'])
                         @case('Estimasi Gaji')
                             @can("exata_" . $key . ".read")
                                 <td>{{$data[str_replace('DATATABLE_','',$key)] . ($data[str_replace('DATATABLE_','',$key.'Top')] ? '-' . $data[str_replace('DATATABLE_','',$key.'Top')] : '');}}</td>
                             @endCan
-                            @break
-                        @case('Estimasi Gaji Top')
-                            
                             @break
                         @default
                             @can("exata_" . $key . ".read")

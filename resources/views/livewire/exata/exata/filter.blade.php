@@ -220,8 +220,8 @@
     {{-- Import Modal --}}
     <div class="modal fade" id="importModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-fullscreen" style="overflow: scroll">
+            <div class="modal-content" style="overflow: scroll">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importModalLabel">Import Data</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -229,17 +229,52 @@
                 <form wire:submit.prevent="storeImport">
                     <div class="modal-body import_modal">
                         <div class="form-group mb-2">
-                            <label>File</label>
+                            <label>File Import Excel</label>
                             <input type="file" wire:model="inputFile" class="form-control" id="inputFile">
                             @error('input_file')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="row">
+                            @if($previewRows)
+                                <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            @foreach($previewRows[0]['data'] as $name => $value)
+                                            
+                                                <th>{{$name}}</th>
+                                            @endForeach
+                                                <th>Pesan Error System</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($previewRows as $i => $row)
+                                            <tr class="{{ count($row['error']) ? 'table-danger' : '' }}">
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    @foreach ($row['data'] as $item)
+                                                        <td>{{ $item }}</td>
+                                                    @endforeach
+                                                <td>
+                                                    @foreach($row['error'] as $field => $msg)
+                                                        <div>{{ $msg[0] }}</div>
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
-                            wire:target='input_file'>Simpan</button>
+                        @if (!$errorRows)
+                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
+                                wire:target='input_file'>Simpan</button>
+                        @endif
                     </div>
                 </form>
             </div>

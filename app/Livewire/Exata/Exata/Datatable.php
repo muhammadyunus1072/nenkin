@@ -136,20 +136,21 @@ class Datatable extends Component
         ];
         foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
-                if ($access == 'Estimasi Gaji') {
+                if ($access['name'] == 'Estimasi Gaji') {
                     $columns[] = [
                         'key' => str_replace('DATATABLE_', '', $key),
-                        'name' => $access,
+                        'name' => $access['name'],
                         'render' => function ($item) {
                             return $item->EstimasiGaji . ($item->EstimasiGajiTop ? '-' . $item->EstimasiGajiTop : '');
-                        }
+                        },
+                        'class' => isset($access['class']) ? $access['class'] : ''
                     ];
-                } else if ($access == 'Estimasi Gaji Top') {
                 } else {
 
                     $columns[] = [
                         'key' => str_replace('DATATABLE_', '', $key),
-                        'name' => $access,
+                        'name' => $access['name'],
+                        'class' => isset($access['class']) ? $access['class'] : ''
                     ];
                 }
             }
