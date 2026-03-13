@@ -9,8 +9,10 @@ use App\Models\Exata\Exata;
 use App\Repositories\Account\UserRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -71,6 +73,43 @@ class Datatable extends Component
     public function onDialogDeleteCancel()
     {
         $this->targetDeleteId = null;
+    }
+
+    #[On('saveBulk')]
+    public function saveBulk($editBulk)
+    {
+        try {
+            DB::transaction(function () use ($editBulk) {
+                // Vehicle
+                $validateData = [
+                    'pipeline' => $editBulk['pipeline'],
+                    'Available' => $editBulk['Available'],
+                    'Keterangan' => $editBulk['Keterangan'],
+                ];
+                $this->getQuery()->update($validateData);
+            });
+
+
+            DB::commit();
+
+            $this->dispatch('onSuccessEditBulk');
+
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil Diperbarui",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
+        $this->dispatch('consoleLog', $this->getQuery()->count());
+        $this->dispatch('consoleLog', $editBulk);
     }
 
     public function showDeleteDialog($id)

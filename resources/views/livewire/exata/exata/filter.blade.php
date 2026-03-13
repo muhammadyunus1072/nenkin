@@ -25,6 +25,15 @@
             </button>
         </div>
         @endCan
+        <div class="col-auto">
+            <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">
+                <i class='ki-duotone ki-notepad-edit'>
+                    <span class='path1'></span>
+                    <span class='path2'></span>
+                </i>
+                Edit Bulk
+            </button>
+        </div>
     </div>
 
     {{-- Filter --}}
@@ -118,7 +127,7 @@
         </div>
         
 
-        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_pipeline.'.read')
+        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Pipeline.'.read')
             <div class="col-auto mb-2">
                 <label class="form-label">Pipeline</label>
                 <select class="form-select" wire:model.live="pipeline">
@@ -219,6 +228,122 @@
             </div>
         @endCan
     </div>
+    {{-- Edit Bulk Modal --}}
+    <div class="modal fade" id="bulkModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        wire:ignore.self>
+        <div class="modal-dialog modal-lg" style="overflow: scroll">
+            <div class="modal-content" style="overflow: scroll">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bulkModalLabel">Edit Bulk Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form wire:submit.prevent="storeImport">
+                    <div class="modal-body import_modal">
+                        
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label">Pipeline</label>
+                                    <select class="form-select" wire:model="edit_bulk.pipeline">
+                                        <option value="">-- Pilih --</option>
+                                        @foreach (App\Models\Exata\Exata::FILTER_PIPELINE_CHOICE as $key => $name)
+                                            
+                                            @can('exata_'.$key.'.read')
+                                                <option value="{{$name}}">{{$name}}</option>
+                                            @endCan
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label">Available</label>
+                                    <select class="form-select" wire:model="edit_bulk.Available">
+                                        <option value="">-- Pilih --</option>
+                                        @foreach (App\Models\Exata\Exata::FILTER_AVAILABLE_CHOICE as $key => $name)    
+                                            <option value="{{$name}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label>Keterangan</label>
+                                    <textarea placeholder="Keterangan" class="form-control" cols="30" rows="4" wire:model="edit_bulk.Keterangan"></textarea>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" wire:loading.attr="disabled"
+                            wire:target='saveBulk' wire:click="saveBulk">Simpan</button>
+                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Edit Manual Modal --}}
+    <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        wire:ignore.self>
+        <div class="modal-dialog modal-lg" style="overflow: scroll">
+            <div class="modal-content" style="overflow: scroll">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form wire:submit.prevent="storeImport">
+                    <div class="modal-body import_modal">
+                        @if ($edit_detail)
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <label>Nama Lengkap</label>
+                                    <p class="form-control">{{$edit_detail[App\Models\Exata\Exata::PERMISSION_NamaLengkap]}}</p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label>Provinsi</label>
+                                    <p class="form-control">{{$edit_detail[App\Models\Exata\Exata::PERMISSION_Provinsi]}}</p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label>Kota</label>
+                                    <p class="form-control">{{$edit_detail[App\Models\Exata\Exata::PERMISSION_Kota]}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label">Pipeline</label>
+                                    <select class="form-select" wire:model="edit_detail.pipeline">
+                                        <option value="">-- Pilih --</option>
+                                        @foreach (App\Models\Exata\Exata::FILTER_PIPELINE_CHOICE as $key => $name)
+                                            
+                                            @can('exata_'.$key.'.read')
+                                                <option value="{{$name}}">{{$name}}</option>
+                                            @endCan
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label">Available</label>
+                                    <select class="form-select" wire:model="edit_detail.Available">
+                                        <option value="">-- Pilih --</option>
+                                        @foreach (App\Models\Exata\Exata::FILTER_AVAILABLE_CHOICE as $key => $name)    
+                                            <option value="{{$name}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label>Keterangan</label>
+                                    <textarea placeholder="Keterangan" class="form-control" cols="30" rows="4" wire:model="edit_detail.Keterangan"></textarea>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" wire:loading.attr="disabled"
+                            wire:target='save_edit' wire:click="save_edit">Simpan</button>
+                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Import Modal --}}
     <div class="modal fade" id="importModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>
@@ -289,6 +414,12 @@
         Livewire.on('onSuccessImportData', () => {
             $('#importModal').modal('hide');
             $('#inputFile').val(null);
+        })
+        Livewire.on('onSuccessEditData', () => {
+            $('#editModal').modal('hide');
+        })
+        Livewire.on('onSuccessEditBulk', () => {
+            $('#bulkModal').modal('hide');
         })
     </script>
 @endpush

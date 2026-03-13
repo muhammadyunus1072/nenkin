@@ -6,14 +6,17 @@ use App\Helpers\Alert;
 use App\Imports\ExcelImportExata;
 use App\Imports\ExcelImportExataPreview;
 use App\Models\Exata\Exata;
+use App\Repositories\Exata\ExataRepository;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Validator;
 
 
 class Filter extends Component
@@ -49,6 +52,16 @@ class Filter extends Component
     public $previewRows;
     public $errorRows = [];
 
+    // Edit Manual
+    public $edit_detail = [];
+
+    // Edit Bulk
+    public $edit_bulk = [
+        'pipeline' => '',
+        'Available' => '',
+        'Keterangan' => '',
+    ];
+
 
     public function mount() {}
 
@@ -81,7 +94,58 @@ class Filter extends Component
     #[On('editData')]
     public function editData($id)
     {
+        $this->edit_detail = ExataRepository::find(Crypt::decrypt($id))->toArray();
+
         $this->dispatch('consoleLog', $id);
+        $this->dispatch('consoleLog', $this->edit_detail);
+    }
+
+    public function editBulk()
+    {
+        $this->edit_bulk = [
+            'pipeline' => '',
+            'Available' => '',
+            'Keterangan' => '',
+        ];
+    }
+
+    public function saveBulk()
+    {
+        $this->dispatch('saveBulk', $this->edit_bulk);
+    }
+
+    public function save_edit()
+    {
+        try {
+            DB::transaction(function () {
+                // Vehicle
+                $validateData = [
+                    'pipeline' => $this->edit_detail['pipeline'],
+                    'Available' => $this->edit_detail['Available'],
+                    'Keterangan' => $this->edit_detail['Keterangan'],
+                ];
+                ExataRepository::update($this->edit_detail['id'], $validateData);
+            });
+
+
+            DB::commit();
+
+            $this->dispatch('onSuccessEditData');
+            $this->edit_detail = [];
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil Diperbarui",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
     }
 
     public function updatedInputFile()

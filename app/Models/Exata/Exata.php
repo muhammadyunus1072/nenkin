@@ -14,7 +14,7 @@ class Exata extends Model
     const PERMISSION_Ref = 'Ref';
     const PERMISSION_TglInput = 'TglInput';
     const PERMISSION_TanggalPulang = 'TanggalPulang';
-    const PERMISSION_pipeline = 'pipeline';
+    const PERMISSION_Pipeline = 'pipeline';
     const PERMISSION_NamaLengkap = 'NamaLengkap';
     const PERMISSION_TanggalLahir = 'TanggalLahir';
     const PERMISSION_Gender = 'Gender';
@@ -52,7 +52,7 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_Ref => 'Ref',
         'FILTER_' . self::PERMISSION_TglInput => 'Tgl Input',
         'FILTER_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
-        'FILTER_' . self::PERMISSION_pipeline => 'Pipeline',
+        'FILTER_' . self::PERMISSION_Pipeline => 'Pipeline',
         'FILTER_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'FILTER_' . self::PERMISSION_Gender => 'Gender',
         'FILTER_' . self::PERMISSION_Pendidikan => 'Pendidikan',
@@ -95,7 +95,7 @@ class Exata extends Model
             'class' => 'text-center',
             'isDate' => true,
         ],
-        'DATATABLE_' . self::PERMISSION_pipeline => [
+        'DATATABLE_' . self::PERMISSION_Pipeline => [
             'name' => 'Pipeline',
             'class' => 'text-center',
             'isDate' => false,
@@ -270,6 +270,15 @@ class Exata extends Model
     const FILTER_GENDER_CHOICE = [
         self::FILTER_GENDER_L => 'L',
         self::FILTER_GENDER_P => 'P',
+    ];
+
+    const FILTER_AVAILABLE_AVAILABLE = 'AVAILABEL';
+    const FILTER_AVAILABLE_SUDAH_BEKERJA = 'SUDAH BEKERJA';
+    const FILTER_AVAILABLE_CANCEL = 'CANCEL';
+    const FILTER_AVAILABLE_CHOICE = [
+        self::FILTER_AVAILABLE_AVAILABLE => 'Available',
+        self::FILTER_AVAILABLE_SUDAH_BEKERJA => 'Sudah Bekerja',
+        self::FILTER_AVAILABLE_CANCEL => 'Cancel',
     ];
 
 
