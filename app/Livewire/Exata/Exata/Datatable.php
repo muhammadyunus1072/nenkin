@@ -10,6 +10,7 @@ use App\Repositories\Account\UserRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -125,6 +126,32 @@ class Datatable extends Component
 
         $columns = [
             [
+                'name' => 'Action',
+                'sortable' => false,
+                'searchable' => false,
+                'render' => function ($item) {
+                    $editHtml = "";
+
+                    $id = Crypt::encrypt($item->id);
+                    if ($this->isCanUpdate) {
+                        $editHtml = "<div class='col-auto mb-2'>
+                            <button class='btn btn-primary btn-sm' href=''>
+                                <i class='ki-duotone ki-notepad-edit fs-1'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                </i>
+                                Ubah
+                            </butt>
+                        </div>";
+                    }
+                    $html = "<div class='row'>
+                        $editHtml 
+                    </div>";
+
+                    return $html;
+                },
+            ],
+            [
                 'sortable' => false,
                 'searchable' => false,
                 'name' => '#',
@@ -142,6 +169,23 @@ class Datatable extends Component
                         'name' => $access['name'],
                         'render' => function ($item) {
                             return $item->EstimasiGaji . ($item->EstimasiGajiTop ? '-' . $item->EstimasiGajiTop : '');
+                        },
+                        'class' => isset($access['class']) ? $access['class'] : ''
+                    ];
+                } else if ($access['name'] == 'Bidang Kerja Pilihan') {
+                    $columns[] = [
+                        'key' => str_replace('DATATABLE_', '', $key),
+                        'name' => $access['name'],
+                        'render' => function ($item) {
+                            $array = explode(',', $item->BidangKerjaPilihan);
+
+                            $chunks = array_chunk($array, 3);
+
+                            $result = array_map(function ($chunk) {
+                                return implode(', ', $chunk);
+                            }, $chunks);
+
+                            return implode(',<br>', $result);
                         },
                         'class' => isset($access['class']) ? $access['class'] : ''
                     ];

@@ -17,12 +17,14 @@
             </button>
         </div>
 
+        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE))
         <div class="col-auto">
             <button class="btn btn-danger btn-sm" wire:click="showDeleteDialog">
                 <i class="fa fa-trash"></i>
                     Delete Data
             </button>
         </div>
+        @endCan
     </div>
 
     {{-- Filter --}}
