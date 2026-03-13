@@ -31,7 +31,7 @@ class Exata extends Model
     const PERMISSION_EstimasiGajiTop = 'EstimasiGajiTop';
     const PERMISSION_Domisili = 'Domisili';
     const PERMISSION_Penempatankerja = 'Penempatankerja';
-    const PERMISSION_tglSiapkerja = 'tglSiapkerja';
+    const PERMISSION_TglSiapkerja = 'TglSiapkerja';
     const PERMISSION_Senmongkyu = 'Senmongkyu';
     const PERMISSION_BidangSenmongkyu = 'BidangSenmongkyu';
     const PERMISSION_JenisVisa = 'JenisVisa';
@@ -66,7 +66,7 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_EstimasiGajiTop => 'Estimasi Gaji Top',
         'FILTER_' . self::PERMISSION_Domisili => 'Domisili',
         'FILTER_' . self::PERMISSION_Penempatankerja => 'Penempatan Kerja',
-        'FILTER_' . self::PERMISSION_tglSiapkerja => 'tgl Siap kerja',
+        'FILTER_' . self::PERMISSION_TglSiapkerja => 'tgl Siap kerja',
         // 'FILTER_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
         // 'FILTER_' . self::PERMISSION_BidangSenmongkyu => 'Bidang Senmongkyu',
         'FILTER_' . self::PERMISSION_JenisVisa => 'Jenis Visa',
@@ -103,7 +103,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_EstimasiGaji => 'Estimasi Gaji',
         'DATATABLE_' . self::PERMISSION_Domisili => 'Domisili',
         'DATATABLE_' . self::PERMISSION_Penempatankerja => 'Bersedia di Kota',
-        'DATATABLE_' . self::PERMISSION_tglSiapkerja => 'Siap Bekerja',
+        'DATATABLE_' . self::PERMISSION_TglSiapkerja => 'Siap Bekerja',
         'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => 'Bidang Kerjadi Jepang',
         'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => 'Bidang Kerja Pilihan',
         'DATATABLE_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
@@ -124,7 +124,7 @@ class Exata extends Model
     const FILTER_TGL_CHOICE = [
         'FILTER_' . self::PERMISSION_TglInput => 'Tanggal Input',
         'FILTER_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
-        'FILTER_' . self::PERMISSION_tglSiapkerja => 'Tanggal Siap Kerja',
+        'FILTER_' . self::PERMISSION_TglSiapkerja => 'Tanggal Siap Kerja',
     ];
 
     const FILTER_GENDER_L = 'L';
