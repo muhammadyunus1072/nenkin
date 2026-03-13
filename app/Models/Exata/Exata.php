@@ -45,7 +45,7 @@ class Exata extends Model
     const PERMISSION_PICSales = 'PICSales';
     const PERMISSION_NamaLPK = 'NamaLPK';
     const PERMISSION_Keterangan = 'Keterangan';
-    const PERMISSION_available = 'available';
+    const PERMISSION_available = 'Available';
     const PERMISSION_Job = 'JOB';
 
     const EXATA_FILTER_CHOICE = [
@@ -80,7 +80,7 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_PICSales => 'PIC Sales',
         'FILTER_' . self::PERMISSION_NamaLPK => 'Nama LPK',
         'FILTER_' . self::PERMISSION_Keterangan => 'Keterangan',
-        'FILTER_' . self::PERMISSION_available => 'available',
+        'FILTER_' . self::PERMISSION_available => 'Available',
         'FILTER_' . self::PERMISSION_Job => 'Job',
     ];
 
@@ -88,7 +88,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_Ref => 'Ref',
         'DATATABLE_' . self::PERMISSION_TglInput => 'Tgl Input',
         'DATATABLE_' . self::PERMISSION_pipeline => 'Pipeline',
-        'DATATABLE_' . self::PERMISSION_available => 'available',
+        'DATATABLE_' . self::PERMISSION_available => 'Available',
         'DATATABLE_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'DATATABLE_' . self::PERMISSION_TanggalLahir => 'Tanggal Lahir',
         'DATATABLE_' . self::PERMISSION_Gender => 'Gender',
