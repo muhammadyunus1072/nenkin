@@ -11,11 +11,12 @@ class Exata extends Model
 {
     use HasFactory, SoftDeletes, HasTrackHistory;
 
-    const PERMISSION_No = 'No';
+    const PERMISSION_Ref = 'Ref';
     const PERMISSION_TglInput = 'TglInput';
     const PERMISSION_TanggalPulang = 'TanggalPulang';
     const PERMISSION_pipeline = 'pipeline';
     const PERMISSION_NamaLengkap = 'NamaLengkap';
+    const PERMISSION_TanggalLahir = 'TanggalLahir';
     const PERMISSION_Gender = 'Gender';
     const PERMISSION_Pendidikan = 'Pendidikan';
     const PERMISSION_TahunTerbit = 'TahunTerbit';
@@ -48,7 +49,7 @@ class Exata extends Model
     const PERMISSION_Job = 'JOB';
 
     const EXATA_FILTER_CHOICE = [
-        'FILTER_' . self::PERMISSION_No => 'No',
+        'FILTER_' . self::PERMISSION_Ref => 'Ref',
         'FILTER_' . self::PERMISSION_TglInput => 'Tgl Input',
         'FILTER_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
         'FILTER_' . self::PERMISSION_pipeline => 'Pipeline',
@@ -84,13 +85,14 @@ class Exata extends Model
     ];
 
     const EXATA_DATATABLE_CHOICE = [
-        'DATATABLE_' . self::PERMISSION_No => 'Ref',
+        'DATATABLE_' . self::PERMISSION_Ref => 'Ref',
         'DATATABLE_' . self::PERMISSION_TglInput => 'Tgl Input',
         'DATATABLE_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
         'DATATABLE_' . self::PERMISSION_pipeline => 'Pipeline',
         'DATATABLE_' . self::PERMISSION_available => 'available',
         'DATATABLE_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'DATATABLE_' . self::PERMISSION_Gender => 'Gender',
+        'DATATABLE_' . self::PERMISSION_TanggalLahir => 'Tanggal Lahir',
         'DATATABLE_' . self::PERMISSION_Pendidikan => 'Pendidikan',
         'DATATABLE_' . self::PERMISSION_TahunTerbit => 'Tahun Terbit',
         'DATATABLE_' . self::PERMISSION_LevelBahasa => 'Level Bahasa',
@@ -280,56 +282,27 @@ class Exata extends Model
     ];
 
     protected $fillable = [
-
-        // 'no',
-        // 'tgl_input',
-        // 'habis_kontrak',
-        // 'kembali_ke_jepang',
-        // 'nama_lengkap',
-        // 'tgl_pulang',
-        // 'pic',
-        // 'nama_lpk',
-        // 'lama_di_jepang',
-        // 'referensi_kerja',
-        // 'jenis_kelamin',
-        // 'pendidikan',
-        // 'tahun_terbit',
-        // 'level_bahasa',
-        // 'sensei',
-        // 'dokumen',
-        // 'penerjemah',
-        // 'bidang_kerja_di_jepang',
-        // 'bidang_kerja_pilihan',
-        // 'senmongkyu',
-        // 'bidang_senmongkyu',
-        // 'jenis_visa',
-        // 'nama_tiktok',
-        // 'nama_instagram',
-        // 'no_telp_indonesia',
-        // 'no_telp_jepang',
-        // 'email',
-        // 'provinsi',
-        // 'kota',
-        'No',
+        'Ref',
         'TglInput',
-        'TanggalPulang',
         'pipeline',
         'NamaLengkap',
+        'TanggalLahir',
         'Gender',
         'Pendidikan',
-        'TahunTerbit',
         'LevelBahasa',
+        'TahunTerbit',
         'LamaDiJepang',
+        'TanggalPulang',
         'Sensei',
         'Dokumen',
         'Penerjemah',
-        'BidangKerjadiJepang',
-        'BidangKerjaPilihan',
         'EstimasiGaji',
         'EstimasiGajiTop',
         'Domisili',
         'Penempatankerja',
-        'tglSiapkerja',
+        'TglSiapkerja',
+        'BidangKerjadiJepang',
+        'BidangKerjaPilihan',
         'Senmongkyu',
         'BidangSenmongkyu',
         'JenisVisa',
@@ -339,11 +312,11 @@ class Exata extends Model
         'NamaInstagram',
         'NoTelpIndonesia',
         'NoTelpJepang',
-        'email',
+        'Email',
         'PICSales',
         'NamaLPK',
         'Keterangan',
-        'available',
+        'Available',
     ];
 
     protected $guarded = ['id'];

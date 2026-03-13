@@ -13,11 +13,12 @@ class ExcelImportExata implements ToCollection
         $rows = $rows->skip(1);
 
         foreach ($rows as $row) {
-            $no = '';
+            $ref = '';
             $tgl_input = '';
             $tgl_pulang = '';
             $pipeline = '';
             $nama_lengkap = '';
+            $tanggal_lahir = '';
             $gender = '';
             $pendidikan = '';
             $tahun_terbit = '';
@@ -44,27 +45,27 @@ class ExcelImportExata implements ToCollection
             $email = '';
             $pic_sales = '';
             $nama_lpk = '';
-            $keterangan = '';
             $data_import = [
-                'no',
+                'ref',
                 'tgl_input',
-                'tgl_pulang',
                 'pipeline',
                 'nama_lengkap',
+                'tanggal_lahir',
                 'gender',
                 'pendidikan',
-                'tahun_terbit',
                 'level_bahasa',
+                'tahun_terbit',
                 'lama_di_jepang',
+                'tgl_pulang',
                 'sensei',
                 'dokumen',
                 'penerjemah',
-                'bidang_kerja_jepang',
-                'bidang_kerja_pilihan',
                 'estimasi_gaji',
                 'domisili',
                 'penempatan_kerja',
                 'tgl_siap_kerja',
+                'bidang_kerja_jepang',
+                'bidang_kerja_pilihan',
                 'senmongkyu',
                 'bidang_senmongkyu',
                 'jenis_visa',
@@ -77,7 +78,6 @@ class ExcelImportExata implements ToCollection
                 'email',
                 'pic_sales',
                 'nama_lpk',
-                // 'keterangan',
             ];
 
             foreach ($data_import as $index => $data_name) {
@@ -88,11 +88,12 @@ class ExcelImportExata implements ToCollection
             $estimasi_gaji_bottom = $estimasi_gaji[0];
             $estimasi_gaji_top = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
             $exata = ExataRepository::create([
-                'No' => strtoupper($no),
+                'Ref' => strtoupper($ref),
                 'TglInput' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_input))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_input))) : null,
                 'TanggalPulang' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_pulang))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_pulang))) : null,
                 'pipeline' => strtoupper($pipeline),
                 'NamaLengkap' => strtoupper($nama_lengkap),
+                'TanggalLahir' => strtoupper(preg_replace('/\s+/u', '', trim($tanggal_lahir))) ? strtoupper(preg_replace('/\s+/u', '', trim($tanggal_lahir))) : null,
                 'Gender' => strtoupper(preg_replace('/\s+/u', '', trim($gender))) ? strtoupper(preg_replace('/\s+/u', '', trim($gender))) : null,
                 'Pendidikan' => strtoupper($pendidikan),
                 'TahunTerbit' => strtoupper($tahun_terbit),
@@ -103,8 +104,8 @@ class ExcelImportExata implements ToCollection
                 'Penerjemah' => strtoupper(preg_replace('/\s+/u', '', trim($penerjemah))) ? strtoupper(preg_replace('/\s+/u', '', trim($penerjemah))) : null,
                 'BidangKerjadiJepang' => strtoupper($bidang_kerja_jepang),
                 'BidangKerjaPilihan' => strtoupper($bidang_kerja_pilihan),
-                'EstimasiGaji' => strtoupper($estimasi_gaji_bottom),
-                'EstimasiGajiTop' => strtoupper($estimasi_gaji_top),
+                'EstimasiGaji' => $estimasi_gaji_bottom ? $estimasi_gaji_bottom : null,
+                'EstimasiGajiTop' => $estimasi_gaji_top ? $estimasi_gaji_top : null,
                 'Domisili' => strtoupper($domisili),
                 'Penempatankerja' => strtoupper($penempatan_kerja),
                 'tglSiapkerja' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) : null,
@@ -120,9 +121,6 @@ class ExcelImportExata implements ToCollection
                 'email' => strtoupper($email),
                 'PICSales' => strtoupper($pic_sales),
                 'NamaLPK' => strtoupper($nama_lpk),
-                // 'Keterangan' => strtoupper($keterangan),
-
-                'available' => 'YA',
             ]);
         }
     }
