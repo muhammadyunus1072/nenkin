@@ -101,7 +101,7 @@ class ExataRepository extends MasterDataRepository
                 $query->whereBetween('TanggalPulang', [$start_date, $end_date]);
             })
             ->when(($start_date && $end_date) && $date_type == 'Tanggal Siap Kerja', function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('tglSiapkerja', [$start_date, $end_date]);
+                $query->whereBetween('TglSiapkerja', [$start_date, $end_date]);
             })
             ->when($pipeline, function ($query) use ($pipeline) {
                 $query->where('pipeline', 'like', '%' . $pipeline . '%');

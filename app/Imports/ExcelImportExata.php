@@ -108,7 +108,7 @@ class ExcelImportExata implements ToCollection
                 'EstimasiGajiTop' => $estimasi_gaji_top ? $estimasi_gaji_top : null,
                 'Domisili' => strtoupper($domisili),
                 'Penempatankerja' => strtoupper($penempatan_kerja),
-                'tglSiapkerja' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) : null,
+                'TglSiapkerja' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_siap_kerja))) : null,
                 'Senmongkyu' => strtoupper($senmongkyu),
                 'BidangSenmongkyu' => strtoupper($bidang_senmongkyu),
                 'JenisVisa' => strtoupper($jenis_visa),

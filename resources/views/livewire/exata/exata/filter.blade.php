@@ -91,7 +91,7 @@
         @canany([
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TglInput.'.read',
             'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TanggalPulang.'.read',
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_tglSiapkerja.'.read'
+            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TglSiapkerja.'.read'
         ])
             <div class="col-auto mb-2"  style="scale: 1;">
                 <label class="form-label">Filter Tanggal</label>

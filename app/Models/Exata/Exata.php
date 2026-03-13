@@ -41,11 +41,11 @@ class Exata extends Model
     const PERMISSION_NamaInstagram = 'NamaInstagram';
     const PERMISSION_NoTelpIndonesia = 'NoTelpIndonesia';
     const PERMISSION_NoTelpJepang = 'NoTelpJepang';
-    const PERMISSION_email = 'email';
+    const PERMISSION_Email = 'Email';
     const PERMISSION_PICSales = 'PICSales';
     const PERMISSION_NamaLPK = 'NamaLPK';
     const PERMISSION_Keterangan = 'Keterangan';
-    const PERMISSION_available = 'Available';
+    const PERMISSION_Available = 'Available';
     const PERMISSION_Job = 'JOB';
 
     const EXATA_FILTER_CHOICE = [
@@ -76,11 +76,11 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_NamaInstagram => 'Nama Instagram',
         'FILTER_' . self::PERMISSION_NoTelpIndonesia => 'No Telp Indonesia',
         'FILTER_' . self::PERMISSION_NoTelpJepang => 'No Telp Jepang',
-        'FILTER_' . self::PERMISSION_email => 'email',
+        'FILTER_' . self::PERMISSION_Email => 'Email',
         'FILTER_' . self::PERMISSION_PICSales => 'PIC Sales',
         'FILTER_' . self::PERMISSION_NamaLPK => 'Nama LPK',
         'FILTER_' . self::PERMISSION_Keterangan => 'Keterangan',
-        'FILTER_' . self::PERMISSION_available => 'Available',
+        'FILTER_' . self::PERMISSION_Available => 'Available',
         'FILTER_' . self::PERMISSION_Job => 'Job',
     ];
 
@@ -88,7 +88,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_Ref => 'Ref',
         'DATATABLE_' . self::PERMISSION_TglInput => 'Tgl Input',
         'DATATABLE_' . self::PERMISSION_pipeline => 'Pipeline',
-        'DATATABLE_' . self::PERMISSION_available => 'Available',
+        'DATATABLE_' . self::PERMISSION_Available => 'Available',
         'DATATABLE_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'DATATABLE_' . self::PERMISSION_TanggalLahir => 'Tanggal Lahir',
         'DATATABLE_' . self::PERMISSION_Gender => 'Gender',
@@ -115,7 +115,7 @@ class Exata extends Model
         'DATATABLE_' . self::PERMISSION_NamaInstagram => 'Nama Instagram',
         'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => 'No Telp Indonesia',
         'DATATABLE_' . self::PERMISSION_NoTelpJepang => 'No Telp Jepang',
-        'DATATABLE_' . self::PERMISSION_email => 'Email',
+        'DATATABLE_' . self::PERMISSION_Email => 'Email',
         'DATATABLE_' . self::PERMISSION_PICSales => 'PIC/Sales',
         'DATATABLE_' . self::PERMISSION_NamaLPK => 'Nama LPK',
         'DATATABLE_' . self::PERMISSION_Keterangan => 'Keterangan',
