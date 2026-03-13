@@ -21,6 +21,10 @@ class Detail extends Component
 
     public $accesses = [];
 
+    public $filter_all;
+    public $datatable_all;
+    public $pipeline_all;
+
     public function mount()
     {
         $permissions = PermissionRepository::getIdAndNames();
@@ -58,6 +62,38 @@ class Detail extends Component
         }
     }
 
+    public function updatedFilterAll($value)
+    {
+        foreach ($this->accesses as $keyAccess => $access) {
+            if (str_starts_with($access['name'], 'exata_FILTER_')) {
+                foreach ($access['permissions'] as $keyPermission => $permission) {
+                    $this->accesses[$keyAccess]['permissions'][$keyPermission]['is_checked'] = $value;
+                }
+            }
+        }
+    }
+
+    public function updatedDatatableAll($value)
+    {
+        foreach ($this->accesses as $keyAccess => $access) {
+            if (str_starts_with($access['name'], 'exata_DATATABLE_')) {
+                foreach ($access['permissions'] as $keyPermission => $permission) {
+                    $this->accesses[$keyAccess]['permissions'][$keyPermission]['is_checked'] = $value;
+                }
+            }
+        }
+    }
+
+    public function updatedPipelineAll($value)
+    {
+        foreach ($this->accesses as $keyAccess => $access) {
+            if (str_starts_with($access['name'], 'exata_PIPELINE_')) {
+                foreach ($access['permissions'] as $keyPermission => $permission) {
+                    $this->accesses[$keyAccess]['permissions'][$keyPermission]['is_checked'] = $value;
+                }
+            }
+        }
+    }
     #[On('on-dialog-confirm')]
     public function onDialogConfirm()
     {

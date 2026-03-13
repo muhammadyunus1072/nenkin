@@ -11,8 +11,15 @@
             @enderror
         </div>
 
-        <h3>
-            Filter
+        <h3 class="row d-flex jusfity-content-start">
+            Filter 
+            <div class="form-check mb-2 ms-2 col-auto">
+                <input class="form-check-input" type="checkbox" value="1"
+                    id="permission_filter" wire:model.live="filter_all">
+                <label class="" for="permission_filter">
+                    Ijinkan Semua
+                </label>
+            </div>
         </h3>
         @foreach ($accesses as $keyAccess => $access)
             @if (str_starts_with($access['name'], 'exata_FILTER_'))
@@ -36,9 +43,16 @@
                 </div>
             @endif
         @endforeach
-
-        <h3>
-            Datatable
+        <hr>
+        <h3 class="row d-flex jusfity-content-start">
+            Datatable 
+            <div class="form-check mb-2 ms-2 col-auto">
+                <input class="form-check-input" type="checkbox" value="1"
+                    id="permission_datatable" wire:model.live="datatable_all">
+                <label class="" for="permission_datatable">
+                    Ijinkan Semua
+                </label>
+            </div>
         </h3>
         @foreach ($accesses as $keyAccess => $access)
             @if (str_starts_with($access['name'], 'exata_DATATABLE_'))
@@ -62,9 +76,16 @@
                 </div>
             @endif
         @endforeach
-
-        <h3>
-            Pipeline
+        <hr>
+        <h3 class="row d-flex jusfity-content-start">
+            Pipeline 
+            <div class="form-check mb-2 ms-2 col-auto">
+                <input class="form-check-input" type="checkbox" value="1"
+                    id="permission_pipeline" wire:model.live="pipeline_all">
+                <label class="" for="permission_pipeline">
+                    Ijinkan Semua
+                </label>
+            </div>
         </h3>
         @foreach ($accesses as $keyAccess => $access)
             @if (str_starts_with($access['name'], 'exata_PIPELINE_'))
