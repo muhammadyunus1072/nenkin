@@ -34,7 +34,7 @@
                             @break
                         @default
                             @can("exata_" . $key . ".read")
-                                <th>{{$access}}</th>
+                                <th>{{$access['name']}}</th>
                             @endCan
                     @endswitch
                 @endForeach
