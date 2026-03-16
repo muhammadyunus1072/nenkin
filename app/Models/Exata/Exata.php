@@ -175,7 +175,7 @@ class Exata extends Model
             'isDate' => false,
         ],
         'DATATABLE_' . self::PERMISSION_Penempatankerja => [
-            'name' => 'Bersedia di Kota',
+            'name' => 'Preferensi Lokasi',
             'class' => '',
             'isDate' => false,
         ],
@@ -405,7 +405,7 @@ class Exata extends Model
         self::FILTER_JOB_PILIHAN_INDO_Lainnya => 'Lainnya',
     ];
 
-    const PIPELINE_NEW_LEADS = 'PIPELINE_NEW_LEADS';
+    const PIPELINE_NEW_LEADS = 'PIPELINE_NEW_LEAD';
     const PIPELINE_WEBINAR = 'PIPELINE_WEBINAR';
     const PIPELINE_VERIFIED = 'PIPELINE_VERIFIED';
     const PIPELINE_INTERVIEW_INTERNAL = 'PIPELINE_INTERVIEW_INTERNAL';
@@ -417,7 +417,7 @@ class Exata extends Model
     const PIPELINE_MASA_PROBATION = 'PIPELINE_MASA_PROBATION';
     const PIPELINE_FEEDBACK = 'PIPELINE_FEEDBACK';
     const FILTER_PIPELINE_CHOICE = [
-        self::PIPELINE_NEW_LEADS => 'NEW LEADS',
+        self::PIPELINE_NEW_LEADS => 'NEW LEAD',
         self::PIPELINE_WEBINAR => 'WEBINAR',
         self::PIPELINE_VERIFIED => 'VERIFIED',
         self::PIPELINE_INTERVIEW_INTERNAL => 'INTERVIEW INTERNAL',

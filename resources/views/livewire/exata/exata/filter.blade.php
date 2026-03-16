@@ -63,14 +63,14 @@
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Domisili.'.read')
             <div style="flex:0 0 10%;">
-                <label class="form-label">Dimisili</label>
+                <label class="form-label">Domisili</label>
                 <input type="text" class="form-control" wire:model.live="domisili" placeholder="domisili" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Penempatankerja.'.read')
             <div style="flex:0 0 12%;">
-                <label class="form-label">Penempatan Kerja</label>
-                <input type="text" class="form-control" wire:model.live="penempatan_kerja" placeholder="Penempatan" />
+                <label class="form-label">Preferensi Lokasi</label>
+                <input type="text" class="form-control" wire:model.live="penempatan_kerja" placeholder="Preferensi Lokasi" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaLPK.'.read')
@@ -222,6 +222,11 @@
                 </select>
             </div>
         @endCan
+        <div class="col-auto row d-flex align-items-end">
+            <button class="btn btn-warning btn-sm mb-2" wire:click="resetFilter">
+                Reset Filter
+            </button>
+        </div>
     </div>
     {{-- Edit Bulk Modal --}}
     <div class="modal fade" id="bulkModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -374,6 +379,7 @@
                                     <tbody>
                                         @foreach($previewRows as $i => $row)
                                             <tr class="{{ count($row['error']) ? 'table-danger' : '' }}">
+                                            {{-- <tr class="{{ count($row['error']) ? '--kt-gray-100' : '' }}"> --}}
                                                     <td>{{ $loop->iteration }}</td>
                                                     @foreach ($row['data'] as $item)
                                                         <td>{{ $item }}</td>

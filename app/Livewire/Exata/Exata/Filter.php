@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -239,13 +238,41 @@ class Filter extends Component
         }
     }
 
+    public function resetFilter()
+    {
+        $this->reset(
+            'nama_lengkap',
+            'no_whatsapp',
+            'estimasi_gaji',
+            'domisili',
+            'penempatan_kerja',
+            'nama_lpk',
+            'instagram',
+            'tiktok',
+            'keterangan',
+            'date_type',
+            'start_date',
+            'end_date',
+            'pipeline',
+            'gender',
+            'pendidikan',
+            'level_bahasa',
+            'job',
+            'bidang_kerja_japan',
+            'pilihan_kerja_indonesia',
+            'pic_sales',
+            'jenis_visa',
+        );
+        $this->updated();
+    }
+
     public function updated()
     {
         $this->dispatch('datatable-add-filter', [
             'nama_lengkap' => $this->nama_lengkap,
             'no_whatsapp' => $this->no_whatsapp,
             'estimasi_gaji' => $this->estimasi_gaji,
-            'item' => $this->domisili,
+            'domisili' => $this->domisili,
             'penempatan_kerja' => $this->penempatan_kerja,
             'nama_lpk' => $this->nama_lpk,
             'instagram' => $this->instagram,

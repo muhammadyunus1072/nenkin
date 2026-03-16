@@ -26,32 +26,37 @@ return [
     'profile_image' => 'assets/media/avatars/profile.png',
 
     'menu' => [
+        // [
+        //     'text' => 'Convert Data Ichijikin',
+        //     'route'  => 'convert-data-ichijikin.index',
+        //     'icon' => 'ki-duotone ki-element-11',
+        // ],
         [
-            'text' => 'Convert Data Ichijikin',
-            'route'  => 'convert-data-ichijikin.index',
-            'icon' => 'ki-duotone ki-element-11',
-        ],
-        [
-            'text' => 'J-Expert',
+            'text' => 'J-Expert Kandidat',
             'route'  => 'exata.index',
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
-            'text' => 'Kendaraan',
-            'icon' => 'ki-duotone ki-shield-tick',
-            'submenu' => [
-                [
-                    'text' => 'Data Kendaraan',
-                    'route' => 'vehicle.index',
-                    'icon_color' => 'success',
-                ],
-                [
-                    'text' => 'Penggunaan Kendaraan',
-                    'route' => 'vehicle-usage.index',
-                    'icon_color' => 'primary',
-                ],
-            ],
+            'text' => 'Master Data Regency',
+            'route'  => 'regency.index',
+            'icon' => 'ki-duotone ki-element-11',
         ],
+        // [
+        //     'text' => 'Kendaraan',
+        //     'icon' => 'ki-duotone ki-shield-tick',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Data Kendaraan',
+        //             'route' => 'vehicle.index',
+        //             'icon_color' => 'success',
+        //         ],
+        //         [
+        //             'text' => 'Penggunaan Kendaraan',
+        //             'route' => 'vehicle-usage.index',
+        //             'icon_color' => 'primary',
+        //         ],
+        //     ],
+        // ],
         [
             'text' => 'Admin',
             'icon' => 'ki-duotone ki-shield-tick',

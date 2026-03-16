@@ -253,6 +253,7 @@ class Datatable extends Component
 
     public function getQuery(): Builder
     {
+
         return ExataRepository::datatable(
             $this->nama_lengkap,
             $this->no_whatsapp,

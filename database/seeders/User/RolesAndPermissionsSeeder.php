@@ -24,10 +24,12 @@ class RolesAndPermissionsSeeder extends Seeder
             PermissionHelper::ACCESS_DASHBOARD => [PermissionHelper::TYPE_READ],
             PermissionHelper::ACCESS_USER => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_ROLE => PermissionHelper::TYPE_ALL,
-            PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
-            PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
-            PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
+            // PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
+            // PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
+            // PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_PERMISSION => PermissionHelper::TYPE_ALL,
+
+            PermissionHelper::ACCESS_REGENCY => PermissionHelper::TYPE_ALL,
 
             PermissionHelper::ACCESS_EXATA => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_EXATA_PERMISSION => PermissionHelper::TYPE_ALL,
@@ -58,9 +60,11 @@ class RolesAndPermissionsSeeder extends Seeder
                 PermissionHelper::ACCESS_USER => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_PERMISSION => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_ROLE => PermissionHelper::TYPE_ALL,
-                PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
-                PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
-                PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
+                // PermissionHelper::ACCESS_CONVERT_DATA_ICHIJIKIN => PermissionHelper::TYPE_ALL,
+                // PermissionHelper::ACCESS_VEHICLE => PermissionHelper::TYPE_ALL,
+                // PermissionHelper::ACCESS_VEHICLE_USAGE => PermissionHelper::TYPE_ALL,
+
+                PermissionHelper::ACCESS_REGENCY => PermissionHelper::TYPE_ALL,
 
                 PermissionHelper::ACCESS_EXATA => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_EXATA_PERMISSION => PermissionHelper::TYPE_ALL,
