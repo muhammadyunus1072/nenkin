@@ -346,7 +346,7 @@
             <div class="modal-content" style="overflow: scroll">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importModalLabel">Import Data</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click="closeImportModal"></button>
                 </div>
                 <form wire:submit.prevent="storeImport">
                     <div class="modal-body import_modal">
@@ -392,8 +392,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        @if (!$errorRows)
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="closeImportModal">Tutup</button>
+                        @if (!$errorRows && $previewRows)
                             <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
                                 wire:target='input_file'>Simpan</button>
                         @endif

@@ -204,15 +204,24 @@ class Filter extends Component
         }
     }
 
+    public function closeImportModal()
+    {
+        $this->reset('inputFile');
+        $this->previewRows = [];
+        $this->errorRows = [];
+    }
+
     public function storeImport()
     {
         try {
             DB::beginTransaction();
-            $path = $this->inputFile->store('temp');
-            Excel::import(new ExcelImportExata(), Storage::path($path));
+            $path = $this->inputFile->getRealPath();
+            Excel::import(new ExcelImportExata(), $path);
+            unlink($path);
             DB::commit();
 
             $this->dispatch('onSuccessImportData');
+            $this->dispatch('refresh-table');
 
             Alert::confirmation(
                 $this,
@@ -224,8 +233,6 @@ class Filter extends Component
                 "Oke",
                 "Tutup",
             );
-
-            $this->dispatch('refresh-table');
         } catch (\Exception $e) {
             DB::rollBack();
             Alert::fail($this, "Gagal", $e->getMessage());
