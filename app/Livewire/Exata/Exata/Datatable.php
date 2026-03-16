@@ -54,8 +54,8 @@ class Datatable extends Component
     public function onMount()
     {
         $authUser = UserRepository::authenticatedUser();
-        $this->isCanUpdate = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_USER, PermissionHelper::TYPE_UPDATE));
-        $this->isCanDelete = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_USER, PermissionHelper::TYPE_DELETE));
+        $this->isCanUpdate = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE));
+        $this->isCanDelete = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE));
     }
 
     #[On('on-delete-dialog-confirm')]
@@ -165,6 +165,17 @@ class Datatable extends Component
 
         $columns = [
             [
+                'sortable' => false,
+                'searchable' => false,
+                'name' => '#',
+                'render' => function ($item, $index) {
+                    $i = $index + 1;
+                    return $i;
+                }
+            ]
+        ];
+        if ($this->isCanUpdate) {
+            $columns[] = [
                 'name' => 'Action',
                 'sortable' => false,
                 'searchable' => false,
@@ -172,8 +183,8 @@ class Datatable extends Component
                     $editHtml = "";
 
                     $id = Crypt::encrypt($item->id);
-                    if ($this->isCanUpdate) {
-                        $editHtml = "
+
+                    $editHtml = "
                         <div class='col-auto mb-2'>
                             <button 
                                 class='btn btn-primary btn-sm'
@@ -190,24 +201,15 @@ class Datatable extends Component
                             </button>
                         </div>
                         ";
-                    }
+
                     $html = "<div class='row'>
                         $editHtml 
                     </div>";
 
                     return $html;
                 },
-            ],
-            [
-                'sortable' => false,
-                'searchable' => false,
-                'name' => '#',
-                'render' => function ($item, $index) {
-                    $i = $index + 1;
-                    return $i;
-                }
-            ]
-        ];
+            ];
+        }
         foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
                 if ($access['name'] == 'Estimasi Gaji') {

@@ -27,7 +27,7 @@ class Detail extends Component
 
     public function mount()
     {
-        $permissions = PermissionRepository::getIdAndNames();
+        $permissions = PermissionRepository::getExataIdAndNames();
         foreach ($permissions as $permission) {
             $access = PermissionHelper::getAccess($permission->name);
             if (!isset($this->accesses[$access])) {

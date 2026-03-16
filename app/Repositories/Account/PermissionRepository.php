@@ -22,6 +22,11 @@ class PermissionRepository extends MasterDataRepository
         return Permission::select('id', 'name')->orderBy('name')->get();
     }
 
+    public static function getExataIdAndNames()
+    {
+        return Permission::select('id', 'name')->orderBy('id')->get();
+    }
+
     public static function datatable()
     {
         return Permission::query();

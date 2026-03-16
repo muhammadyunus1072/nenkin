@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use App\Helpers\PermissionHelper;
 use Closure;
 use Illuminate\Http\Request;
@@ -17,9 +18,10 @@ class AccessPermission
     public function handle(Request $request, Closure $next): Response
     {
         if (!PermissionHelper::isRoutePermitted($request->route()->getName())) {
-            abort(401);
+            // abort(401);
+            return redirect(RouteServiceProvider::HOME);
         }
-        
+
         return $next($request);
     }
 }

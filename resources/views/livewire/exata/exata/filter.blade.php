@@ -1,12 +1,14 @@
 <div>
     {{-- Export Data --}}
     <div class="row mt-4 d-flex gap-4">
-        <div class="col-md-auto mb-2">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
-                <i class="fa fa-download"></i>
-                Import
-            </button>
-        </div>
+        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_CREATE))
+            <div class="col-md-auto mb-2">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
+                    <i class="fa fa-download"></i>
+                    Import
+                </button>
+            </div>
+        @endCan
         <div class="col-auto">
             <button
                 class="btn btn-success btn-sm"
@@ -18,22 +20,24 @@
         </div>
 
         @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE))
-        <div class="col-auto">
-            <button class="btn btn-danger btn-sm" wire:click="showDeleteDialog">
-                <i class="fa fa-trash"></i>
-                    Delete Data
-            </button>
-        </div>
+            <div class="col-auto">
+                <button class="btn btn-danger btn-sm" wire:click="showDeleteDialog">
+                    <i class="fa fa-trash"></i>
+                        Delete Data
+                </button>
+            </div>
         @endCan
-        <div class="col-auto">
-            <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">
-                <i class='ki-duotone ki-notepad-edit'>
-                    <span class='path1'></span>
-                    <span class='path2'></span>
-                </i>
-                Edit Bulk
-            </button>
-        </div>
+        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE))
+            <div class="col-auto">
+                <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">
+                    <i class='ki-duotone ki-notepad-edit'>
+                        <span class='path1'></span>
+                        <span class='path2'></span>
+                    </i>
+                    Edit Bulk
+                </button>
+            </div>
+        @endCan
     </div>
 
     {{-- Filter --}}
@@ -45,15 +49,12 @@
                 <input type="text" class="form-control" wire:model.live="nama_lengkap" placeholder="nama_lengkap" />
             </div>
         @endCan
-        @canany([
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NoTelpJepang.'.read',
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NoTelpIndonesia.'.read'
-        ])
+        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_FilterNoWa.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">No Whatsapp</label>
                 <input type="text" class="form-control" wire:model.live="no_whatsapp" placeholder="no_whatsapp" />
             </div>
-        @endCanany
+        @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_EstimasiGaji.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">Estimasi Gaji</label>
@@ -99,11 +100,7 @@
     </div>
     <div class="row mt-4 d-flex gap-4">
     {{-- Dropdown Filter --}}
-        @canany([
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TglInput.'.read',
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TanggalPulang.'.read',
-            'exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_TglSiapkerja.'.read'
-        ])
+        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_FilterTanggal.'.read')
             <div class="col-auto mb-2"  style="scale: 1;">
                 <label class="form-label">Filter Tanggal</label>
                 <select class="form-select" wire:model.live="date_type">
@@ -115,18 +112,16 @@
                     @endforeach
                 </select>
             </div>
-        @endcanany
+            <div class="col-auto mb-2"  style="scale: 1;">
+                <label class="form-label">Tanggal Dari</label>
+                <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="start_date"  />
+            </div>
+            <div class="col-auto mb-2"  style="scale: 1;">
+                <label class="form-label">Tanggal Sampai</label>
+                <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="end_date"  />
+            </div>
+        @endCan
         
-        <div class="col-auto mb-2"  style="scale: 1;">
-            <label class="form-label">Tanggal Dari</label>
-            <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="start_date"  />
-        </div>
-        <div class="col-auto mb-2"  style="scale: 1;">
-            <label class="form-label">Tanggal Sampai</label>
-            <input type="date" class="form-control" {{$date_type ? '' : 'disabled'}} wire:model.live="end_date"  />
-        </div>
-        
-
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Pipeline.'.read')
             <div class="col-auto mb-2">
                 <label class="form-label">Pipeline</label>
