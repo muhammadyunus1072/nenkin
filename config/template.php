@@ -32,7 +32,7 @@ return [
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
-            'text' => 'Exata',
+            'text' => 'J-Expert',
             'route'  => 'exata.index',
             'icon' => 'ki-duotone ki-element-11',
         ],
