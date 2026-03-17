@@ -717,10 +717,10 @@
             {
                 navigator.clipboard.writeText(text)
                 .then(() => {
-                    // Swal.fire({
-                    //     icon: 'success',
-                    //     title: 'Berhasil Copy Link Form Kandidat!',
-                    // });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil Copy Link Form Kandidat!',
+                    });
                 });
             }
     </script>
