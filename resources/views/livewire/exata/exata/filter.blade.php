@@ -712,5 +712,16 @@
         $('#select2-jenis-visa').on('select2:unselect', function(e) {
             @this.call('unSelectJenisVisa', e.params.data)
         });
+
+            window.copyToClipboard = function(text)
+            {
+                navigator.clipboard.writeText(text)
+                .then(() => {
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Berhasil Copy Link Form Kandidat!',
+                    // });
+                });
+            }
     </script>
 @endpush

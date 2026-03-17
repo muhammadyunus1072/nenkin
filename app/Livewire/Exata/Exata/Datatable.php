@@ -234,9 +234,24 @@ class Datatable extends Component
                             </button>
                         </div>
                         ";
+                    $routeLink = route('exata.edit', $id);
+                    $linkHtml = "
+                        <div class='col-auto mb-2'>
+                            <button
+                                class='btn btn-success btn-sm'
+                                onclick=\"copyToClipboard('$routeLink')\"
+                            >
+                                <i class='ki-duotone ki-archive-tick fs-1'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                </i>
+                                Link Form Kandidat
+                            </button>
+                        </div>
+                        ";
 
                     $html = "<div class='row'>
-                        $editHtml 
+                        $editHtml $linkHtml
                     </div>";
 
                     return $html;
