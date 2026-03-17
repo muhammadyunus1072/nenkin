@@ -3,7 +3,6 @@
 namespace App\Livewire\Exata\Exata;
 
 use App\Helpers\Alert;
-use App\Imports\ExcelImportExata;
 use App\Imports\ExcelImportExataPreview;
 use App\Models\Exata\Exata;
 use App\Repositories\Exata\ExataRepository;
