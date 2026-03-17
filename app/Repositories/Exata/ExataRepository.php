@@ -85,14 +85,18 @@ class ExataRepository extends MasterDataRepository
                 // });
             })
             ->when($domisili, function ($query) use ($domisili) {
-                foreach ($domisili as $item) {
-                    $query->orWhere('Domisili', 'like', '%' . $item . '%');
-                }
+                $query->where(function ($q) use ($domisili) {
+                    foreach ($domisili as $item) {
+                        $q->orWhere('Domisili', 'like', '%' . $item . '%');
+                    }
+                });
             })
             ->when($penempatan_kerja, function ($query) use ($penempatan_kerja) {
-                foreach ($penempatan_kerja as $item) {
-                    $query->orWhere('Penempatankerja', 'like', '%' . $item . '%');
-                }
+                $query->where(function ($q) use ($penempatan_kerja) {
+                    foreach ($penempatan_kerja as $item) {
+                        $q->orWhere('Penempatankerja', 'like', '%' . $item . '%');
+                    }
+                });
             })
             ->when($nama_lpk, function ($query) use ($nama_lpk) {
                 $query->where('NamaLPK', 'like', '%' . $nama_lpk . '%');
