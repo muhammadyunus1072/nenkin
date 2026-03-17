@@ -226,7 +226,7 @@ class Datatable extends Component
                                 x-data
                                 @click=\"\$dispatch('editData', { id: '" . $id . "' })\"
                             >
-                                <i class='ki-duotone ki-notepad-edit fs-1'>
+                                <i class='ki-duotone ki-notepad-edit fs-3'>
                                     <span class='path1'></span>
                                     <span class='path2'></span>
                                 </i>
@@ -241,16 +241,16 @@ class Datatable extends Component
                                 class='btn btn-success btn-sm'
                                 onclick=\"copyToClipboard('$routeLink')\"
                             >
-                                <i class='ki-duotone ki-archive-tick fs-1'>
+                                <i class='ki-duotone ki-archive-tick fs-3'>
                                     <span class='path1'></span>
                                     <span class='path2'></span>
                                 </i>
-                                Link Form Kandidat
+                                Link
                             </button>
                         </div>
                         ";
 
-                    $html = "<div class='row'>
+                    $html = "<div class='row d-flex justify-content-start flex-nowrap gap-0'>
                         $editHtml $linkHtml
                     </div>";
 
