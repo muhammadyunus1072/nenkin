@@ -415,7 +415,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_CHOICE as $name => $value)
+                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_CHOICE() as $name => $value)
                                                         <th>{{$value['name']}}</th>
                                                     @endForeach
                                                 </tr>
@@ -442,7 +442,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_CHOICE as $name => $value)
+                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_CHOICE() as $name => $value)
                                                         <th>{{$value['name']}}</th>
                                                     @endForeach
                                                         <th>Pesan Error System</th>

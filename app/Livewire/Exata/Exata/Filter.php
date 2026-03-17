@@ -158,7 +158,7 @@ class Filter extends Component
         $this->errorRows = [];
 
         $data_import = [];
-        foreach (Exata::EXATA_IMPORT_CHOICE as $key => $value) {
+        foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
             if (!isset($value['isNotImport'])) {
                 $data_import[] = [
                     $value['name'] => [
@@ -170,9 +170,11 @@ class Filter extends Component
             }
         }
         $val = [];
-        foreach (Exata::EXATA_IMPORT_CHOICE as $key => $value) {
+        $valmessage = [];
+        foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
             if (!isset($value['isNotImport'])) {
-                $val[$value['name']] =  $value['isDate'] ? 'nullable|date' : '';
+                $val[$value['name']] =  $value['validator'] ?? '';
+                $valmessage[$value['name']] =  $value['validator_message'] ?? '';
             }
         }
         foreach ($import->rows as $index => $row) {
@@ -189,9 +191,7 @@ class Filter extends Component
             $d['Estimasi Gaji'] = $estimasi_gaji[0];
             // $d['Estimasi Gaji Top'] = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
 
-            $validator = Validator::make($d, $val, [
-                'date' => 'Format Tanggal Tidak Sesuai'
-            ]);
+            $validator = Validator::make($d, $val, $valmessage);
 
             $this->previewRows[] = [
                 'data' => $d,
