@@ -241,7 +241,7 @@
             </div>
         @endCan
         <div class="col-auto row d-flex align-items-end">
-            <button class="btn btn-warning btn-sm mb-2" wire:click="resetFilter">
+            <button class="btn btn-warning btn-sm mb-4" wire:click="resetFilter">
                 Reset Filter
             </button>
         </div>
