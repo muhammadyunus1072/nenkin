@@ -16,7 +16,7 @@ class ExcelImportExata implements ToCollection
             $ref = '';
             $tgl_input = '';
             $tgl_pulang = '';
-            $pipeline = '';
+            $Pipeline = '';
             $nama_lengkap = '';
             $tanggal_lahir = '';
             $gender = '';
@@ -48,7 +48,7 @@ class ExcelImportExata implements ToCollection
             $data_import = [
                 'ref',
                 'tgl_input',
-                'pipeline',
+                'Pipeline',
                 'nama_lengkap',
                 'tanggal_lahir',
                 'gender',
@@ -91,7 +91,7 @@ class ExcelImportExata implements ToCollection
                 'Ref' => strtoupper($ref),
                 'TglInput' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_input))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_input))) : null,
                 'TanggalPulang' => strtoupper(preg_replace('/\s+/u', '', trim($tgl_pulang))) ? strtoupper(preg_replace('/\s+/u', '', trim($tgl_pulang))) : null,
-                'pipeline' => strtoupper($pipeline),
+                'Pipeline' => strtoupper($Pipeline),
                 'NamaLengkap' => strtoupper($nama_lengkap),
                 'TanggalLahir' => strtoupper(preg_replace('/\s+/u', '', trim($tanggal_lahir))) ? strtoupper(preg_replace('/\s+/u', '', trim($tanggal_lahir))) : null,
                 'Gender' => strtoupper(preg_replace('/\s+/u', '', trim($gender))) ? strtoupper(preg_replace('/\s+/u', '', trim($gender))) : null,

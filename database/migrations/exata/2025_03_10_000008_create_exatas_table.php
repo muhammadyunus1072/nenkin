@@ -35,9 +35,11 @@ return new class extends Migration
         } else {
         }
         // Data Baru
+        $table->text('KodeUnik')->nullable();
         $table->text('Ref')->nullable();
         $table->date('TglInput')->nullable();
-        $table->text('pipeline')->nullable();
+        $table->text('Pipeline')->nullable();
+        $table->text('Kategori')->nullable();
         $table->text('NamaLengkap')->nullable();
         $table->date('TanggalLahir')->nullable();
         $table->text('Gender')->nullable();

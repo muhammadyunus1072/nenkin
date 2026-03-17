@@ -5,20 +5,17 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RegencySeeder extends Seeder
+class ProvinceSeeder extends Seeder
 {
     public function run()
     {
-        $file = storage_path('app/regencies.csv');
+        $file = storage_path('app/provinces.csv');
 
         $rows = array_map('str_getcsv', file($file));
 
         $data = collect($rows)->map(function ($row) {
 
-            $name = strtoupper($row[2]);
-
-            // remove prefix
-            $name = str_replace(['KABUPATEN ', 'KOTA '], '', $name);
+            $name = strtoupper($row[1]);
 
             return [
                 'name' => trim($name),

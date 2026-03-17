@@ -29,8 +29,9 @@ class Datatable extends Component
     public $nama_lengkap;
     public $no_whatsapp;
     public $estimasi_gaji;
-    public $domisili;
-    public $penempatan_kerja;
+    public $estimasi_gaji_top;
+    public $domisili = [];
+    public $preferensi_lokasi = [];
     public $nama_lpk;
     public $instagram;
     public $tiktok;
@@ -38,15 +39,17 @@ class Datatable extends Component
     public $date_type;
     public $start_date;
     public $end_date;
-    public $pipeline;
-    public $gender;
-    public $pendidikan;
-    public $level_bahasa;
-    public $job;
+    public $pipeline = [];
+    public $gender = [];
+    public $pendidikan = [];
+    public $level_bahasa = [];
+    public $job_sensei;
+    public $job_staff_dokumen;
+    public $job_penerjemah;
     public $bidang_kerja_japan;
-    public $pilihan_kerja_indonesia;
-    public $pic_sales;
-    public $jenis_visa;
+    public $pilihan_kerja_indonesia = [];
+    public $pic_sales = [];
+    public $jenis_visa = [];
 
     // Delete Dialog
     public $targetDeleteId;
@@ -69,6 +72,37 @@ class Datatable extends Component
         Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
+    #[On('reset-filter')]
+    public function resetFilter()
+    {
+        $this->reset(
+            'nama_lengkap',
+            'no_whatsapp',
+            'estimasi_gaji',
+            'estimasi_gaji_top',
+            'domisili',
+            'preferensi_lokasi',
+            'nama_lpk',
+            'instagram',
+            'tiktok',
+            'keterangan',
+            'date_type',
+            'start_date',
+            'end_date',
+            'pipeline',
+            'gender',
+            'pendidikan',
+            'level_bahasa',
+            'job_sensei',
+            'job_staff_dokumen',
+            'job_penerjemah',
+            'bidang_kerja_japan',
+            'pilihan_kerja_indonesia',
+            'pic_sales',
+            'jenis_visa',
+        );
+    }
+
     #[On('on-delete-dialog-cancel')]
     public function onDialogDeleteCancel()
     {
@@ -82,8 +116,9 @@ class Datatable extends Component
             DB::transaction(function () use ($editBulk) {
                 // Vehicle
                 $validateData = [
-                    'pipeline' => $editBulk['pipeline'],
+                    'Pipeline' => $editBulk['Pipeline'],
                     'Available' => $editBulk['Available'],
+                    'Kategori' => $editBulk['Kategori'],
                     'Keterangan' => $editBulk['Keterangan'],
                 ];
                 $this->getQuery()->update($validateData);
@@ -108,8 +143,6 @@ class Datatable extends Component
             DB::rollBack();
             Alert::fail($this, "Gagal", $e->getMessage());
         }
-        $this->dispatch('consoleLog', $this->getQuery()->count());
-        $this->dispatch('consoleLog', $editBulk);
     }
 
     public function showDeleteDialog($id)
@@ -258,8 +291,9 @@ class Datatable extends Component
             $this->nama_lengkap,
             $this->no_whatsapp,
             $this->estimasi_gaji,
+            $this->estimasi_gaji_top,
             $this->domisili,
-            $this->penempatan_kerja,
+            $this->preferensi_lokasi,
             $this->nama_lpk,
             $this->instagram,
             $this->tiktok,
@@ -271,7 +305,9 @@ class Datatable extends Component
             $this->gender,
             $this->pendidikan,
             $this->level_bahasa,
-            $this->job,
+            $this->job_sensei,
+            $this->job_staff_dokumen,
+            $this->job_penerjemah,
             $this->bidang_kerja_japan,
             $this->pilihan_kerja_indonesia,
             $this->pic_sales,

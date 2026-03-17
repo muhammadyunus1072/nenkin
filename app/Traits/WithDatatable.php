@@ -51,6 +51,7 @@ trait WithDatatable
         foreach ($filter as $key => $value) {
             $this->$key = $value;
         }
+        $this->resetPage();
     }
 
     #[On('datatable-refresh')]

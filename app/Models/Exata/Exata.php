@@ -2,6 +2,7 @@
 
 namespace App\Models\Exata;
 
+use App\Helpers\NumberGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,10 +12,12 @@ class Exata extends Model
 {
     use HasFactory, SoftDeletes, HasTrackHistory;
 
+    const PERMISSION_KodeUnik = 'KodeUnik';
     const PERMISSION_Ref = 'Ref';
     const PERMISSION_TglInput = 'TglInput';
     const PERMISSION_TanggalPulang = 'TanggalPulang';
-    const PERMISSION_Pipeline = 'pipeline';
+    const PERMISSION_Kategori = 'Kategori';
+    const PERMISSION_Pipeline = 'Pipeline';
     const PERMISSION_NamaLengkap = 'NamaLengkap';
     const PERMISSION_TanggalLahir = 'TanggalLahir';
     const PERMISSION_Gender = 'Gender';
@@ -87,7 +90,7 @@ class Exata extends Model
         // 'FILTER_' . self::PERMISSION_Available => 'Available',
     ];
 
-    const EXATA_DATATABLE_CHOICE = [
+    const EXATA_IMPORT_CHOICE = [
         'DATATABLE_' . self::PERMISSION_Ref => [
             'name' => 'Ref',
             'class' => 'text-center',
@@ -100,6 +103,197 @@ class Exata extends Model
         ],
         'DATATABLE_' . self::PERMISSION_Pipeline => [
             'name' => 'Pipeline',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        // 'DATATABLE_' . self::PERMISSION_Available => [
+        //     'name' => 'Available',
+        //     'class' => 'text-center',
+        //     'isDate' => false,
+        //     'isNotImport' => false,
+        // ],
+        'DATATABLE_' . self::PERMISSION_NamaLengkap => [
+            'name' => 'Nama Lengkap',
+            'class' => '',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_TanggalLahir => [
+            'name' => 'Tanggal Lahir',
+            'class' => 'text-center',
+            'isDate' => true,
+        ],
+        'DATATABLE_' . self::PERMISSION_Gender => [
+            'name' => 'Gender',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Pendidikan => [
+            'name' => 'Pendidikan',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_LevelBahasa => [
+            'name' => 'Level Bahasa',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_TahunTerbit => [
+            'name' => 'Tahun Terbit',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
+            'name' => 'Lama Di Jepang',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_TanggalPulang => [
+            'name' => 'Tanggal Pulang',
+            'class' => 'text-center',
+            'isDate' => true,
+        ],
+        'DATATABLE_' . self::PERMISSION_Sensei => [
+            'name' => 'Sensei',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Dokumen => [
+            'name' => 'Dokumen',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Penerjemah => [
+            'name' => 'Penerjemah',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
+            'name' => 'Estimasi Gaji',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Domisili => [
+            'name' => 'Domisili',
+            'class' => '',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Penempatankerja => [
+            'name' => 'Preferensi Lokasi',
+            'class' => '',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
+            'name' => 'Siap Bekerja',
+            'class' => 'text-center',
+            'isDate' => true,
+        ],
+        'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
+            'name' => 'Bidang Kerjadi Jepang',
+            'class' => '',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
+            'name' => 'Bidang Kerja Pilihan',
+            'class' => '',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Senmongkyu => [
+            'name' => 'Senmongkyu',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => [
+            'name' => 'Bidang Senmongkyu',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_JenisVisa => [
+            'name' => 'Jenis Visa',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Provinsi => [
+            'name' => 'Provinsi',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Kota => [
+            'name' => 'Kota',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_NamaTikTok => [
+            'name' => 'Nama TikTok',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_NamaInstagram => [
+            'name' => 'Nama Instagram',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => [
+            'name' => 'No Telp Indonesia',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_NoTelpJepang => [
+            'name' => 'No Telp Jepang',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Email => [
+            'name' => 'Email',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_PICSales => [
+            'name' => 'PIC/Sales',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_NamaLPK => [
+            'name' => 'Nama LPK',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        // 'DATATABLE_' . self::PERMISSION_EstimasiGajiTop => [
+        //     'name' => 'Estimasi Gaji Top',
+        //     'class' => 'text-center',
+        //     'isNotImport' => true,
+        //     'isDate' => false,
+        // ],
+        // 'DATATABLE_' . self::PERMISSION_Keterangan => [
+        //     'name' => 'Keterangan',
+        //     'class' => 'text-center',
+        //     'isNotImport' => true,
+        //     'isDate' => false,
+        // ],
+    ];
+
+    const EXATA_DATATABLE_CHOICE = [
+        'DATATABLE_' . self::PERMISSION_KodeUnik => [
+            'name' => 'Kode Unik',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Ref => [
+            'name' => 'Ref',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_TglInput => [
+            'name' => 'Tgl Input',
+            'class' => 'text-center',
+            'isDate' => true,
+        ],
+        'DATATABLE_' . self::PERMISSION_Pipeline => [
+            'name' => 'Pipeline',
+            'class' => 'text-center',
+            'isDate' => false,
+        ],
+        'DATATABLE_' . self::PERMISSION_Kategori => [
+            'name' => 'Kategori',
             'class' => 'text-center',
             'isDate' => false,
         ],
@@ -268,6 +462,13 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_TglSiapkerja => 'Tanggal Siap Kerja',
     ];
 
+    const FILTER_KATEGORI_BLACKLIST = 'Blacklist';
+    const FILTER_KATEGORI_PRIORITAS = 'Prioritas';
+    const FILTER_KATEGORI_CHOICE = [
+        self::FILTER_KATEGORI_BLACKLIST => 'BlackList',
+        self::FILTER_KATEGORI_PRIORITAS => 'Prioritas',
+    ];
+
     const FILTER_GENDER_L = 'L';
     const FILTER_GENDER_P = 'P';
     const FILTER_GENDER_CHOICE = [
@@ -315,9 +516,9 @@ class Exata extends Model
     const FILTER_SALES_KIM = 'KIM_EXATA';
     const FILTER_SALES_SLAMET = 'SLAMET_EXATA';
     const FILTER_SALES_CHOICE = [
-        self::FILTER_SALES_AINUL => 'Ainul',
-        self::FILTER_SALES_KIM => 'Kim',
-        self::FILTER_SALES_SLAMET => 'Slamet',
+        self::FILTER_SALES_AINUL => 'AINUL - SALES 1',
+        self::FILTER_SALES_KIM => 'KIM EXATA - SALES 2',
+        self::FILTER_SALES_SLAMET => 'SELAMET EXATA - SALES 3',
     ];
 
     const FILTER_PENDIDIKAN_SMA_SMK = 'SMA_SMK';
@@ -429,11 +630,78 @@ class Exata extends Model
         self::PIPELINE_MASA_PROBATION => 'MASA PROBATION',
         self::PIPELINE_FEEDBACK => 'FEEDBACK',
     ];
+    const COLOR_PIPELINE_CHOICE = [
+        self::PIPELINE_NEW_LEADS => 'background-color: #FFEEF3;',
+        self::PIPELINE_WEBINAR => 'background-color: #e4df21;',
+        self::PIPELINE_VERIFIED => 'background-color: #f8961e;',
+        self::PIPELINE_INTERVIEW_INTERNAL => 'background-color: #f9c74f;',
+        self::PIPELINE_PROMOTION => 'background-color: #90be6d;',
+        self::PIPELINE_DEPOSIT => 'background-color: #43aa8b;',
+        self::PIPELINE_INTERVIEW_PERUSAHAAN => 'background-color: #F7F5FF;',
+        self::PIPELINE_REFUND_DEPOSIT => 'background-color: #ffedc2;',
+        self::PIPELINE_LOLOS_TIDAK => 'background-color: #c3fdee;',
+        self::PIPELINE_MASA_PROBATION => 'background-color: #118ab2;',
+        self::PIPELINE_FEEDBACK => 'background-color: #0197f6;',
+    ];
+
+    public function colorPipeline()
+    {
+        $color = '';
+        switch ($this->Pipeline) {
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_NEW_LEADS]:
+
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_NEW_LEADS];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_WEBINAR]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_WEBINAR];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_VERIFIED]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_VERIFIED];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_INTERVIEW_INTERNAL]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_INTERVIEW_INTERNAL];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_PROMOTION]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_PROMOTION];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_DEPOSIT]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_DEPOSIT];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_INTERVIEW_PERUSAHAAN]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_INTERVIEW_PERUSAHAAN];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_REFUND_DEPOSIT]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_REFUND_DEPOSIT];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_LOLOS_TIDAK]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_LOLOS_TIDAK];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_MASA_PROBATION]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_MASA_PROBATION];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_FEEDBACK]:
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_FEEDBACK];
+                break;
+        }
+        return $color;
+    }
 
     protected $fillable = [
+        'KodeUnik',
         'Ref',
         'TglInput',
-        'pipeline',
+        'Pipeline',
+        'Kategori',
         'NamaLengkap',
         'TanggalLahir',
         'Gender',
@@ -480,5 +748,10 @@ class Exata extends Model
         return true;
     }
 
-    protected static function onBoot() {}
+    protected static function onBoot()
+    {
+        self::creating(function ($model) {
+            $model->KodeUnik = NumberGenerator::generate($model);
+        });
+    }
 }

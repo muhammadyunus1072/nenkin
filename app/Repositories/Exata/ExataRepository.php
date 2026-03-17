@@ -16,6 +16,7 @@ class ExataRepository extends MasterDataRepository
         $nama_lengkap,
         $no_whatsapp,
         $estimasi_gaji,
+        $estimasi_gaji_top,
         $domisili,
         $penempatan_kerja,
         $nama_lpk,
@@ -29,36 +30,42 @@ class ExataRepository extends MasterDataRepository
         $gender,
         $pendidikan,
         $level_bahasa,
-        $job,
+        $job_sensei,
+        $job_staff_dokumen,
+        $job_penerjemah,
         $bidang_kerja_japan,
         $pilihan_kerja_indonesia,
         $pic_sales,
         $jenis_visa,
     ) {
-        if ($date_type) {
+        if ($job_sensei) {
 
-            // dd([
-            //     $nama_lengkap,
-            //     $no_whatsapp,
-            //     $estimasi_gaji,
-            //     $domisili,
-            //     $penempatan_kerja,
-            //     $nama_lpk,
-            //     $instagram,
-            //     $tiktok,
-            //     $keterangan,
-            //     $date_type,
-            //     $start_date,
-            //     $end_date,
-            //     $pipeline,
-            //     $gender,
-            //     $pendidikan,
-            //     $level_bahasa,
-            //     $job,
-            //     $bidang_kerja_japan,
-            //     $pilihan_kerja_indonesia,
-            //     $pic_sales
-            // ]);
+            logger([
+                $nama_lengkap,
+                $no_whatsapp,
+                $estimasi_gaji,
+                $estimasi_gaji_top,
+                $domisili,
+                $penempatan_kerja,
+                $nama_lpk,
+                $instagram,
+                $tiktok,
+                $keterangan,
+                $date_type,
+                $start_date,
+                $end_date,
+                $pipeline,
+                $gender,
+                $pendidikan,
+                $level_bahasa,
+                $job_sensei,
+                $job_staff_dokumen,
+                $job_penerjemah,
+                $bidang_kerja_japan,
+                $pilihan_kerja_indonesia,
+                $pic_sales,
+                $jenis_visa,
+            ]);
         }
         return Exata::when($nama_lengkap, function ($query) use ($nama_lengkap) {
             $query->where('NamaLengkap', 'like', '%' . $nama_lengkap . '%');
@@ -69,18 +76,23 @@ class ExataRepository extends MasterDataRepository
                         ->orWhere('NoTelpJepang', 'like', '%' . $no_whatsapp . '%');
                 });
             })
-            ->when($estimasi_gaji, function ($query) use ($estimasi_gaji) {
-                $query->where('EstimasiGaji', '<=', $estimasi_gaji)
-                    ->where(function ($q) use ($estimasi_gaji) {
-                        $q->whereNull('EstimasiGajiTop')
-                            ->orWhere('EstimasiGajiTop', '>=', $estimasi_gaji);
-                    });
+            ->when($estimasi_gaji, function ($query) use ($estimasi_gaji, $estimasi_gaji_top) {
+                $query->where('EstimasiGaji', '>=', $estimasi_gaji)
+                    ->where('EstimasiGaji', '<=', $estimasi_gaji_top ?? 0);
+                // ->where(function ($q) use ($estimasi_gaji) {
+                //     $q->whereNull('EstimasiGajiTop')
+                //         ->orWhere('EstimasiGajiTop', '>=', $estimasi_gaji);
+                // });
             })
             ->when($domisili, function ($query) use ($domisili) {
-                $query->where('Domisili', 'like', '%' . $domisili . '%');
+                foreach ($domisili as $item) {
+                    $query->orWhere('Domisili', 'like', '%' . $item . '%');
+                }
             })
             ->when($penempatan_kerja, function ($query) use ($penempatan_kerja) {
-                $query->where('Penempatankerja', 'like', '%' . $penempatan_kerja . '%');
+                foreach ($penempatan_kerja as $item) {
+                    $query->orWhere('Penempatankerja', 'like', '%' . $item . '%');
+                }
             })
             ->when($nama_lpk, function ($query) use ($nama_lpk) {
                 $query->where('NamaLPK', 'like', '%' . $nama_lpk . '%');
@@ -103,38 +115,40 @@ class ExataRepository extends MasterDataRepository
             ->when(($start_date && $end_date) && $date_type == 'Tanggal Siap Kerja', function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('TglSiapkerja', [$start_date, $end_date]);
             })
-            ->when($pipeline, function ($query) use ($pipeline) {
-                $query->where('pipeline', 'like', '%' . $pipeline . '%');
+            ->when(!empty($pipeline), function ($query) use ($pipeline) {
+                $query->whereIn('Pipeline', $pipeline);
             })
-            ->when($gender, function ($query) use ($gender) {
-                $query->where('Gender', 'like', '%' .   $gender . '%');
+            ->when(!empty($gender), function ($query) use ($gender) {
+                $query->whereIn('Gender', $gender);
             })
-            ->when($pendidikan, function ($query) use ($pendidikan) {
-                $query->where('Pendidikan', 'like', '%' .   $pendidikan . '%');
+            ->when(!empty($pendidikan), function ($query) use ($pendidikan) {
+                $query->whereIn('Pendidikan', $pendidikan);
             })
-            ->when($level_bahasa, function ($query) use ($level_bahasa) {
-                $query->where('LevelBahasa', 'like', '%' .   $level_bahasa . '%');
+            ->when(!empty($level_bahasa), function ($query) use ($level_bahasa) {
+                $query->whereIn('LevelBahasa', $level_bahasa);
             })
-            ->when($job == 'Sensei', function ($query) {
-                $query->where('Sensei', 'Ya');
+            ->when($job_sensei == 'YA', function ($query) {
+                $query->where('Sensei', 'YA');
             })
-            ->when($job == 'Staff Dokumen', function ($query) {
-                $query->where('Dokumen', 'Ya');
+            ->when($job_staff_dokumen == 'YA', function ($query) {
+                $query->where('Dokumen', 'YA');
             })
-            ->when($job == 'Penerjemah', function ($query) {
-                $query->where('Penerjemah', 'Ya');
+            ->when($job_penerjemah == 'YA', function ($query) {
+                $query->where('Penerjemah', 'YA');
             })
             ->when($bidang_kerja_japan, function ($query) use ($bidang_kerja_japan) {
                 $query->where('BidangKerjadiJepang', 'like', '%' . $bidang_kerja_japan . '%');
             })
-            ->when($pilihan_kerja_indonesia, function ($query) use ($pilihan_kerja_indonesia) {
-                $query->where('BidangKerjaPilihan', 'like', '%' .   $pilihan_kerja_indonesia . '%');
+            ->when(!empty($pilihan_kerja_indonesia), function ($query) use ($pilihan_kerja_indonesia) {
+                foreach ($pilihan_kerja_indonesia as $item) {
+                    $query->where('BidangKerjaPilihan', 'like', '%' . $item . '%');
+                }
             })
-            ->when($pic_sales, function ($query) use ($pic_sales) {
-                $query->where('PICSales', 'like', '%' .  $pic_sales . '%');
+            ->when(!empty($pic_sales), function ($query) use ($pic_sales) {
+                $query->whereIn('PICSales', $pic_sales);
             })
-            ->when($jenis_visa, function ($query) use ($jenis_visa) {
-                $query->where('JenisVisa', 'like', '%' .  $jenis_visa . '%');
+            ->when(!empty($jenis_visa), function ($query) use ($jenis_visa) {
+                $query->whereIn('JenisVisa', $jenis_visa);
             });
     }
 }
