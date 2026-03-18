@@ -97,6 +97,9 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_BidangKerjaPilihan => 'Bidang Kerja Pilihan',
         'FILTER_' . self::PERMISSION_PICSales => 'PIC Sales',
         'FILTER_' . self::PERMISSION_JenisVisa => 'Jenis Visa',
+
+        'FILTER_' . self::PERMISSION_Cv => 'CV',
+        'FILTER_' . self::PERMISSION_SertifikatBahasaJepang => 'Sertifikat Bahasa Jepang',
         // 'FILTER_' . self::PERMISSION_Ref => 'Ref',
         // 'FILTER_' . self::PERMISSION_EstimasiGajiTop => 'Estimasi Gaji Top',
         // 'FILTER_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
@@ -807,7 +810,7 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_PICSales => [
-                'name' => 'PIC/Sales',
+                'name' => 'Sumber',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
@@ -830,6 +833,20 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_TglInput => 'Tanggal Input',
         'FILTER_' . self::PERMISSION_TanggalPulang => 'Tanggal Pulang',
         'FILTER_' . self::PERMISSION_TglSiapkerja => 'Tanggal Siap Kerja',
+    ];
+
+    const FILTER_CV_SUDAH = 'Sudah';
+    const FILTER_CV_BELUM = 'Belum';
+    const FILTER_CV_CHOICE = [
+        self::FILTER_CV_SUDAH => 'Sudah',
+        self::FILTER_CV_BELUM => 'Belum',
+    ];
+
+    const FILTER_SERTIFIKAT_BAHASA_JEPANG_SUDAH = 'Sudah';
+    const FILTER_SERTIFIKAT_BAHASA_JEPANG_BELUM = 'Belum';
+    const FILTER_SERTIFIKAT_BAHASA_JEPANG_CHOICE = [
+        self::FILTER_SERTIFIKAT_BAHASA_JEPANG_SUDAH => 'Sudah',
+        self::FILTER_SERTIFIKAT_BAHASA_JEPANG_BELUM => 'Belum',
     ];
 
     const FILTER_KATEGORI_BLACKLIST = 'Blacklist';
