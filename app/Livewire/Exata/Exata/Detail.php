@@ -116,8 +116,8 @@ class Detail extends Component
             DB::transaction(function () {
                 // Form Candidate
                 $validateData = [
-                    'TinggiBadan' => $this->tinggi_badan,
-                    'BeratBadan' => $this->berat_badan,
+                    'TinggiBadan' => $this->tinggi_badan ? $this->tinggi_badan : null,
+                    'BeratBadan' => $this->berat_badan ? $this->berat_badan : null,
                     'SkillBahasaLain' => $this->skill_bahasa_lain,
                     'SkillKomputer' => $this->skill_komputer,
                     'PencapaianTertinggi' => $this->pencapaian_tertinggi,
