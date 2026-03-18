@@ -110,6 +110,32 @@ class Exata extends Model
         // 'FILTER_' . self::PERMISSION_Available => 'Available',
     ];
 
+    // name": "Sabrina"
+    //   +"email": "sabrina@jexpertrecruitment.com"
+    //   +"password": "$2y$12$GFT63uHthafzJejvn8f0me/SKVQbHnIZENPzkoE0iGrSdeVQwInNe"
+    //   +"phone": "8118680136"
+    //   +"email_verified_at": null
+    //   +"remember_token": null
+    //   +"created_by": 1
+    //   +"updated_by": 1
+    //   +"deleted_by": null
+    //   +"deleted_at": null
+    //   +"created_at": "2026-03-13 15:21:33"
+    //   +"updated_at": "2026-03-13 15:21:33"
+
+    //   "name": "Tanjung"
+    //   +"email": "tanjung@jexpertrecruitment.com"
+    //   +"password": "$2y$12$sGNTAnNvArw0bUfXIrXLPOMj128JlS0e6L0RbLmppOLmATHuHHm8e"
+    //   +"phone": "81220004752"
+    //   +"email_verified_at": null
+    //   +"remember_token": null
+    //   +"created_by": 1
+    //   +"updated_by": 1
+    //   +"deleted_by": null
+    //   +"deleted_at": null
+    //   +"created_at": "2026-03-13 15:22:17"
+    //   +"updated_at": "2026-03-13 15:22:17"
+
     public static function EXATA_IMPORT_CHOICE()
     {
         // EXATA_IMPORT_CHOICE =
