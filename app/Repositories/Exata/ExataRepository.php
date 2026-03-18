@@ -37,6 +37,7 @@ class ExataRepository extends MasterDataRepository
         $pilihan_kerja_indonesia,
         $pic_sales,
         $jenis_visa,
+        $attachment,
     ) {
         return Exata::when($nama_lengkap, function ($query) use ($nama_lengkap) {
             $query->where('NamaLengkap', 'like', '%' . $nama_lengkap . '%');
@@ -120,6 +121,12 @@ class ExataRepository extends MasterDataRepository
             })
             ->when(!empty($jenis_visa), function ($query) use ($jenis_visa) {
                 $query->whereIn('JenisVisa', $jenis_visa);
+            })
+            ->when(in_array(Exata::FILTER_ATTACHMENT_CV, $attachment), function ($query) {
+                $query->whereHas('exataCurriculumVitaes');
+            })
+            ->when(in_array(Exata::FILTER_ATTACHMENT_SERTIFIKAT_BAHASA_JEPANG, $attachment), function ($query) {
+                $query->whereHas('exataJapaneseLanguageCertificates');
             });
     }
 }

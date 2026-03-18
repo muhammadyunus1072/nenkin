@@ -249,6 +249,18 @@
                 </div>
             </div>
         @endCan
+        @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Attachment.'.read')
+             <div class="col-auto mb-4">
+                <div class="w-100" wire:ignore>
+                    <label>Lampiran</label>
+                    <select id="select2-attachment" class="form-select" multiple>
+                        @foreach (App\Models\Exata\Exata::FILTER_ATTACHMENT_CHOICE as $key => $name)    
+                            <option value="{{$key}}">{{$name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        @endCan
         <div class="col-auto row d-flex align-items-end">
             <button class="btn btn-warning btn-sm mb-4" wire:click="resetFilter">
                 Reset Filter
@@ -592,6 +604,9 @@
              $('#select2-jenis-visa')
                 .val(null)
                 .trigger('change');
+             $('#select2-attachment')
+                .val(null)
+                .trigger('change');
         })
 
         // Domisili
@@ -774,6 +789,20 @@
 
         $('#select2-jenis-visa').on('select2:unselect', function(e) {
             @this.call('unSelectJenisVisa', e.params.data)
+        });
+
+        // Attachment
+        $('#select2-attachment').select2({
+            placeholder: "-- Pilih --",
+            cache: true
+        });
+
+        $('#select2-attachment').on('select2:select', function(e) {
+            @this.call('selectAttachment', e.params.data)
+        });
+
+        $('#select2-attachment').on('select2:unselect', function(e) {
+            @this.call('unSelectAttachment', e.params.data)
         });
 
             window.copyToClipboard = function(text)

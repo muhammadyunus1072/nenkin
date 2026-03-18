@@ -50,6 +50,7 @@ class Datatable extends Component
     public $pilihan_kerja_indonesia = [];
     public $pic_sales = [];
     public $jenis_visa = [];
+    public $attachment = [];
 
     // Delete Dialog
     public $targetDeleteId;
@@ -121,6 +122,7 @@ class Datatable extends Component
             'pilihan_kerja_indonesia',
             'pic_sales',
             'jenis_visa',
+            'attachment',
         );
     }
 
@@ -345,7 +347,6 @@ class Datatable extends Component
 
     public function getQuery(): Builder
     {
-
         return ExataRepository::datatable(
             $this->nama_lengkap,
             $this->no_whatsapp,
@@ -371,6 +372,7 @@ class Datatable extends Component
             $this->pilihan_kerja_indonesia,
             $this->pic_sales,
             $this->jenis_visa,
+            $this->attachment,
         );
     }
 

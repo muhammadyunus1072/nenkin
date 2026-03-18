@@ -70,6 +70,8 @@ class Exata extends Model
     const PERMISSION_SkillLainnya = 'SkillLainnya';
     const PERMISSION_PengalamanKerja = 'PengalamanKerja';
 
+    const PERMISSION_Attachment = 'Attachment';
+
     const EXATA_FILTER_CHOICE = [
         'FILTER_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
         'FILTER_' . self::PERMISSION_FilterNoWa => 'No Whatsapp',
@@ -98,8 +100,7 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_PICSales => 'PIC Sales',
         'FILTER_' . self::PERMISSION_JenisVisa => 'Jenis Visa',
 
-        'FILTER_' . self::PERMISSION_Cv => 'CV',
-        'FILTER_' . self::PERMISSION_SertifikatBahasaJepang => 'Sertifikat Bahasa Jepang',
+        'FILTER_' . self::PERMISSION_Attachment => 'Attachment',
         // 'FILTER_' . self::PERMISSION_Ref => 'Ref',
         // 'FILTER_' . self::PERMISSION_EstimasiGajiTop => 'Estimasi Gaji Top',
         // 'FILTER_' . self::PERMISSION_Senmongkyu => 'Senmongkyu',
@@ -835,18 +836,11 @@ class Exata extends Model
         'FILTER_' . self::PERMISSION_TglSiapkerja => 'Tanggal Siap Kerja',
     ];
 
-    const FILTER_CV_SUDAH = 'Sudah';
-    const FILTER_CV_BELUM = 'Belum';
-    const FILTER_CV_CHOICE = [
-        self::FILTER_CV_SUDAH => 'Sudah',
-        self::FILTER_CV_BELUM => 'Belum',
-    ];
-
-    const FILTER_SERTIFIKAT_BAHASA_JEPANG_SUDAH = 'Sudah';
-    const FILTER_SERTIFIKAT_BAHASA_JEPANG_BELUM = 'Belum';
-    const FILTER_SERTIFIKAT_BAHASA_JEPANG_CHOICE = [
-        self::FILTER_SERTIFIKAT_BAHASA_JEPANG_SUDAH => 'Sudah',
-        self::FILTER_SERTIFIKAT_BAHASA_JEPANG_BELUM => 'Belum',
+    const FILTER_ATTACHMENT_CV = 'CV';
+    const FILTER_ATTACHMENT_SERTIFIKAT_BAHASA_JEPANG = 'SERTIFIKAT_BAHASA_JEPANG';
+    const FILTER_ATTACHMENT_CHOICE = [
+        self::FILTER_ATTACHMENT_CV => 'CV',
+        self::FILTER_ATTACHMENT_SERTIFIKAT_BAHASA_JEPANG => 'Sertifikat bahasa Jepang',
     ];
 
     const FILTER_KATEGORI_BLACKLIST = 'Blacklist';

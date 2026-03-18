@@ -49,6 +49,7 @@ class Filter extends Component
     public $pilihan_kerja_indonesia = [];
     public $pic_sales = [];
     public $jenis_visa = [];
+    public $attachment = [];
 
     // Import
     public $previewRows;
@@ -290,6 +291,7 @@ class Filter extends Component
             'pilihan_kerja_indonesia',
             'pic_sales',
             'jenis_visa',
+            'attachment',
         );
         $this->dispatch('reset-select2');
         $this->dispatch('reset-filter');
@@ -519,6 +521,26 @@ class Filter extends Component
 
         $this->dispatch('datatable-add-filter', [
             'jenis_visa' => $this->jenis_visa,
+        ]);
+    }
+
+    public function selectAttachment($data)
+    {
+        $this->attachment[] = $data['id'];
+
+        $this->dispatch('datatable-add-filter', [
+            'attachment' => $this->attachment,
+        ]);
+    }
+    public function unSelectAttachment($data)
+    {
+        $index = array_search($data['id'], $this->attachment);
+        if ($index !== false) {
+            unset($this->attachment[$index]);
+        }
+
+        $this->dispatch('datatable-add-filter', [
+            'attachment' => $this->attachment,
         ]);
     }
 
