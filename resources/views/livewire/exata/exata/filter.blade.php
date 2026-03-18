@@ -18,6 +18,15 @@
                 Download
             </button>
         </div>
+        <div class="col-auto">
+            <button
+                class="btn btn-success btn-sm"
+                x-data
+                @click="$dispatch('export-preview', { type: '{{ App\Helpers\ExportHelper::TYPE_EXCEL }}' })">
+                <i class="fa fa-file-excel"></i>
+                Download Preview
+            </button>
+        </div>
 
         @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE))
             <div class="col-auto">

@@ -190,14 +190,34 @@ class Datatable extends Component
     #[On('export')]
     public function export($type)
     {
-        $fileName = "Data Exata";
+        $fileName = "Data Kandidat";
         return ExportHelper::export(
             $type,
             $fileName,
             $this->getQuery()->get()->toArray(),
             'app.exata.exata.export',
             [
-                'title' => 'Data Exata',
+                'title' => 'Data Kandidat',
+                'type' => $type,
+            ],
+            [
+                'size' => 'legal',
+                'orientation' => 'landscape',
+            ]
+        );
+    }
+
+    #[On('export-preview')]
+    public function exportPreview($type)
+    {
+        $fileName = "Preview Kandidat";
+        return ExportHelper::export(
+            $type,
+            $fileName,
+            $this->getQuery()->get()->toArray(),
+            'app.exata.exata.export-preview',
+            [
+                'title' => 'Preview Kandidat',
                 'type' => $type,
             ],
             [

@@ -5,6 +5,7 @@ namespace App\Models\Exata;
 use App\Helpers\NumberGenerator;
 use App\Models\Exata\ExataCurriculumVitae;
 use App\Models\Exata\ExataJapaneseLanguageCertificate;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -389,6 +390,134 @@ class Exata extends Model
         ];
     }
 
+    public static function EXATA_DATATABLE_PREVIEW_CHOICE()
+    {
+        return [
+
+            'DATATABLE_' . self::PERMISSION_KodeUnik => [
+                'name' => 'Kode unik',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TanggalLahir => [
+                'name' => 'Umur',
+                'class' => 'text-center',
+                'isDate' => true,
+                'render' => function ($item) {
+                    return Carbon::parse($item['TanggalLahir'])->age;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_Gender => [
+                'name' => 'Gender',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Pendidikan => [
+                'name' => 'Pendidikan terakhir',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_LevelBahasa => [
+                'name' => 'Level bahasa',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
+                'name' => 'Lama di Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+                'render' => function ($item) {
+                    $years = floor($item['LamaDiJepang'] / 12);
+                    $remainingMonths = $item['LamaDiJepang'] % 12;
+
+                    $result = '';
+
+                    if ($years > 0) {
+                        $result .= $years . ' tahun ';
+                    }
+
+                    if ($remainingMonths > 0) {
+                        $result .= $remainingMonths . ' bulan';
+                    }
+
+                    return trim($result);
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
+                'name' => 'Estimasi gaji',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+                'render' => function ($item) {
+                    return $item['EstimasiGaji'] . ($item['EstimasiGajiTop'] ? '-' . $item['EstimasiGajiTop'] : '');
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_Domisili => [
+                'name' => 'Domisili',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
+                'name' => 'Siap kerja tanggal',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
+                'name' => 'Bidang kerja di Jepang',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
+                'name' => 'Bidang kerja pilihan',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Sensei => [
+                'name' => 'Bersedia kerja LPK',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+                'render' => function ($item) {
+                    $c = false;
+                    $html = "";
+                    if ($item['Sensei'] == 'YA') {
+                        $html .= "Sensei";
+                        $c = true;
+                    }
+                    if ($item['Penerjemah'] == 'YA') {
+                        $html .= ($c ? ($item['Dokumen'] == 'YA' ? ", " : " dan ") : "") . "penerjemah";
+                        $c = true;
+                    }
+                    if ($item['Dokumen'] == 'YA') {
+                        $html .= ($c ? " dan " : "") . "admin";
+                    }
+                    return $html;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_SoftSkill => [
+                'name' => 'Soft skill',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillKomputer => [
+                'name' => 'Skill komputer',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Keterangan => [
+                'name' => 'Keterangan',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+        ];
+    }
     public static function EXATA_DATATABLE_CHOICE()
     {
         return [
