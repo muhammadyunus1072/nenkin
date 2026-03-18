@@ -38,35 +38,6 @@ class ExataRepository extends MasterDataRepository
         $pic_sales,
         $jenis_visa,
     ) {
-        if ($job_sensei) {
-
-            logger([
-                $nama_lengkap,
-                $no_whatsapp,
-                $estimasi_gaji,
-                $estimasi_gaji_top,
-                $domisili,
-                $penempatan_kerja,
-                $nama_lpk,
-                $instagram,
-                $tiktok,
-                $keterangan,
-                $date_type,
-                $start_date,
-                $end_date,
-                $pipeline,
-                $gender,
-                $pendidikan,
-                $level_bahasa,
-                $job_sensei,
-                $job_staff_dokumen,
-                $job_penerjemah,
-                $bidang_kerja_japan,
-                $pilihan_kerja_indonesia,
-                $pic_sales,
-                $jenis_visa,
-            ]);
-        }
         return Exata::when($nama_lengkap, function ($query) use ($nama_lengkap) {
             $query->where('NamaLengkap', 'like', '%' . $nama_lengkap . '%');
         })
@@ -78,11 +49,7 @@ class ExataRepository extends MasterDataRepository
             })
             ->when($estimasi_gaji, function ($query) use ($estimasi_gaji, $estimasi_gaji_top) {
                 $query->where('EstimasiGaji', '>=', $estimasi_gaji)
-                    ->where('EstimasiGaji', '<=', $estimasi_gaji_top ?? 0);
-                // ->where(function ($q) use ($estimasi_gaji) {
-                //     $q->whereNull('EstimasiGajiTop')
-                //         ->orWhere('EstimasiGajiTop', '>=', $estimasi_gaji);
-                // });
+                    ->where('EstimasiGaji', '<=', $estimasi_gaji_top ?? $estimasi_gaji);
             })
             ->when($domisili, function ($query) use ($domisili) {
                 $query->where(function ($q) use ($domisili) {

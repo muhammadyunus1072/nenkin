@@ -27,7 +27,7 @@
     <table class="table-border" style="width: 100%">
         <thead>
             <tr>
-                @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
+                @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE() as $key => $access) 
                     @switch($access['name'])
                         @case('Estimasi Gaji Top')
                             
@@ -48,7 +48,7 @@
             @foreach ($collection as $index => $data)
                 
                 <tr>
-                    @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE as $key => $access) 
+                    @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE() as $key => $access) 
                     @switch($access['name'])
                         @case('Estimasi Gaji')
                             @can("exata_" . $key . ".read")

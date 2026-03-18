@@ -61,15 +61,35 @@ class Datatable extends Component
         $this->isCanDelete = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE));
     }
 
-    #[On('on-delete-dialog-confirm')]
+    #[On('on-delete-datatable-confirm')]
     public function onDialogDeleteConfirm()
     {
-        if (!$this->isCanDelete || $this->targetDeleteId == null) {
-            return;
-        }
 
-        ExataRepository::delete($this->targetDeleteId);
-        Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+        try {
+            DB::transaction(function () {
+
+                $this->getQuery()->delete();
+            });
+
+
+            DB::commit();
+
+            $this->dispatch('onSuccessEditBulk');
+
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil Dihapus",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
     }
 
     #[On('reset-filter')]
@@ -258,7 +278,7 @@ class Datatable extends Component
                 },
             ];
         }
-        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $access) {
+        foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
                 if ($access['name'] == 'Estimasi Gaji') {
                     $columns[] = [
@@ -291,7 +311,10 @@ class Datatable extends Component
                     $columns[] = [
                         'key' => str_replace('DATATABLE_', '', $key),
                         'name' => $access['name'],
-                        'class' => isset($access['class']) ? $access['class'] : ''
+                        'class' => isset($access['class']) ? $access['class'] : '',
+                        'render' => isset($access['render']) ? $access['render'] : '',
+                        'sortable' => isset($access['sortable']) ? $access['sortable'] : true,
+                        'searchable' => isset($access['searchable']) ? $access['sortable'] : true
                     ];
                 }
             }

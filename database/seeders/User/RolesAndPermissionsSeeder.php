@@ -40,7 +40,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $permissions['exata_' . $key] = [PermissionHelper::TYPE_READ];
         }
 
-        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $data) {
+        foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $data) {
             $permissions['exata_' . $key] = [PermissionHelper::TYPE_READ];
         }
 
@@ -78,7 +78,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $roles['Admin']['exata_' . $key] = [PermissionHelper::TYPE_READ];
         }
 
-        foreach (Exata::EXATA_DATATABLE_CHOICE as $key => $data) {
+        foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $data) {
             $roles['Admin']['exata_' . $key] = [PermissionHelper::TYPE_READ];
         }
 

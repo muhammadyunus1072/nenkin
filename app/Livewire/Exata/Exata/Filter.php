@@ -5,6 +5,8 @@ namespace App\Livewire\Exata\Exata;
 use App\Helpers\Alert;
 use App\Imports\ExcelImportExataPreview;
 use App\Models\Exata\Exata;
+use App\Repositories\Exata\ExataCurriculumVitaeRepository;
+use App\Repositories\Exata\ExataJapaneseLanguageCertificateRepository;
 use App\Repositories\Exata\ExataRepository;
 use Carbon\Carbon;
 use Exception;
@@ -63,6 +65,8 @@ class Filter extends Component
         'Keterangan' => '',
     ];
 
+    public $candidate_attachments = [];
+
 
     public function mount() {}
 
@@ -73,24 +77,39 @@ class Filter extends Component
             Alert::ICON_QUESTION,
             "Hapus Data",
             "Apakah Anda Yakin Ingin Menghapus Data Ini ?",
-            "on-delete-dialog-confirm",
-            "on-delete-dialog-cancel",
+            "on-delete-datatable-confirm",
+            "on-delete-datatable-cancel",
             "Hapus",
             "Batal",
         );
     }
 
-    #[On('on-delete-dialog-confirm')]
-    public function onDialogDeleteConfirm()
-    {
-        DB::table('exatas')->truncate();
-        DB::table('_history_exatas')->truncate();
-        $this->dispatch('refresh-table');
-        // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
-    }
+    // #[On('on-delete-dialog-confirm')]
+    // public function onDialogDeleteConfirm()
+    // {
+    //     DB::table('exatas')->truncate();
+    //     DB::table('_history_exatas')->truncate();
+    //     $this->dispatch('refresh-table');
+    //     // Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
+    // }
 
-    #[On('on-delete-dialog-cancel')]
-    public function onDialogDeleteCancel() {}
+    // #[On('on-delete-dialog-cancel')]
+    // public function onDialogDeleteCancel() {}
+
+    #[On('showFileJapaneseLanguageCertificate')]
+    public function showFileJapaneseLanguageCertificate($id)
+    {
+        $this->candidate_attachments = ExataJapaneseLanguageCertificateRepository::getBy([
+            ['exata_id', Crypt::decrypt($id)]
+        ])->toArray();
+    }
+    #[On('showFileCurriculumVitae')]
+    public function showFileCurriculumVitae($id)
+    {
+        $this->candidate_attachments = ExataCurriculumVitaeRepository::getBy([
+            ['exata_id', Crypt::decrypt($id)]
+        ])->toArray();
+    }
 
     #[On('editData')]
     public function editData($id)

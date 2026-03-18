@@ -246,6 +246,38 @@
             </button>
         </div>
     </div>
+    {{-- Show Candidate Attachment Modal --}}
+    <div class="modal fade" id="showCandidateAttachmentModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        wire:ignore.self>
+        <div class="modal-dialog modal-fullscreen" style="overflow: scroll">
+            <div class="modal-content" style="overflow: scroll">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showCandidateAttachmentModalLabel">Lampiran Kandidat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form wire:submit.prevent="storeImport">
+                    <div class="modal-body import_modal">
+                        
+                        <div class="row d-flex justify-content-center">
+                            @foreach ($candidate_attachments as $index => $image)
+                                <div class="col-md-10 mb-2 position-relative">
+                                   <a href="{{ Storage::url($image['file']) }}" download="{{$image['name']}}" class="position-absolute btn btn-primary btn-sm p-2 m-4">
+                                        <i class="fa fa-download"></i>
+                                        Download
+                                    </a>
+                                    <img src="{{ Storage::url($image['file']) }}" class="img-fluid rounded">
+                                </div>
+                            @endforeach
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Edit Bulk Modal --}}
     <div class="modal fade" id="bulkModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>

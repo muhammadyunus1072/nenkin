@@ -3,9 +3,12 @@
 namespace App\Models\Exata;
 
 use App\Helpers\NumberGenerator;
+use App\Models\Exata\ExataCurriculumVitae;
+use App\Models\Exata\ExataJapaneseLanguageCertificate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Muhammadyunus1072\TrackHistory\HasTrackHistory;
 
@@ -53,6 +56,19 @@ class Exata extends Model
     const PERMISSION_FilterNoWa = 'FilterNoWa';
     const PERMISSION_Available = 'Available';
     const PERMISSION_Job = 'JOB';
+
+
+    const PERMISSION_SertifikatBahasaJepang = 'SertifikatBahasaJepang';
+    const PERMISSION_Cv = 'Cv';
+    const PERMISSION_TinggiBadan = 'TinggiBadan';
+    const PERMISSION_BeratBadan = 'BeratBadan';
+    const PERMISSION_SkillBahasaLain = 'SkillBahasaLain';
+    const PERMISSION_SkillKomputer = 'SkillKomputer';
+    const PERMISSION_PencapaianTertinggi = 'PencapaianTertinggi';
+    const PERMISSION_ValueSaatDiJepang = 'ValueSaatDiJepang';
+    const PERMISSION_SoftSkill = 'SoftSkill';
+    const PERMISSION_SkillLainnya = 'SkillLainnya';
+    const PERMISSION_PengalamanKerja = 'PengalamanKerja';
 
     const EXATA_FILTER_CHOICE = [
         'FILTER_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
@@ -374,190 +390,313 @@ class Exata extends Model
         ];
     }
 
-    const EXATA_DATATABLE_CHOICE = [
-        'DATATABLE_' . self::PERMISSION_KodeUnik => [
-            'name' => 'Kode Unik',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Ref => [
-            'name' => 'Ref',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_TglInput => [
-            'name' => 'Tgl Input',
-            'class' => 'text-center',
-            'isDate' => true,
-        ],
-        'DATATABLE_' . self::PERMISSION_Pipeline => [
-            'name' => 'Pipeline',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Kategori => [
-            'name' => 'Kategori',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Available => [
-            'name' => 'Available',
-            'class' => 'text-center',
-            'isDate' => false,
-            'isNotImport' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NamaLengkap => [
-            'name' => 'Nama Lengkap',
-            'class' => '',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_TanggalLahir => [
-            'name' => 'Tanggal Lahir',
-            'class' => 'text-center',
-            'isDate' => true,
-        ],
-        'DATATABLE_' . self::PERMISSION_Gender => [
-            'name' => 'Gender',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Pendidikan => [
-            'name' => 'Pendidikan',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_LevelBahasa => [
-            'name' => 'Level Bahasa',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_TahunTerbit => [
-            'name' => 'Tahun Terbit',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
-            'name' => 'Lama Di Jepang',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_TanggalPulang => [
-            'name' => 'Tanggal Pulang',
-            'class' => 'text-center',
-            'isDate' => true,
-        ],
-        'DATATABLE_' . self::PERMISSION_Sensei => [
-            'name' => 'Sensei',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Dokumen => [
-            'name' => 'Dokumen',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Penerjemah => [
-            'name' => 'Penerjemah',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
-            'name' => 'Estimasi Gaji',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Domisili => [
-            'name' => 'Domisili',
-            'class' => '',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Penempatankerja => [
-            'name' => 'Preferensi Lokasi',
-            'class' => '',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
-            'name' => 'Siap Bekerja',
-            'class' => 'text-center',
-            'isDate' => true,
-        ],
-        'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
-            'name' => 'Bidang Kerjadi Jepang',
-            'class' => '',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
-            'name' => 'Bidang Kerja Pilihan',
-            'class' => '',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Senmongkyu => [
-            'name' => 'Senmongkyu',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => [
-            'name' => 'Bidang Senmongkyu',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_JenisVisa => [
-            'name' => 'Jenis Visa',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Provinsi => [
-            'name' => 'Provinsi',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Kota => [
-            'name' => 'Kota',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NamaTikTok => [
-            'name' => 'Nama TikTok',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NamaInstagram => [
-            'name' => 'Nama Instagram',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => [
-            'name' => 'No Telp Indonesia',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NoTelpJepang => [
-            'name' => 'No Telp Jepang',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Email => [
-            'name' => 'Email',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_PICSales => [
-            'name' => 'PIC/Sales',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_NamaLPK => [
-            'name' => 'Nama LPK',
-            'class' => 'text-center',
-            'isDate' => false,
-        ],
-        'DATATABLE_' . self::PERMISSION_Keterangan => [
-            'name' => 'Keterangan',
-            'class' => 'text-center',
-            'isNotImport' => true,
-            'isDate' => false,
-        ],
-    ];
+    public static function EXATA_DATATABLE_CHOICE()
+    {
+        return [
+
+            'DATATABLE_' . self::PERMISSION_KodeUnik => [
+                'name' => 'Kode Unik',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SertifikatBahasaJepang => [
+                'name' => 'Sertifikat Bahasa Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+                'sortable' => false,
+                'searchable' => false,
+                'render' => function ($item) {
+                    $id = Crypt::encrypt($item->id);
+                    $html = '';
+                    if (!$item->exataJapaneseLanguageCertificates->isEmpty()) {
+
+                        $html = "<div class='col-auto mb-2'>
+                            <button 
+                                class='btn btn-primary btn-sm'
+                                data-bs-toggle='modal'
+                                data-bs-target='#showCandidateAttachmentModal'
+                                x-data
+                                @click=\"\$dispatch('showFileJapaneseLanguageCertificate', { id: '" . $id . "' })\"
+                            >
+                            <i class='ki-duotone ki-eye fs-3'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                    <span class='path3'></span>
+                                    <span class='path4'></span>
+                                    <span class='path5'></span>
+                                </i>
+                            </button>
+                        </div>";
+                    }
+
+                    return $html;
+                },
+
+            ],
+            'DATATABLE_' . self::PERMISSION_Cv => [
+                'name' => 'CV',
+                'class' => 'text-center',
+                'isDate' => false,
+                'sortable' => false,
+                'searchable' => false,
+                'render' => function ($item) {
+                    $id = Crypt::encrypt($item->id);
+                    $html = '';
+                    if (!$item->exataCurriculumVitaes->isEmpty()) {
+
+                        $html = "<div class='col-auto mb-2'>
+                            <button 
+                                class='btn btn-primary btn-sm'
+                                data-bs-toggle='modal'
+                                data-bs-target='#showCandidateAttachmentModal'
+                                x-data
+                                @click=\"\$dispatch('showFileCurriculumVitae', { id: '" . $id . "' })\"
+                            >
+                            <i class='ki-duotone ki-eye fs-3'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                    <span class='path3'></span>
+                                    <span class='path4'></span>
+                                    <span class='path5'></span>
+                                </i>
+                            </button>
+                        </div>";
+                    }
+
+                    return $html;
+                },
+            ],
+            'DATATABLE_' . self::PERMISSION_TinggiBadan => [
+                'name' => 'Tinggi Badan',
+                'class' => 'text-center',
+                'isDate' => false,
+                'render' => function ($item) {
+                    return $item->TinggiBadan ? $item->TinggiBadan . " Cm" : null;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_BeratBadan => [
+                'name' => 'Berat Badan',
+                'class' => 'text-center',
+                'isDate' => false,
+                'render' => function ($item) {
+                    return $item->BeratBadan ? $item->BeratBadan . " Kg" : null;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillBahasaLain => [
+                'name' => 'Skill Basaha Lain',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillKomputer => [
+                'name' => 'Skill Komputer',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_PencapaianTertinggi => [
+                'name' => 'Pencapaian Tertinggi',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_ValueSaatDiJepang => [
+                'name' => 'Value Saat Di Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SoftSkill => [
+                'name' => 'Soft Skill',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillLainnya => [
+                'name' => 'Skill Lainnya',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_PengalamanKerja => [
+                'name' => 'Pengalaman Kerja',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Ref => [
+                'name' => 'Ref',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TglInput => [
+                'name' => 'Tgl Input',
+                'class' => 'text-center',
+                'isDate' => true,
+            ],
+            'DATATABLE_' . self::PERMISSION_Pipeline => [
+                'name' => 'Pipeline',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Kategori => [
+                'name' => 'Kategori',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Available => [
+                'name' => 'Available',
+                'class' => 'text-center',
+                'isDate' => false,
+                'isNotImport' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NamaLengkap => [
+                'name' => 'Nama Lengkap',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TanggalLahir => [
+                'name' => 'Tanggal Lahir',
+                'class' => 'text-center',
+                'isDate' => true,
+            ],
+            'DATATABLE_' . self::PERMISSION_Gender => [
+                'name' => 'Gender',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Pendidikan => [
+                'name' => 'Pendidikan',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_LevelBahasa => [
+                'name' => 'Level Bahasa',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TahunTerbit => [
+                'name' => 'Tahun Terbit',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
+                'name' => 'Lama Di Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TanggalPulang => [
+                'name' => 'Tanggal Pulang',
+                'class' => 'text-center',
+                'isDate' => true,
+            ],
+            'DATATABLE_' . self::PERMISSION_Sensei => [
+                'name' => 'Sensei',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Dokumen => [
+                'name' => 'Dokumen',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Penerjemah => [
+                'name' => 'Penerjemah',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
+                'name' => 'Estimasi Gaji',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Domisili => [
+                'name' => 'Domisili',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Penempatankerja => [
+                'name' => 'Preferensi Lokasi',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
+                'name' => 'Siap Bekerja',
+                'class' => 'text-center',
+                'isDate' => true,
+            ],
+            'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
+                'name' => 'Bidang Kerjadi Jepang',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
+                'name' => 'Bidang Kerja Pilihan',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Senmongkyu => [
+                'name' => 'Senmongkyu',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => [
+                'name' => 'Bidang Senmongkyu',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_JenisVisa => [
+                'name' => 'Jenis Visa',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Provinsi => [
+                'name' => 'Provinsi',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Kota => [
+                'name' => 'Kota',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NamaTikTok => [
+                'name' => 'Nama TikTok',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NamaInstagram => [
+                'name' => 'Nama Instagram',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => [
+                'name' => 'No Telp Indonesia',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NoTelpJepang => [
+                'name' => 'No Telp Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Email => [
+                'name' => 'Email',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_PICSales => [
+                'name' => 'PIC/Sales',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_NamaLPK => [
+                'name' => 'Nama LPK',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Keterangan => [
+                'name' => 'Keterangan',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+        ];
+    }
+
 
     const FILTER_TGL_CHOICE = [
         'FILTER_' . self::PERMISSION_TglInput => 'Tanggal Input',
@@ -837,6 +976,19 @@ class Exata extends Model
         'NamaLPK',
         'Keterangan',
         'Available',
+
+        // Form Kandidat
+        'SertifikatBahasaJepang',
+        'Cv',
+        'TinggiBadan',
+        'BeratBadan',
+        'SkillBahasaLain',
+        'SkillKomputer',
+        'PencapaianTertinggi',
+        'ValueSaatDiJepang',
+        'SoftSkill',
+        'SkillLainnya',
+        'PengalamanKerja',
     ];
 
     protected $guarded = ['id'];
@@ -856,5 +1008,15 @@ class Exata extends Model
         self::creating(function ($model) {
             $model->KodeUnik = NumberGenerator::generate($model);
         });
+    }
+
+    public function exataCurriculumVitaes()
+    {
+        return $this->hasMany(ExataCurriculumVitae::class, 'exata_id', 'id');
+    }
+
+    public function exataJapaneseLanguageCertificates()
+    {
+        return $this->hasMany(ExataJapaneseLanguageCertificate::class, 'exata_id', 'id');
     }
 }

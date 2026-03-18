@@ -82,7 +82,7 @@
                             </div>
                         @endforeach
                         <div class='fw-bold col-auto'>
-                            {{App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE[str_replace('exata_','',$access['name'])]['name']}}
+                            {{$EXATA_DATATABLE_CHOICE[str_replace('exata_','',$access['name'])]['name']}}
                         </div>
                         <hr>
                     </div>

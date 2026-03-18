@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\VehicleManagement\Vehicle;
+namespace App\Livewire\Exata\Exata;
 
 use App\Helpers\Alert;
 use App\Helpers\FilePathHelper;
-use App\Repositories\VehicleManagement\VehicleRepository;
-use App\Repositories\VehicleManagement\VehicleMaintenanceByIntervalRepository;
-use App\Repositories\VehicleManagement\VehicleMaintenanceByOdometerRepository;
+use App\Repositories\Exata\ExataCurriculumVitaeRepository;
+use App\Repositories\Exata\ExataJapaneseLanguageCertificateRepository;
+use App\Repositories\Exata\ExataRepository;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -21,210 +21,145 @@ class Detail extends Component
 
     public $objId;
 
-    public $image;
-    public $image_old;
-    public $name;
-    public $number_plate;
-    public $max_range;
-    public $current_odometer;
-    public $current_fuel;
-    public $current_etoll_balance;
-    public $is_active;
+    public $candidate_profile;
 
-    // Maintenance By Interval
-    public $maintenance_by_intervals = [];
-    public $maintenance_by_interval_removes = [];
-
-    // Maintenance By Odometer
-    public $maintenance_by_odometers = [];
-    public $maintenance_by_odometer_removes = [];
+    // Form Input
+    public $sertifikat_bahasa_jepang = [];
+    public $cv = [];
+    public $sertifikat_bahasa_jepang_old = [];
+    public $cv_old = [];
+    public $sertifikat_bahasa_jepang_removes = [];
+    public $cv_removes = [];
+    public $tinggi_badan;
+    public $berat_badan;
+    public $skill_bahasa_lain;
+    public $skill_komputer;
+    public $pencapaian_tertinggi;
+    public $value_saat_di_jepang;
+    public $soft_skill;
+    public $skill_lainnya;
+    public $pengalaman_kerja;
 
     public function mount()
     {
         if ($this->objId) {
-            $vehicle = VehicleRepository::find(Crypt::decrypt($this->objId));
-            $this->image_old = Storage::url($vehicle->image);
-            $this->name = $vehicle->name;
-            $this->number_plate = $vehicle->number_plate;
-            $this->max_range = $vehicle->max_range;
-            $this->current_odometer = $vehicle->current_odometer;
-            $this->current_fuel = $vehicle->current_fuel;
-            $this->current_etoll_balance = $vehicle->current_etoll_balance;
-            $this->is_active = $vehicle->is_active ? true : false;
+            $candidate = ExataRepository::find(Crypt::decrypt($this->objId));
+            $this->candidate_profile = $candidate->toArray();
 
-            $vehicle_maintenance_by_intervals = VehicleMaintenanceByIntervalRepository::getBy([
-                ['vehicle_id', $vehicle->id],
-            ]);
-            foreach ($vehicle_maintenance_by_intervals as $service) {
-                $this->maintenance_by_intervals[] = [
-                    'id' => Crypt::encrypt($service->id),
-                    'name' => $service->name,
-                    'message' => $service->message,
-                    'notif_interval' => $service->notif_interval,
-                    'current_interval' => $service->current_interval,
-                    'is_show' => $service->is_show ? true : false,
+            foreach ($candidate->exataJapaneseLanguageCertificates as $certificate) {
+                $this->sertifikat_bahasa_jepang_old[] = [
+                    'id' => Crypt::encrypt($certificate->id),
+                    'name' => $certificate->name,
+                    'file' => Storage::url($certificate->file),
                 ];
             }
-
-            $vehicle_maintenance_by_odometers = VehicleMaintenanceByOdometerRepository::getBy([
-                ['vehicle_id', $vehicle->id],
-            ]);
-            foreach ($vehicle_maintenance_by_odometers as $service) {
-                $this->maintenance_by_odometers[] = [
-                    'id' => Crypt::encrypt($service->id),
-                    'name' => $service->name,
-                    'message' => $service->message,
-                    'notif_odometer' => $service->notif_odometer,
-                    'latest_odometer' => $service->latest_odometer,
-                    'is_show' => $service->is_show ? true : false,
+            foreach ($candidate->exataCurriculumVitaes as $cv) {
+                $this->cv_old[] = [
+                    'id' => Crypt::encrypt($cv->id),
+                    'name' => $cv->name,
+                    'file' => Storage::url($cv->file),
                 ];
             }
+            $this->tinggi_badan = $candidate->TinggiBadan;
+            $this->berat_badan = $candidate->BeratBadan;
+            $this->skill_bahasa_lain = $candidate->SkillBahasaLain;
+            $this->skill_komputer = $candidate->SkillKomputer;
+            $this->pencapaian_tertinggi = $candidate->PencapaianTertinggi;
+            $this->value_saat_di_jepang = $candidate->ValueSaatDiJepang;
+            $this->soft_skill = $candidate->SoftSkill;
+            $this->skill_lainnya = $candidate->SkillLainnya;
+            $this->pengalaman_kerja = $candidate->PengalamanKerja;
         }
-    }
-
-    public function updatedImage()
-    {
-        $this->image_old = null;
     }
 
     #[On('on-dialog-confirm')]
-    public function onDialogConfirm()
-    {
-        if ($this->objId) {
-            $this->redirectRoute('vehicle.edit', $this->objId);
-        } else {
-            $this->redirectRoute('vehicle.create');
-        }
-    }
+    public function onDialogConfirm() {}
 
     #[On('on-dialog-cancel')]
-    public function onDialogCancel()
+    public function onDialogCancel() {}
+
+    public function removeSertifikatBahasaJepang($index)
     {
-        $this->redirectRoute('vehicle.index');
+        unset($this->sertifikat_bahasa_jepang[$index]);
+
+        // IMPORTANT → reset index array
+        $this->sertifikat_bahasa_jepang = array_values($this->sertifikat_bahasa_jepang);
+    }
+    public function removeCV($index)
+    {
+        unset($this->cv[$index]);
+
+        // IMPORTANT → reset index array
+        $this->cv = array_values($this->cv);
     }
 
-    public function addMaintenanceByInterval()
+    public function removeSertifikatBahasaJepangOld($index)
     {
-        $this->maintenance_by_intervals[] = [
-            'id' => null,
-            'name' => '',
-            'message' => '',
-            'notif_interval' => 0,
-            'current_interval' => 0,
-            'is_show' => false,
-        ];
-    }
 
-    public function removeMaintenanceByInterval($index)
-    {
-        if ($this->maintenance_by_intervals[$index]['id']) {
-            $this->maintenance_by_interval_removes[] = $this->maintenance_by_intervals[$index]['id'];
+        if ($this->sertifikat_bahasa_jepang_old[$index]['id']) {
+            $this->sertifikat_bahasa_jepang_removes[] = $this->sertifikat_bahasa_jepang_old[$index]['id'];
         }
-        unset($this->maintenance_by_intervals[$index]);
+        unset($this->sertifikat_bahasa_jepang_old[$index]);
     }
-
-
-    public function addMaintenanceByOdometer()
+    public function removeCVOld($index)
     {
-        $this->maintenance_by_odometers[] = [
-            'id' => null,
-            'name' => '',
-            'message' => '',
-            'notif_odometer' => 0,
-            'latest_odometer' => 0,
-            'is_show' => false,
-        ];
-    }
 
-    public function removeMaintenanceByOdometer($index)
-    {
-        if ($this->maintenance_by_odometers[$index]['id']) {
-            $this->maintenance_by_odometer_removes[] = $this->maintenance_by_odometers[$index]['id'];
+        if ($this->cv_old[$index]['id']) {
+            $this->cv_removes[] = $this->cv_old[$index]['id'];
         }
-        unset($this->maintenance_by_odometers[$index]);
+        unset($this->cv_old[$index]);
     }
 
     public function store()
     {
         try {
             DB::transaction(function () {
-                // Vehicle
+                // Form Candidate
                 $validateData = [
-                    'is_active' => $this->is_active,
-                    'name' => $this->name,
-                    'number_plate' => $this->number_plate,
-                    'max_range' => $this->max_range,
-                    'current_odometer' => $this->current_odometer,
-                    'current_fuel' => $this->current_fuel,
-                    'current_etoll_balance' => $this->current_etoll_balance,
+                    'TinggiBadan' => $this->tinggi_badan,
+                    'BeratBadan' => $this->berat_badan,
+                    'SkillBahasaLain' => $this->skill_bahasa_lain,
+                    'SkillKomputer' => $this->skill_komputer,
+                    'PencapaianTertinggi' => $this->pencapaian_tertinggi,
+                    'ValueSaatDiJepang' => $this->value_saat_di_jepang,
+                    'SoftSkill' => $this->soft_skill,
+                    'SkillLainnya' => $this->skill_lainnya,
+                    'PengalamanKerja' => $this->pengalaman_kerja,
                 ];
-                $vehicle_id = null;
-                if ($this->image) {
-                    $path = $this->image->store(FilePathHelper::FILE_VEHICLE_IMAGE, 'public');
-                    $validateData['image'] = $path;
-                }
-
                 if ($this->objId) {
-                    $vehicle = VehicleRepository::find(Crypt::decrypt($this->objId));
-                    if ($vehicle) {
-                        VehicleRepository::update($vehicle->id, $validateData);
-                        $vehicle_id = $vehicle->id;
-                    }
-                } else {
-                    $vehicle = VehicleRepository::create($validateData);
-                    $vehicle_id = $vehicle->id;
+                    $exata_id = Crypt::decrypt($this->objId);
+                    ExataRepository::update($exata_id, $validateData);
                 }
 
-                // Vehicle Service
-                foreach ($this->maintenance_by_intervals as $service) {
-                    $validateDataService = [
-                        'vehicle_id' => $vehicle_id,
-                        'name' => $service['name'],
-                        'message' => $service['message'],
-                        'notif_interval' => $service['notif_interval'],
-                        'current_interval' => $service['current_interval'],
-                        'is_show' => $service['is_show'],
+                foreach ($this->sertifikat_bahasa_jepang as $sertifikat) {
+
+                    $path = $sertifikat->store(FilePathHelper::FILE_CANDIDATE_JAPANESE_LANGUAGE_CERTIFICATE, 'public');
+                    $validatedSertifikat = [
+                        'exata_id' => $exata_id,
+                        'file' => $path,
+                        'name' => $sertifikat->getClientOriginalName()
                     ];
 
-                    if ($service['id']) {
-                        // Update
-                        VehicleMaintenanceByIntervalRepository::update(Crypt::decrypt($service['id']), $validateDataService);
-                    } else {
-
-                        // Create
-                        VehicleMaintenanceByIntervalRepository::create($validateDataService);
-                    }
+                    ExataJapaneseLanguageCertificateRepository::create($validatedSertifikat);
                 }
+                foreach ($this->cv as $cv) {
 
-                // Remove Vehicle Service
-                foreach ($this->maintenance_by_interval_removes as $maintenance_by_interval_remove) {
-                    VehicleMaintenanceByIntervalRepository::delete(Crypt::decrypt($maintenance_by_interval_remove));
-                }
-
-                // Vehicle Service
-                foreach ($this->maintenance_by_odometers as $service) {
-                    $validateDataService = [
-                        'vehicle_id' => $vehicle_id,
-                        'name' => $service['name'],
-                        'message' => $service['message'],
-                        'notif_odometer' => $service['notif_odometer'],
-                        'latest_odometer' => $service['latest_odometer'],
-                        'is_show' => $service['is_show'],
+                    $path = $cv->store(FilePathHelper::FILE_CANDIDATE_CURRICULUM_VITAE, 'public');
+                    $validatedCv = [
+                        'exata_id' => $exata_id,
+                        'file' => $path,
+                        'name' => $cv->getClientOriginalName()
                     ];
 
-                    if ($service['id']) {
-                        // Update
-                        VehicleMaintenanceByOdometerRepository::update(Crypt::decrypt($service['id']), $validateDataService);
-                    } else {
-
-                        // Create
-                        VehicleMaintenanceByOdometerRepository::create($validateDataService);
-                    }
+                    ExataCurriculumVitaeRepository::create($validatedCv);
                 }
 
-                // Remove Vehicle Service
-                foreach ($this->maintenance_by_odometer_removes as $maintenance_by_odometer_remove) {
-                    VehicleMaintenanceByOdometerRepository::delete(Crypt::decrypt($maintenance_by_odometer_remove));
+                // Remove
+                foreach ($this->sertifikat_bahasa_jepang_removes as $sertifikat_remove) {
+                    ExataJapaneseLanguageCertificateRepository::delete(Crypt::decrypt($sertifikat_remove));
+                }
+                foreach ($this->cv_removes as $cv_remove) {
+                    ExataCurriculumVitaeRepository::delete(Crypt::decrypt($cv_remove));
                 }
             });
 
@@ -248,6 +183,6 @@ class Detail extends Component
 
     public function render()
     {
-        return view('livewire.vehicle-management.vehicle.detail');
+        return view('livewire.exata.exata.detail');
     }
 }

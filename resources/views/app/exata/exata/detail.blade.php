@@ -21,7 +21,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            {{-- <livewire:convert-data-ichijikin.detail :objId="$objId"> --}}
+            <livewire:exata.exata.detail :objId="$objId">
         </div>
     </div>
 @stop

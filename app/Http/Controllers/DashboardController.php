@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('app.vehicle-management.vehicle-usage.index');
+        return view('app.exata.exata.index');
     }
 }

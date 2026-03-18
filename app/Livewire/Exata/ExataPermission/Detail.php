@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Exata\ExataPermission;
 
-use Exception;
 use App\Helpers\Alert;
 use App\Helpers\PermissionHelper;
+use App\Models\Exata\Exata;
 use App\Repositories\Account\PermissionRepository;
 use App\Repositories\Account\RoleRepository;
-use Livewire\Component;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class Detail extends Component
 {
@@ -25,8 +26,11 @@ class Detail extends Component
     public $datatable_all;
     public $pipeline_all;
 
+    public $EXATA_DATATABLE_CHOICE;
+
     public function mount()
     {
+        $this->EXATA_DATATABLE_CHOICE = Exata::EXATA_DATATABLE_CHOICE();
         $permissions = PermissionRepository::getExataIdAndNames();
         foreach ($permissions as $permission) {
             $access = PermissionHelper::getAccess($permission->name);
