@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Validation\Rule;
 use Muhammadyunus1072\TrackHistory\HasTrackHistory;
 
 class Exata extends Model

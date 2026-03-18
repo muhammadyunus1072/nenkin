@@ -78,7 +78,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-    
+                
                 {{-- Preview --}}
                 <div class="row mt-3">
                     @foreach ($sertifikat_bahasa_jepang as $index => $image)
@@ -92,7 +92,31 @@
                                     <span class='path5'></span>
                                 </i>
                             </button>
-                            <img src="{{ $image->temporaryUrl() }}" class="img-fluid rounded">
+                            @php
+                                $ext = $image->getClientOriginalExtension();
+                                if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
+                                    $url = $image->temporaryUrl();
+                                }else{
+                                    $url = $image->getClientOriginalName();
+                                }
+                                
+
+                                $ext = strtolower($ext);
+                                
+                            @endphp
+                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+    
+                                <img src="{{ $url }}" class="img-fluid rounded">
+                            @else
+
+                                <div class="border rounded p-4 text-center bg-light">
+                                    <i class="bi bi-file-earmark fs-1"></i>
+                                    <div class="mt-2">
+                                        {{$url}}
+                                    </div>
+                                </div>
+
+                            @endif
                         </div>
                     @endforeach
                     @foreach ($sertifikat_bahasa_jepang_old as $index => $image)
@@ -106,7 +130,32 @@
                                     <span class='path5'></span>
                                 </i>
                             </button>
-                            <img src="{{ $image['file'] }}" class="img-fluid rounded">
+                            @php
+                                
+                                if (is_array($image)) {
+                                    $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
+                                    $url = $image['file'];
+                                }
+
+                                $ext = strtolower($ext);
+                                
+                            @endphp
+                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+    
+                                <img src="{{ $url }}" class="img-fluid rounded">
+                            @else
+                                <div class="border rounded p-4 text-center bg-light">
+                                    <i class="bi bi-file-earmark fs-1"></i>
+                                    <div class="mt-2">
+                                        {{ $image['name'] }}
+                                    </div>
+
+                                    <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                        Download
+                                    </a>
+                                </div>
+
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -134,7 +183,31 @@
                                     <span class='path5'></span>
                                 </i>
                             </button>
-                            <img src="{{ $image->temporaryUrl() }}" class="img-fluid rounded">
+                            @php
+                                $ext = $image->getClientOriginalExtension();
+                                if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
+                                    $url = $image->temporaryUrl();
+                                }else{
+                                    $url = $image->getClientOriginalName();
+                                }
+                                
+
+                                $ext = strtolower($ext);
+                                
+                            @endphp
+                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+    
+                                <img src="{{ $url }}" class="img-fluid rounded">
+                            @else
+
+                                <div class="border rounded p-4 text-center bg-light">
+                                    <i class="bi bi-file-earmark fs-1"></i>
+                                    <div class="mt-2">
+                                        {{$url}}
+                                    </div>
+                                </div>
+
+                            @endif
                         </div>
                     @endforeach
                     @foreach ($cv_old as $index => $image)
@@ -148,7 +221,32 @@
                                     <span class='path5'></span>
                                 </i>
                             </button>
-                            <img src="{{ $image['file'] }}" class="img-fluid rounded">
+                            @php
+                                
+                                if (is_array($image)) {
+                                    $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
+                                    $url = $image['file'];
+                                }
+
+                                $ext = strtolower($ext);
+                                
+                            @endphp
+                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+    
+                                <img src="{{ $url }}" class="img-fluid rounded">
+                            @else
+                                <div class="border rounded p-4 text-center bg-light">
+                                    <i class="bi bi-file-earmark fs-1"></i>
+                                    <div class="mt-2">
+                                        {{ $image['name'] }}
+                                    </div>
+
+                                    <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                        Download
+                                    </a>
+                                </div>
+
+                            @endif
                         </div>
                     @endforeach
                 </div>

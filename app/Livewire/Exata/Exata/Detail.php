@@ -78,6 +78,8 @@ class Detail extends Component
     #[On('on-dialog-cancel')]
     public function onDialogCancel() {}
 
+
+
     public function removeSertifikatBahasaJepang($index)
     {
         unset($this->sertifikat_bahasa_jepang[$index]);
