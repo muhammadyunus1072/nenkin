@@ -482,6 +482,17 @@ class Exata extends Model
                 'class' => 'text-center',
                 'isNotImport' => true,
                 'isDate' => false,
+                'render' => function ($item) {
+                    $array = explode(',', $item['BidangKerjaPilihan']);
+
+                    $chunks = array_chunk($array, 2);
+
+                    $result = array_map(function ($chunk) {
+                        return implode(', ', $chunk);
+                    }, $chunks);
+
+                    return implode(',<br>', $result);
+                }
             ],
             'DATATABLE_' . self::PERMISSION_Sensei => [
                 'name' => 'Bersedia kerja LPK',
@@ -714,7 +725,7 @@ class Exata extends Model
                 'render' => function ($item) {
                     $array = explode(',', $item['BidangKerjaPilihan']);
 
-                    $chunks = array_chunk($array, 3);
+                    $chunks = array_chunk($array, 2);
 
                     $result = array_map(function ($chunk) {
                         return implode(', ', $chunk);
