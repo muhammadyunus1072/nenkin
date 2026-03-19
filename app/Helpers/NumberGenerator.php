@@ -20,9 +20,9 @@ class NumberGenerator
         $domisili = strtoupper(preg_replace('/\s+/', '', $model->Domisili));
 
         $namaPart = str_pad(substr($nama, 0, 3), 3, 'X');
-        $domisiliPart = str_pad(substr($domisili, -3), 3, 'X');
+        $domisiliPart = str_pad(substr($domisili, 0, 3), 3, 'X');
 
-        $tgl = $model->TanggalLahir ? \Carbon\Carbon::parse($model->TanggalLahir)->format('Ymd') : null;
+        $tgl = $model->TanggalLahir ? \Carbon\Carbon::parse($model->TanggalLahir)->format('dmy') : null;
 
         return $namaPart . $domisiliPart . $tgl;
     }

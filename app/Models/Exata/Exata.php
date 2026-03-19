@@ -425,6 +425,9 @@ class Exata extends Model
                 'name' => 'Level bahasa',
                 'class' => 'text-center',
                 'isDate' => false,
+                'render' => function ($item) {
+                    return (!$item['LevelBahasa'] || $item['LevelBahasa'] == self::FILTER_LEVEL_BAHASA_CHOICE[self::FILTER_LEVEL_BAHASA_TIDAK_PUNYA]) ? '-' : $item['LevelBahasa'];
+                }
             ],
             'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
                 'name' => 'Lama di Jepang',
@@ -527,20 +530,21 @@ class Exata extends Model
         return [
 
             'DATATABLE_' . self::PERMISSION_KodeUnik => [
-                'name' => 'Kode Unik',
+                'name' => 'Kode unik',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_SertifikatBahasaJepang => [
-                'name' => 'Sertifikat Bahasa Jepang',
+                'name' => 'Sertifikat bahasa Jepang',
                 'class' => 'text-center',
                 'isDate' => false,
                 'sortable' => false,
                 'searchable' => false,
+                'isExport' => false,
                 'render' => function ($item) {
-                    $id = Crypt::encrypt($item->id);
+                    $id = Crypt::encrypt($item['id']);
                     $html = '';
-                    if (!$item->exataJapaneseLanguageCertificates->isEmpty()) {
+                    if (!$item['exataJapaneseLanguageCertificates']->isEmpty()) {
 
                         $html = "<div class='col-auto mb-2'>
                             <button 
@@ -571,10 +575,11 @@ class Exata extends Model
                 'isDate' => false,
                 'sortable' => false,
                 'searchable' => false,
+                'isExport' => false,
                 'render' => function ($item) {
-                    $id = Crypt::encrypt($item->id);
+                    $id = Crypt::encrypt($item['id']);
                     $html = '';
-                    if (!$item->exataCurriculumVitaes->isEmpty()) {
+                    if (!$item['exataCurriculumVitaes']->isEmpty()) {
 
                         $html = "<div class='col-auto mb-2'>
                             <button 
@@ -598,64 +603,8 @@ class Exata extends Model
                     return $html;
                 },
             ],
-            'DATATABLE_' . self::PERMISSION_TinggiBadan => [
-                'name' => 'Tinggi Badan',
-                'class' => 'text-center',
-                'isDate' => false,
-                'render' => function ($item) {
-                    return $item->TinggiBadan ? $item->TinggiBadan . " Cm" : null;
-                }
-            ],
-            'DATATABLE_' . self::PERMISSION_BeratBadan => [
-                'name' => 'Berat Badan',
-                'class' => 'text-center',
-                'isDate' => false,
-                'render' => function ($item) {
-                    return $item->BeratBadan ? $item->BeratBadan . " Kg" : null;
-                }
-            ],
-            'DATATABLE_' . self::PERMISSION_SkillBahasaLain => [
-                'name' => 'Skill Basaha Lain',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_SkillKomputer => [
-                'name' => 'Skill Komputer',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_PencapaianTertinggi => [
-                'name' => 'Pencapaian Tertinggi',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_ValueSaatDiJepang => [
-                'name' => 'Value Saat Di Jepang',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_SoftSkill => [
-                'name' => 'Soft Skill',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_SkillLainnya => [
-                'name' => 'Skill Lainnya',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_PengalamanKerja => [
-                'name' => 'Pengalaman Kerja',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
-            'DATATABLE_' . self::PERMISSION_Ref => [
-                'name' => 'Ref',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
             'DATATABLE_' . self::PERMISSION_TglInput => [
-                'name' => 'Tgl Input',
+                'name' => 'Tgl input',
                 'class' => 'text-center',
                 'isDate' => true,
             ],
@@ -676,12 +625,12 @@ class Exata extends Model
                 'isNotImport' => false,
             ],
             'DATATABLE_' . self::PERMISSION_NamaLengkap => [
-                'name' => 'Nama Lengkap',
+                'name' => 'Nama lengkap',
                 'class' => '',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_TanggalLahir => [
-                'name' => 'Tanggal Lahir',
+                'name' => 'Tanggal lahir',
                 'class' => 'text-center',
                 'isDate' => true,
             ],
@@ -696,22 +645,22 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_LevelBahasa => [
-                'name' => 'Level Bahasa',
+                'name' => 'Level bahasa',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_TahunTerbit => [
-                'name' => 'Tahun Terbit',
+                'name' => 'Tahun terbit',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
-                'name' => 'Lama Di Jepang',
+                'name' => 'Lama di Jepang',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_TanggalPulang => [
-                'name' => 'Tanggal Pulang',
+                'name' => 'Tanggal pulang',
                 'class' => 'text-center',
                 'isDate' => true,
             ],
@@ -731,9 +680,12 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
-                'name' => 'Estimasi Gaji',
+                'name' => 'Estimasi gaji',
                 'class' => 'text-center',
                 'isDate' => false,
+                'render' => function ($item) {
+                    return $item['EstimasiGaji'] . ($item['EstimasiGajiTop'] ? '-' . $item['EstimasiGajiTop'] : '');
+                }
             ],
             'DATATABLE_' . self::PERMISSION_Domisili => [
                 'name' => 'Domisili',
@@ -741,23 +693,90 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_Penempatankerja => [
-                'name' => 'Preferensi Lokasi',
+                'name' => 'Preferensi lokasi',
                 'class' => '',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
-                'name' => 'Siap Bekerja',
+                'name' => 'Siap bekerja',
                 'class' => 'text-center',
                 'isDate' => true,
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
-                'name' => 'Bidang Kerjadi Jepang',
+                'name' => 'Bidang kerja di Jepang',
                 'class' => '',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
-                'name' => 'Bidang Kerja Pilihan',
+                'name' => 'Bidang kerja pilihan',
                 'class' => '',
+                'isDate' => false,
+                'render' => function ($item) {
+                    $array = explode(',', $item['BidangKerjaPilihan']);
+
+                    $chunks = array_chunk($array, 3);
+
+                    $result = array_map(function ($chunk) {
+                        return implode(', ', $chunk);
+                    }, $chunks);
+
+                    return implode(',<br>', $result);
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_TinggiBadan => [
+                'name' => 'Tinggi badan',
+                'class' => 'text-center',
+                'isDate' => false,
+                'render' => function ($item) {
+                    return $item['TinggiBadan'] ? $item['TinggiBadan'] . " Cm" : null;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_BeratBadan => [
+                'name' => 'Berat badan',
+                'class' => 'text-center',
+                'isDate' => false,
+                'render' => function ($item) {
+                    return $item['BeratBadan'] ? $item['BeratBadan'] . " Kg" : null;
+                }
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillBahasaLain => [
+                'name' => 'Skill basaha lain',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillKomputer => [
+                'name' => 'Skill komputer',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_PencapaianTertinggi => [
+                'name' => 'Pencapaian tertinggi',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_ValueSaatDiJepang => [
+                'name' => 'Value saat di Jepang',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SoftSkill => [
+                'name' => 'Soft skill',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_SkillLainnya => [
+                'name' => 'Skill lainnya',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_PengalamanKerja => [
+                'name' => 'Pengalaman kerja',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Ref => [
+                'name' => 'Ref',
+                'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_Senmongkyu => [
@@ -766,12 +785,12 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => [
-                'name' => 'Bidang Senmongkyu',
+                'name' => 'Bidang senmongkyu',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_JenisVisa => [
-                'name' => 'Jenis Visa',
+                'name' => 'Jenis visa',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
@@ -786,22 +805,22 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_NamaTikTok => [
-                'name' => 'Nama TikTok',
+                'name' => 'Nama tikTok',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_NamaInstagram => [
-                'name' => 'Nama Instagram',
+                'name' => 'Nama instagram',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => [
-                'name' => 'No Telp Indonesia',
+                'name' => 'No telp Indonesia',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_NoTelpJepang => [
-                'name' => 'No Telp Jepang',
+                'name' => 'No telp Jepang',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
@@ -1012,17 +1031,17 @@ class Exata extends Model
         self::PIPELINE_FEEDBACK => 'FEEDBACK',
     ];
     const COLOR_PIPELINE_CHOICE = [
-        self::PIPELINE_NEW_LEADS => 'background-color: #FFEEF3;',
-        self::PIPELINE_WEBINAR => 'background-color: #e4df21;',
-        self::PIPELINE_VERIFIED => 'background-color: #f8961e;',
-        self::PIPELINE_INTERVIEW_INTERNAL => 'background-color: #f9c74f;',
-        self::PIPELINE_PROMOTION => 'background-color: #90be6d;',
-        self::PIPELINE_DEPOSIT => 'background-color: #43aa8b;',
-        self::PIPELINE_INTERVIEW_PERUSAHAAN => 'background-color: #F7F5FF;',
-        self::PIPELINE_REFUND_DEPOSIT => 'background-color: #ffedc2;',
-        self::PIPELINE_LOLOS_TIDAK => 'background-color: #c3fdee;',
-        self::PIPELINE_MASA_PROBATION => 'background-color: #118ab2;',
-        self::PIPELINE_FEEDBACK => 'background-color: #0197f6;',
+        self::PIPELINE_NEW_LEADS => 'background-color: #ea9999;',
+        self::PIPELINE_WEBINAR => 'background-color: #dd7e6b;',
+        self::PIPELINE_VERIFIED => 'background-color: #f9cb9c;',
+        self::PIPELINE_INTERVIEW_INTERNAL => 'background-color: #9fc5e8;',
+        self::PIPELINE_PROMOTION => 'background-color: #ffe599;',
+        self::PIPELINE_DEPOSIT => 'background-color: #e06666;',
+        self::PIPELINE_INTERVIEW_PERUSAHAAN => 'background-color: #b6d7a8;',
+        self::PIPELINE_REFUND_DEPOSIT => 'background-color: #93c47d;',
+        self::PIPELINE_LOLOS_TIDAK => 'background-color: #d5a6bd;',
+        self::PIPELINE_MASA_PROBATION => 'background-color: #00ff00;',
+        self::PIPELINE_FEEDBACK => 'background-color: #ffff00;',
     ];
 
     public function colorPipeline()

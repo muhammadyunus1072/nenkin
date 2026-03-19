@@ -72,6 +72,7 @@
                 <div class="col-md-3 mb-2" wire:key='access_{{ $keyAccess }}'>
                     <div class='col d-flex justify-content-start gap-2'>
                         @foreach ($access['permissions'] as $keyPermission => $permission)
+                        
                             <div class="form-check mb-2 col-auto">
                                 <input class="form-check-input" type="checkbox" value="1"
                                     id="permission_{{ $keyAccess }}_{{ $keyPermission }}"

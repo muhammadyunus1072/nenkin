@@ -234,11 +234,6 @@ class Datatable extends Component
 
     public function getColumns(): array
     {
-        $authUser = UserRepository::authenticatedUser();
-        // $role = $authUser->roles;
-
-        // $role = RoleRepository::find($role[0]->id);
-
         $columns = [
             [
                 'sortable' => false,
@@ -301,45 +296,18 @@ class Datatable extends Component
                 },
             ];
         }
+
+        $authUser = UserRepository::authenticatedUser();
         foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
-                if ($access['name'] == 'Estimasi Gaji') {
-                    $columns[] = [
-                        'key' => str_replace('DATATABLE_', '', $key),
-                        'name' => $access['name'],
-                        'render' => function ($item) {
-                            return $item->EstimasiGaji . ($item->EstimasiGajiTop ? '-' . $item->EstimasiGajiTop : '');
-                        },
-                        'class' => isset($access['class']) ? $access['class'] : ''
-                    ];
-                } else if ($access['name'] == 'Bidang Kerja Pilihan') {
-                    $columns[] = [
-                        'key' => str_replace('DATATABLE_', '', $key),
-                        'name' => $access['name'],
-                        'render' => function ($item) {
-                            $array = explode(',', $item->BidangKerjaPilihan);
-
-                            $chunks = array_chunk($array, 3);
-
-                            $result = array_map(function ($chunk) {
-                                return implode(', ', $chunk);
-                            }, $chunks);
-
-                            return implode(',<br>', $result);
-                        },
-                        'class' => isset($access['class']) ? $access['class'] : ''
-                    ];
-                } else {
-
-                    $columns[] = [
-                        'key' => str_replace('DATATABLE_', '', $key),
-                        'name' => $access['name'],
-                        'class' => isset($access['class']) ? $access['class'] : '',
-                        'render' => isset($access['render']) ? $access['render'] : '',
-                        'sortable' => isset($access['sortable']) ? $access['sortable'] : true,
-                        'searchable' => isset($access['searchable']) ? $access['sortable'] : true
-                    ];
-                }
+                $columns[] = [
+                    'key' => str_replace('DATATABLE_', '', $key),
+                    'name' => $access['name'],
+                    'class' => isset($access['class']) ? $access['class'] : '',
+                    'render' => isset($access['render']) ? $access['render'] : '',
+                    'sortable' => isset($access['sortable']) ? $access['sortable'] : true,
+                    'searchable' => isset($access['searchable']) ? $access['sortable'] : true
+                ];
             }
         }
         return $columns;

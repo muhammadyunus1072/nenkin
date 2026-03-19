@@ -30,7 +30,12 @@ class Detail extends Component
 
     public function mount()
     {
-        $this->EXATA_DATATABLE_CHOICE = Exata::EXATA_DATATABLE_CHOICE();
+        $this->EXATA_DATATABLE_CHOICE = collect(Exata::EXATA_DATATABLE_CHOICE())->map(function ($datatable) {
+            return [
+                'name' => $datatable['name'],
+            ];
+        });
+
         $permissions = PermissionRepository::getExataIdAndNames();
         foreach ($permissions as $permission) {
             $access = PermissionHelper::getAccess($permission->name);
