@@ -46,7 +46,7 @@
                     @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_CHOICE() as $key => $access) 
                     @if (!isset($access['isExport']) || $access['isExport'])
                          @can("exata_" . $key . ".read")
-                            @if (isset($access['render']) && is_callable($access['render']))
+                            @if (!isset($access['isNotRender']) && isset($access['render']) && is_callable($access['render']))
                                 <td>{!! call_user_func($access['render'], $data, $index) !!}</td>
                             @else
                                 <td>{{ $data[str_replace('DATATABLE_','',$key)] }}</td>

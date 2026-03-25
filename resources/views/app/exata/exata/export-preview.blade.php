@@ -44,7 +44,7 @@
                     @foreach (App\Models\Exata\Exata::EXATA_DATATABLE_PREVIEW_CHOICE() as $key => $access) 
                         @can("exata_" . $key . ".read")
                             @if (isset($access['render']) && is_callable($access['render']))
-                                <td>{!! call_user_func($access['render'], $data, $index) !!}</td>
+                                <td>{!! call_user_func($access['render'], $data) !!}</td>
                             @else
                                 <td>{{ $data[str_replace('DATATABLE_','',$key)] }}</td>
                             @endif

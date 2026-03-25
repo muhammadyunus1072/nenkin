@@ -4,11 +4,17 @@
         @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_CREATE))
             <div class="col-md-auto mb-2">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
-                    <i class="fa fa-download"></i>
+                    <i class="fa fa-upload"></i>
                     Import
                 </button>
             </div>
         @endCan
+            <div class="col-md-auto mb-2">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importPipelineModal">
+                    <i class="fa fa-upload"></i>
+                    Import Pipeline
+                </button>
+            </div>
         <div class="col-auto">
             <button
                 class="btn btn-success btn-sm"
@@ -43,7 +49,7 @@
                 </button>
             </div>
         @endCan
-        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE))
+        {{-- @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE))
             <div class="col-auto">
                 <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">
                     <i class='ki-duotone ki-notepad-edit'>
@@ -53,7 +59,7 @@
                     Edit Bulk
                 </button>
             </div>
-        @endCan
+        @endCan --}}
     </div>
 
     {{-- Filter --}}
@@ -335,7 +341,7 @@
         </div>
     </div>
     {{-- Edit Bulk Modal --}}
-    <div class="modal fade" id="bulkModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    {{-- <div class="modal fade" id="bulkModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>
         <div class="modal-dialog modal-lg" style="overflow: scroll">
             <div class="modal-content" style="overflow: scroll">
@@ -393,7 +399,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- Edit Manual Modal --}}
     <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>
@@ -572,6 +578,110 @@
             </div>
         </div>
     </div>
+    {{-- Import Pipeline Modal --}}
+    <div class="modal fade" id="importPipelineModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        wire:ignore.self>
+        <div class="modal-dialog modal-fullscreen" style="overflow: scroll">
+            <div class="modal-content" style="overflow: scroll">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importPipelineModalLabel">Import Pipeline Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click="closeImportPipelineModal"></button>
+                </div>
+                <form wire:submit.prevent="storeImportPipeline">
+                    <div class="modal-body import_modal">
+                        <div class="form-group mb-2">
+                            <label>File Import Excel</label>
+                            <input type="file" wire:model="inputFilePipeline" class="form-control" id="inputFilePipeline">
+                            @error('input_file')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="row">
+                            @if($previewPipelineRows)
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="imported-pipeline" data-bs-toggle="tab" data-bs-target="#imported-pipeline-pane" type="button" role="tab" aria-controls="imported-pipeline-pane" aria-selected="true">Imported</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="invalid-pipeline" data-bs-toggle="tab" data-bs-target="#invalid-pipeline-pane" type="button" role="tab" aria-controls="invalid-pipeline-pane" aria-selected="false">Invalid ({{count($errorPipelineRows)}})</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="imported-pipeline-pane" role="tabpanel" aria-labelledby="imported" tabindex="0">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_PIPELINE_CHOICE() as $name => $value)
+                                                        <th>{{$value['name']}}</th>
+                                                    @endForeach
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($previewPipelineRows as $i => $row)
+                                                    @if (!$row['error'])
+                                                        <tr>
+                                                        {{-- <tr class="{{ count($row['error']) ? '--kt-gray-100' : '' }}"> --}}
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                @foreach ($row['data'] as $item)
+                                                                    <td>{{ $item }}</td>
+                                                                @endforeach
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="invalid-pipeline-pane" role="tabpanel" aria-labelledby="invalid" tabindex="0">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    @foreach(\App\Models\Exata\Exata::EXATA_IMPORT_PIPELINE_CHOICE() as $name => $value)
+                                                        <th>{{$value['name']}}</th>
+                                                    @endForeach
+                                                        <th>Pesan Error System</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($previewPipelineRows as $i => $row)
+                                                    @if ($row['error'])
+                                                        <tr>
+                                                        {{-- <tr class="{{ count($row['error']) ? '--kt-gray-100' : '' }}"> --}}
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                @foreach ($row['data'] as $item)
+                                                                    <td>{{ $item }}</td>
+                                                                @endforeach
+                                                            <td>
+                                                                @foreach($row['error'] as $field => $msg)
+                                                                    <div>{{ $msg[0] }}</div>
+                                                                @endforeach
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="closeImportPipelineModal">Tutup</button>
+                        
+                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
+                            wire:target='input_pipeline_file'>Simpan</button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @push('js')
@@ -579,6 +689,10 @@
         Livewire.on('onSuccessImportData', () => {
             $('#importModal').modal('hide');
             $('#inputFile').val(null);
+        })
+        Livewire.on('onSuccessImportPipelineData', () => {
+            $('#importPipelineModal').modal('hide');
+            $('#inputFilePipeline').val(null);
         })
         Livewire.on('onSuccessEditData', () => {
             $('#editModal').modal('hide');

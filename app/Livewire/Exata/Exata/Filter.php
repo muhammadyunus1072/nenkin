@@ -3,6 +3,7 @@
 namespace App\Livewire\Exata\Exata;
 
 use App\Helpers\Alert;
+use App\Imports\ExcelImportExataPipeline;
 use App\Imports\ExcelImportExataPreview;
 use App\Models\Exata\Exata;
 use App\Repositories\Exata\ExataCurriculumVitaeRepository;
@@ -23,6 +24,7 @@ class Filter extends Component
     use WithFileUploads;
 
     public $inputFile;
+    public $inputFilePipeline;
 
     public $nama_lengkap;
     public $no_whatsapp;
@@ -54,6 +56,10 @@ class Filter extends Component
     // Import
     public $previewRows;
     public $errorRows = [];
+
+    // Import Pipeline
+    public $previewPipelineRows;
+    public $errorPipelineRows = [];
 
     // Edit Manual
     public $edit_detail = [];
@@ -247,6 +253,103 @@ class Filter extends Component
 
             $this->closeImportModal();
             $this->dispatch('onSuccessImportData');
+            $this->dispatch('refresh-table');
+
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil Diperbarui",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
+    }
+
+    // IMPORT PIPELINE
+    public function updatedInputFilePipeline()
+    {
+        $import = new ExcelImportExataPipeline();
+
+        Excel::import($import, $this->inputFilePipeline);
+
+        $this->previewPipelineRows = [];
+        $this->errorPipelineRows = [];
+
+        $data_import = [];
+        foreach (Exata::EXATA_IMPORT_PIPELINE_CHOICE() as $key => $value) {
+            if (!isset($value['isNotImport'])) {
+                $data_import[] = [
+                    str_replace('DATATABLE_', '', $key) => [
+                        'render' => function ($item) use ($value) {
+                            return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
+                        }
+                    ]
+                ];
+            }
+        }
+        $val = [];
+        $valmessage = [];
+        foreach (Exata::EXATA_IMPORT_PIPELINE_CHOICE() as $key => $value) {
+            if (!isset($value['isNotImport'])) {
+                $val[str_replace('DATATABLE_', '', $key)] =  $value['validator'] ?? '';
+                $valmessage[str_replace('DATATABLE_', '', $key)] =  $value['validator_message'] ?? '';
+            }
+        }
+        foreach ($import->rows as $index => $row) {
+
+            $d = [];
+
+            foreach ($data_import as $indexData => $value) {
+                foreach ($value as $keyName => $v) {
+                    $d[$keyName] = call_user_func($v['render'], $row[$indexData]);
+                }
+            }
+
+            $validator = Validator::make($d, $val, $valmessage);
+
+            $this->previewPipelineRows[] = [
+                'data' => $d,
+                'error' => $validator->errors()->toArray()
+            ];
+
+            if ($validator->fails()) {
+                $this->errorPipelineRows[] = $index;
+            }
+        }
+    }
+
+    public function closeImportPipelineModal()
+    {
+        $this->reset('inputFilePipeline');
+        $this->previewPipelineRows = [];
+        $this->errorPipelineRows = [];
+    }
+
+    public function storeImportPipeline()
+    {
+        try {
+            DB::beginTransaction();
+            $path = $this->inputFilePipeline->getRealPath();
+            foreach ($this->previewPipelineRows as $key => $value) {
+                if (!$value['error']) {
+                    $this->dispatch('consoleLog', $value['data']);
+                    ExataRepository::updateBy([
+                        [Exata::PERMISSION_KodeUnik, $value['data'][Exata::PERMISSION_KodeUnik]],
+                        [Exata::PERMISSION_NamaLengkap, $value['data'][Exata::PERMISSION_NamaLengkap]],
+                    ], [Exata::PERMISSION_Pipeline => $value['data'][Exata::PERMISSION_Pipeline]]);
+                }
+            }
+            unlink($path);
+            DB::commit();
+
+            $this->closeImportPipelineModal();
+            $this->dispatch('onSuccessImportPipelineData');
             $this->dispatch('refresh-table');
 
             Alert::confirmation(

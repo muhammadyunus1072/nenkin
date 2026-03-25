@@ -393,6 +393,37 @@ class Exata extends Model
             // ],
         ];
     }
+    public static function EXATA_IMPORT_PIPELINE_CHOICE()
+    {
+        // EXATA_IMPORT_PIPELINE_CHOICE =
+        return [
+
+            'DATATABLE_' . self::PERMISSION_KodeUnik => [
+                'validator' => "required|exists:exatas," . self::PERMISSION_KodeUnik,
+                'validator_message' => ['exists' => 'Kode Unik tidak terdaftar'],
+                'name' => 'Kode Unik',
+                'class' => '',
+                'isDate' => false,
+            ],
+
+            'DATATABLE_' . self::PERMISSION_NamaLengkap => [
+                'validator' => "required|exists:exatas," . self::PERMISSION_NamaLengkap,
+                'validator_message' => ['exists' => 'Nama Lengkap tidak terdaftar'],
+                'name' => 'Nama Lengkap',
+                'class' => '',
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Pipeline => [
+                'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_PIPELINE_CHOICE)),
+                'validator_message' => [
+                    'in' => 'Nilai Pipeline Tidak Sesuai'
+                ],
+                'name' => 'Pipeline',
+                'class' => 'text-center',
+                'isDate' => false,
+            ],
+        ];
+    }
 
     public static function EXATA_DATATABLE_PREVIEW_CHOICE()
     {
@@ -482,17 +513,6 @@ class Exata extends Model
                 'class' => 'text-center',
                 'isNotImport' => true,
                 'isDate' => false,
-                'render' => function ($item) {
-                    $array = explode(',', $item['BidangKerjaPilihan']);
-
-                    $chunks = array_chunk($array, 2);
-
-                    $result = array_map(function ($chunk) {
-                        return implode(', ', $chunk);
-                    }, $chunks);
-
-                    return implode(',<br>', $result);
-                }
             ],
             'DATATABLE_' . self::PERMISSION_Sensei => [
                 'name' => 'Bersedia kerja LPK',
@@ -722,6 +742,7 @@ class Exata extends Model
                 'name' => 'Bidang kerja pilihan',
                 'class' => '',
                 'isDate' => false,
+                'isNotRender' => true,
                 'render' => function ($item) {
                     $array = explode(',', $item['BidangKerjaPilihan']);
 
