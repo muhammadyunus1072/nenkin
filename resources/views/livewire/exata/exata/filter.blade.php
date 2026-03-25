@@ -44,7 +44,7 @@
             <a href="{{asset('template_pipeline.xlsx')}}" download="Template Pipeline"
                 class="btn btn-success btn-sm">
                 <i class="fa fa-file-excel"></i>
-                Download Template Pipeline
+                Download Template Pipeline 
             </a>
         </div>
 
