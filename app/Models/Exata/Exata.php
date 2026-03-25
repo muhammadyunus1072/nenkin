@@ -456,7 +456,7 @@ class Exata extends Model
                 'isNotImport' => true,
                 'isDate' => false,
                 'render' => function ($item) {
-                    return $item['EstimasiGaji'] . ($item['EstimasiGajiTop'] ? '-' . $item['EstimasiGajiTop'] : '');
+                    return "Rp " . $item['EstimasiGaji'] * 0.000001 . " Juta";
                 }
             ],
             'DATATABLE_' . self::PERMISSION_Domisili => [
@@ -695,7 +695,7 @@ class Exata extends Model
                 'class' => 'text-center',
                 'isDate' => false,
                 'render' => function ($item) {
-                    return $item['EstimasiGaji'] . ($item['EstimasiGajiTop'] ? '-' . $item['EstimasiGajiTop'] : '');
+                    return "Rp " . $item['EstimasiGaji'] * 0.000001 . " Juta";
                 }
             ],
             'DATATABLE_' . self::PERMISSION_Domisili => [
