@@ -1017,7 +1017,8 @@ class Exata extends Model
         self::FILTER_JOB_PILIHAN_INDO_Lainnya => 'Lainnya',
     ];
 
-    const PIPELINE_NEW_LEADS = 'PIPELINE_NEW_LEAD';
+    const PIPELINE_NEW_LEAD = 'PIPELINE_NEW_LEAD';
+    const PIPELINE_BLAST = 'PIPELINE_BLAST';
     const PIPELINE_WEBINAR = 'PIPELINE_WEBINAR';
     const PIPELINE_VERIFIED = 'PIPELINE_VERIFIED';
     const PIPELINE_INTERVIEW_INTERNAL = 'PIPELINE_INTERVIEW_INTERNAL';
@@ -1029,7 +1030,8 @@ class Exata extends Model
     const PIPELINE_MASA_PROBATION = 'PIPELINE_MASA_PROBATION';
     const PIPELINE_FEEDBACK = 'PIPELINE_FEEDBACK';
     const FILTER_PIPELINE_CHOICE = [
-        self::PIPELINE_NEW_LEADS => 'NEW LEAD',
+        self::PIPELINE_NEW_LEAD => 'NEW LEAD',
+        self::PIPELINE_BLAST => 'BLAST',
         self::PIPELINE_WEBINAR => 'WEBINAR',
         self::PIPELINE_VERIFIED => 'VERIFIED',
         self::PIPELINE_INTERVIEW_INTERNAL => 'INTERVIEW INTERNAL',
@@ -1042,12 +1044,13 @@ class Exata extends Model
         self::PIPELINE_FEEDBACK => 'FEEDBACK',
     ];
     const COLOR_PIPELINE_CHOICE = [
-        self::PIPELINE_NEW_LEADS => 'background-color: #ea9999;',
+        self::PIPELINE_NEW_LEAD => 'background-color: #ffffff;',
+        self::PIPELINE_BLAST => 'background-color: #ea9999;',
         self::PIPELINE_WEBINAR => 'background-color: #dd7e6b;',
         self::PIPELINE_VERIFIED => 'background-color: #f9cb9c;',
         self::PIPELINE_INTERVIEW_INTERNAL => 'background-color: #9fc5e8;',
         self::PIPELINE_PROMOTION => 'background-color: #ffe599;',
-        self::PIPELINE_DEPOSIT => 'background-color: #e06666;',
+        self::PIPELINE_DEPOSIT => 'background-color: #70e7f4;',
         self::PIPELINE_INTERVIEW_PERUSAHAAN => 'background-color: #b6d7a8;',
         self::PIPELINE_REFUND_DEPOSIT => 'background-color: #93c47d;',
         self::PIPELINE_LOLOS_TIDAK => 'background-color: #d5a6bd;',
@@ -1059,9 +1062,14 @@ class Exata extends Model
     {
         $color = '';
         switch ($this->Pipeline) {
-            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_NEW_LEADS]:
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_NEW_LEAD]:
 
-                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_NEW_LEADS];
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_NEW_LEAD];
+                break;
+
+            case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_BLAST]:
+
+                return self::COLOR_PIPELINE_CHOICE[self::PIPELINE_BLAST];
                 break;
 
             case self::FILTER_PIPELINE_CHOICE[self::PIPELINE_WEBINAR]:
