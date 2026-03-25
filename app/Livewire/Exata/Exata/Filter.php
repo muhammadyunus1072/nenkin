@@ -181,7 +181,7 @@ class Filter extends Component
         foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
             if (!isset($value['isNotImport'])) {
                 $data_import[] = [
-                    $value['name'] => [
+                    str_replace('DATATABLE_', '', $key) => [
                         'render' => function ($item) use ($value) {
                             return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
                         }
@@ -193,8 +193,8 @@ class Filter extends Component
         $valmessage = [];
         foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
             if (!isset($value['isNotImport'])) {
-                $val[$value['name']] =  $value['validator'] ?? '';
-                $valmessage[$value['name']] =  $value['validator_message'] ?? '';
+                $val[str_replace('DATATABLE_', '', $key)] =  $value['validator'] ?? '';
+                $valmessage[str_replace('DATATABLE_', '', $key)] =  $value['validator_message'] ?? '';
             }
         }
         foreach ($import->rows as $index => $row) {
@@ -207,8 +207,8 @@ class Filter extends Component
                 }
             }
 
-            $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d['Estimasi Gaji']));
-            $d['Estimasi Gaji'] = $estimasi_gaji[0];
+            $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d[Exata::PERMISSION_EstimasiGaji]));
+            $d[Exata::PERMISSION_EstimasiGaji] = $estimasi_gaji[0] ? $estimasi_gaji[0] : null;
             // $d['Estimasi Gaji Top'] = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
 
             $validator = Validator::make($d, $val, $valmessage);
@@ -238,6 +238,7 @@ class Filter extends Component
             $path = $this->inputFile->getRealPath();
             foreach ($this->previewRows as $key => $value) {
                 if (!$value['error']) {
+                    // $this->dispatch('consoleLog', $value['data']);
                     $exata = ExataRepository::create($value['data']);
                 }
             }
