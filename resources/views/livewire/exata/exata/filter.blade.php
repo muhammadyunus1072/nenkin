@@ -47,15 +47,6 @@
                 Download Template Pipeline 
             </a>
         </div>
-
-        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE))
-            <div class="col-auto">
-                <button class="btn btn-danger btn-sm" wire:click="showDeleteDialog">
-                    <i class="fa fa-trash"></i>
-                        Delete Data
-                </button>
-            </div>
-        @endCan
         {{-- @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE))
             <div class="col-auto">
                 <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">
