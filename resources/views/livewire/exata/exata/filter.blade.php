@@ -62,23 +62,29 @@
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaLengkap.'.read')
             <div style="flex:0 0 15%;">
                 <label class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" wire:model.live="nama_lengkap" placeholder="nama_lengkap" />
+                <input type="text" class="form-control" wire:model.live="nama_lengkap" placeholder="Nama Lengkap" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_FilterNoWa.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">No Whatsapp</label>
-                <input type="text" class="form-control" wire:model.live="no_whatsapp" placeholder="no_whatsapp" />
+                <input type="text" class="form-control" wire:model.live="no_whatsapp" placeholder="No Whatsapp" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_EstimasiGaji.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">Gaji Dari</label>
-                <input type="text" class="form-control" wire:model.live="estimasi_gaji" placeholder="Gaji Dari" />
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" wire:model.live="estimasi_gaji" placeholder="-- Isi --" >
+                    <span class="input-group-text px-1" id="basic-addon2">00.000</span>
+                </div>
             </div>
             <div style="flex:0 0 10%;">
                 <label class="form-label">Gaji Sampai</label>
-                <input type="text" class="form-control" wire:model.live="estimasi_gaji_top" placeholder="Gaji Sampai" />
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" wire:model.live="estimasi_gaji_top" placeholder="-- Isi --" >
+                    <span class="input-group-text px-1" id="basic-addon2">00.000</span>
+                </div>
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Domisili.'.read')
@@ -102,25 +108,25 @@
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaLPK.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">Nama LPK</label>
-                <input type="text" class="form-control" wire:model.live="nama_lpk" placeholder="nama_lpk" />
+                <input type="text" class="form-control" wire:model.live="nama_lpk" placeholder="Nama LPK" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaInstagram.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">Instagram</label>
-                <input type="text" class="form-control" wire:model.live="instagram" placeholder="instagram" />
+                <input type="text" class="form-control" wire:model.live="instagram" placeholder="Instagram" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_NamaTikTok.'.read')
             <div style="flex:0 0 10%;">
                 <label class="form-label">Tiktok</label>
-                <input type="text" class="form-control" wire:model.live="tiktok" placeholder="tiktok" />
+                <input type="text" class="form-control" wire:model.live="tiktok" placeholder="Tiktok" />
             </div>
         @endCan
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_Keterangan.'.read')
             <div style="flex:0 0 13%;">
                 <label class="form-label">Keterangan</label>
-                <input type="text" class="form-control" wire:model.live="keterangan" placeholder="keterangan" />
+                <input type="text" class="form-control" wire:model.live="keterangan" placeholder="Keterangan" />
             </div>
         @endCan
     </div>
@@ -214,7 +220,7 @@
         @can('exata_FILTER_'.App\Models\Exata\Exata::PERMISSION_BidangKerjadiJepang.'.read')
             <div class="col-auto mb-2">
                 <label class="form-label">Bidang Kerja (Japan)</label>
-                <input type="text" class="form-control" wire:model.live="bidang_kerja_japan" placeholder="bidang_kerja_japan" />
+                <input type="text" class="form-control" wire:model.live="bidang_kerja_japan" placeholder="Bidang kerja Jepang" />
             </div>
         @endCan
 
