@@ -40,6 +40,13 @@
                 Download Template Import
             </a>
         </div>
+        <div class="col-auto">
+            <a href="{{asset('template_pipeline.xlsx')}}" download="Template Pipeline"
+                class="btn btn-success btn-sm">
+                <i class="fa fa-file-excel"></i>
+                Download Template Pipeline
+            </a>
+        </div>
 
         @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE))
             <div class="col-auto">
