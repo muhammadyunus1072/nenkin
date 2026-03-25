@@ -682,7 +682,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="closeImportPipelineModal">Tutup</button>
                         
                         <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
-                            wire:target='input_pipeline_file'>Simpan</button>
+                            wire:target='input_file_pipeline'>Simpan</button>
                         
                     </div>
                 </form>
