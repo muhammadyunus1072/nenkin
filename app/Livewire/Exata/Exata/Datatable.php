@@ -55,12 +55,26 @@ class Datatable extends Component
     // Delete Dialog
     public $targetDeleteId;
 
+    // Toggle Column
+    public $hideColumns = [];
+
     public function onMount()
     {
         $authUser = UserRepository::authenticatedUser();
 
         $this->isCanUpdate = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE));
         $this->isCanDelete = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_DELETE));
+    }
+
+
+    public function hideColumn($index)
+    {
+        $this->hideColumns[] = $index;
+    }
+
+    public function showAllColumns()
+    {
+        $this->hideColumns = [];
     }
 
     #[On('on-delete-datatable-confirm')]

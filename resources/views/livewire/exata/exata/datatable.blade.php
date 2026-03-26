@@ -1,12 +1,27 @@
 <div>
     <div class="row justify-content-between mb-3">
-        <div class="col-auto mb-2 {{ !isset($show_filter) || $show_filter == true ? '' : 'd-none' }}">
-            <label>Show</label>
-            <select wire:model.change="length" class="form-select">
-                @foreach ($lengthOptions as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
-                @endforeach
-            </select>
+        <div class="row col-auto d-flex flex-nowrap">
+            <div class="col-auto mb-2 {{ !isset($show_filter) || $show_filter == true ? '' : 'd-none' }}">
+                <label>Show</label>
+                <select wire:model.change="length" class="form-select">
+                    @foreach ($lengthOptions as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-auto d-flex align-items-end mb-2">
+                <button class="btn btn-primary btn-sm" wire:click="showAllColumns">
+        
+                    <i class='ki-duotone ki-eye fs-3'>
+                            <span class='path1'></span>
+                            <span class='path2'></span>
+                            <span class='path3'></span>
+                            <span class='path4'></span>
+                            <span class='path5'></span>
+                        </i>
+                        Show All
+                </button>
+            </div>
         </div>
         <div class="col-sm-6 mb-2 {{ !isset($keyword_filter) || $keyword_filter == true ? '' : 'd-none' }}">
             <label>Kata Kunci</label>
@@ -28,6 +43,7 @@
                 <thead>
                     <tr>
                         @foreach ($columns as $index => $col)
+                        @if (!in_array($index,$hideColumns))
                             <th wire:key='datatable_header_{{ $index }}'>
                                 @if (!isset($col['sortable']) || $col['sortable'])
                                     @php $isSortAscending = $col['key'] == $sortBy && $sortDirection == 'asc'@endphp
@@ -35,7 +51,8 @@
                                         wire:click="datatableSort('{{ $col['key'] }}')">
                                         <div class="fw-bold align-items-center d-flex">
                                             <div class='pe-2'>
-                                                {{ $col['name'] }}
+                                                <p wire:click="hideColumn({{$index}})" class="">{{ $col['name'] }}</p>
+                                            
                                             </div>
                                             <div class="d-flex flex-column">
                                                 <i
@@ -49,10 +66,12 @@
                                     </button>
                                 @else
                                     <div class="fs-6 p-2">
-                                        {{ $col['name'] }}
+                                        <p wire:click="hideColumn({{$index}})" class="">{{ $col['name'] }}</p>
+                                        
                                     </div>
                                 @endif
                             </th>
+                        @endif
                         @endforeach
                     </tr>
                 </thead>
@@ -61,11 +80,13 @@
                         <tr wire:key='datatable_row_{{ $index }}' 
                         {{-- class="table-danger" > --}}
                         style="{{ $item->colorPipeline() }}">
-                            @foreach ($columns as $col)
-                                @if (isset($col['render']) && is_callable($col['render']))
-                                    <td class="{{isset($col['class']) ? $col['class'] : '' }}">{!! call_user_func($col['render'], $item, $index) !!}</td>
-                                @elseif (isset($col['key']))
-                                    <td class="{{isset($col['class']) ? $col['class'] : '' }}">{{ $item->{$col['key']} }}</td>
+                            @foreach ($columns as $indexCol => $col)
+                                @if (!in_array($indexCol,$hideColumns))
+                                    @if (isset($col['render']) && is_callable($col['render']))
+                                        <td class="{{isset($col['class']) ? $col['class'] : '' }}">{!! call_user_func($col['render'], $item, $index) !!}</td>
+                                    @elseif (isset($col['key']))
+                                        <td class="{{isset($col['class']) ? $col['class'] : '' }}">{{ $item->{$col['key']} }}</td>
+                                    @endif
                                 @endif
                             @endforeach
                         </tr>
