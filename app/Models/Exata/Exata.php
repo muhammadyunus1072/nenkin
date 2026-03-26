@@ -844,7 +844,7 @@ class Exata extends Model
                 }
             ],
             'DATATABLE_' . self::PERMISSION_SkillBahasaLain => [
-                'name' => 'Skill basaha lain',
+                'name' => 'Skill bahasa lain',
                 'class' => 'text-center',
                 'isDate' => false,
             ],
