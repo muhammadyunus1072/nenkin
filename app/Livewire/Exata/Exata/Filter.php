@@ -3,6 +3,7 @@
 namespace App\Livewire\Exata\Exata;
 
 use App\Helpers\Alert;
+use App\Imports\ExcelImportExataHeaderPreview;
 use App\Imports\ExcelImportExataPipeline;
 use App\Imports\ExcelImportExataPreview;
 use App\Models\Exata\Exata;
@@ -158,61 +159,105 @@ class Filter extends Component
 
     public function updatedInputFile()
     {
+        if ($this->importType == 'row') {
+            $import = new ExcelImportExataPreview();
 
-        // if ($this->importType = 'row') {
-        $import = new ExcelImportExataPreview();
+            Excel::import($import, $this->inputFile);
 
-        Excel::import($import, $this->inputFile);
+            $this->previewRows = [];
+            $this->errorRows = [];
 
-        $this->previewRows = [];
-        $this->errorRows = [];
-
-        $data_import = [];
-        foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
-            if (!isset($value['isNotImport'])) {
-                $data_import[] = [
-                    str_replace('DATATABLE_', '', $key) => [
-                        'render' => function ($item) use ($value) {
-                            return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
-                        }
-                    ]
-                ];
-            }
-        }
-        $val = [];
-        $valmessage = [];
-        foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
-            if (!isset($value['isNotImport'])) {
-                $val[str_replace('DATATABLE_', '', $key)] =  $value['validator'] ?? '';
-                $valmessage[str_replace('DATATABLE_', '', $key)] =  $value['validator_message'] ?? '';
-            }
-        }
-        foreach ($import->rows as $index => $row) {
-
-            $d = [];
-
-            foreach ($data_import as $indexData => $value) {
-                foreach ($value as $keyName => $v) {
-                    $d[$keyName] = call_user_func($v['render'], $row[$indexData]);
+            $data_import = [];
+            foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
+                if (!isset($value['isNotImport'])) {
+                    $data_import[] = [
+                        str_replace('DATATABLE_', '', $key) => [
+                            'render' => function ($item) use ($value) {
+                                return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
+                            }
+                        ]
+                    ];
                 }
             }
+            $val = [];
+            $valmessage = [];
+            foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
+                if (!isset($value['isNotImport'])) {
+                    $val[str_replace('DATATABLE_', '', $key)] =  $value['validator'] ?? '';
+                    $valmessage[str_replace('DATATABLE_', '', $key)] =  $value['validator_message'] ?? '';
+                }
+            }
+            foreach ($import->rows as $index => $row) {
 
-            $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d[Exata::PERMISSION_EstimasiGaji]));
-            $d[Exata::PERMISSION_EstimasiGaji] = $estimasi_gaji[0] ? $estimasi_gaji[0] : null;
-            // $d['Estimasi Gaji Top'] = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
+                $d = [];
 
-            $validator = Validator::make($d, $val, $valmessage);
-            // }else{
+                foreach ($data_import as $indexData => $value) {
+                    foreach ($value as $keyName => $v) {
+                        $d[$keyName] = call_user_func($v['render'], $row[$indexData]);
+                    }
+                }
 
-            // }
+                $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d[Exata::PERMISSION_EstimasiGaji]));
+                $d[Exata::PERMISSION_EstimasiGaji] = $estimasi_gaji[0] ? $estimasi_gaji[0] : null;
 
-            $this->previewRows[] = [
-                'data' => $d,
-                'error' => $validator->errors()->toArray()
-            ];
+                $validator = Validator::make($d, $val, $valmessage);
 
-            if ($validator->fails()) {
-                $this->errorRows[] = $index;
+                $this->previewRows[] = [
+                    'data' => $d,
+                    'error' => $validator->errors()->toArray()
+                ];
+
+                if ($validator->fails()) {
+                    $this->errorRows[] = $index;
+                }
+            }
+        } else {
+            $import = new ExcelImportExataHeaderPreview();
+            Excel::import($import, $this->inputFile);
+
+            $this->previewRows = [];
+            $this->errorRows = [];
+
+            $data_import = [];
+            foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
+
+                if (!isset($value['isNotImport'])) {
+                    $data_import[$value['header_name']] = [
+                        'column_name' => $value['column_name'],
+                        'render' => function ($item) use ($value) {
+                            return ($value['isDate']) ? (strtoupper(preg_replace('/\s+/u', '', trim($item))) ? strtoupper(preg_replace('/\s+/u', '', trim($item))) : null) : strtoupper($item);
+                        },
+                    ];
+                }
+            }
+            $val = [];
+            $valmessage = [];
+            foreach (Exata::EXATA_IMPORT_CHOICE() as $key => $value) {
+                if (!isset($value['isNotImport'])) {
+                    $val[$value['header_name']] =  $value['validator'] ?? '';
+                    $valmessage[$value['header_name']] =  $value['validator_message'] ?? '';
+                }
+            }
+            foreach ($import->rows as $index => $row) {
+                $d = [];
+
+
+                foreach ($data_import as $indexData => $value) {
+                    $d[$value['column_name']] = call_user_func($value['render'], $row[$indexData]);
+                }
+
+                $estimasi_gaji = explode('-', preg_replace('/[^0-9\-]/', '', $d[Exata::PERMISSION_EstimasiGaji]));
+                $d[Exata::PERMISSION_EstimasiGaji] = $estimasi_gaji[0] ? $estimasi_gaji[0] : null;
+                $validator = Validator::make($d, $val, $valmessage);
+
+                $this->previewRows[] = [
+                    'data' => $d,
+                    'error' => $validator->errors()->toArray()
+                ];
+
+                if ($validator->fails()) {
+                    $this->errorRows[] = $index;
+                }
             }
         }
     }
@@ -231,7 +276,8 @@ class Filter extends Component
             $path = $this->inputFile->getRealPath();
             foreach ($this->previewRows as $key => $value) {
                 if (!$value['error']) {
-                    // $this->dispatch('consoleLog', $value['data']);
+                    $value['data'][Exata::PERMISSION_Pipeline] = Exata::FILTER_PIPELINE_CHOICE[Exata::PIPELINE_NEW_LEAD];
+
                     $exata = ExataRepository::create($value['data']);
                 }
             }
@@ -325,7 +371,6 @@ class Filter extends Component
             $path = $this->inputFilePipeline->getRealPath();
             foreach ($this->previewPipelineRows as $key => $value) {
                 if (!$value['error']) {
-                    $this->dispatch('consoleLog', $value['data']);
                     ExataRepository::updateBy([
                         [Exata::PERMISSION_KodeUnik, $value['data'][Exata::PERMISSION_KodeUnik]],
                         [Exata::PERMISSION_NamaLengkap, $value['data'][Exata::PERMISSION_NamaLengkap]],

@@ -47,26 +47,25 @@
                             <th wire:key='datatable_header_{{ $index }}'>
                                 @if (!isset($col['sortable']) || $col['sortable'])
                                     @php $isSortAscending = $col['key'] == $sortBy && $sortDirection == 'asc'@endphp
-                                    <button type="button" class='btn p-0 m-0'
-                                        wire:click="datatableSort('{{ $col['key'] }}')">
+                                    
                                         <div class="fw-bold align-items-center d-flex">
                                             <div class='pe-2'>
-                                                <p wire:click="hideColumn({{$index}})" class="">{{ $col['name'] }}</p>
+                                                <button type="button" wire:click="hideColumn({{$index}})" class="btn m-0 p-0">{{ $col['name'] }}</button>
                                             
                                             </div>
-                                            <div class="d-flex flex-column">
+                                            <button type="button" class="btn d-flex flex-column" wire:click="datatableSort('{{ $col['key'] }}')">
                                                 <i
-                                                    class="ki-duotone ki-up fs-4 m-0 p-0
+                                                    class="ki-duotone ki-up fs-4 m-0 p-0 ms-2
                                 {{ $isSortAscending ? 'text-dark' : 'text-secondary' }}"></i>
                                                 <i
-                                                    class="ki-duotone ki-down fs-4 m-0 p-0
+                                                    class="ki-duotone ki-down fs-4 m-0 p-0 ms-2
                                 {{ $isSortAscending ? 'text-secondary' : 'text-dark' }}"></i>
-                                            </div>
+                                            </button>
                                         </div>
-                                    </button>
+                                    
                                 @else
                                     <div class="fs-6 p-2">
-                                        <p wire:click="hideColumn({{$index}})" class="">{{ $col['name'] }}</p>
+                                        <button type="button" wire:click="hideColumn({{$index}})" class="btn m-0 p-0">{{ $col['name'] }}</button>
                                         
                                     </div>
                                 @endif

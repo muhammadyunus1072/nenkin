@@ -2,16 +2,17 @@
     {{-- Export Data --}}
     <div class="row mt-4 d-flex gap-4">
         @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_CREATE))
-            <div class="col-md-auto mb-2">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('row')">
-                    <i class="fa fa-upload"></i>
-                    Import By Row
-                </button>
-            </div>
+
             <div class="col-md-auto mb-2">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('header')">
                     <i class="fa fa-upload"></i>
                     Import By Header
+                </button>
+            </div>
+            <div class="col-md-auto mb-2">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('row')">
+                    <i class="fa fa-upload"></i>
+                    Import By Row
                 </button>
             </div>
         @endCan

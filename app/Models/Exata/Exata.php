@@ -116,13 +116,16 @@ class Exata extends Model
         // EXATA_IMPORT_CHOICE =
         return [
             'DATATABLE_' . self::PERMISSION_Ref => [
+                'column_name' => self::PERMISSION_Ref,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Ref',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'referensi_kerja'
             ],
             'DATATABLE_' . self::PERMISSION_TglInput => [
+                'column_name' => self::PERMISSION_TglInput,
                 'validator' => 'nullable|date',
                 'validator_message' => [
                     'date' => 'Format Tanggal Input Tidak Sesuai'
@@ -130,32 +133,40 @@ class Exata extends Model
                 'name' => 'Tgl Input',
                 'class' => 'text-center',
                 'isDate' => true,
+                'header_name' => 'tgl_input',
             ],
-            'DATATABLE_' . self::PERMISSION_Pipeline => [
-                'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_PIPELINE_CHOICE)),
-                'validator_message' => [
-                    'in' => 'Nilai Pipeline Tidak Sesuai'
-                ],
-                'name' => 'Pipeline',
-                'class' => 'text-center',
-                'isDate' => false,
-            ],
+            // 'DATATABLE_' . self::PERMISSION_Pipeline => [
+            // 'column_name' => self::PERMISSION_Pipeline,
+            //     'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_PIPELINE_CHOICE)),
+            //     'validator_message' => [
+            //         'in' => 'Nilai Pipeline Tidak Sesuai'
+            //     ],
+            //     'name' => 'Pipeline',
+            //     'class' => 'text-center',
+            //     'isDate' => false,
+            //     'header_name' => '',
+            // ],
             // 'DATATABLE_' . self::PERMISSION_Available => [
+            // 'column_name' => self::PERMISSION_Available,
             // 'validator' => '',
             // 'validator_message' => [],
             //     'name' => 'Available',
             //     'class' => 'text-center',
             //     'isDate' => false,
+            // 'header_name' => '',
             //     'isNotImport' => false,
             // ],
             'DATATABLE_' . self::PERMISSION_NamaLengkap => [
+                'column_name' => self::PERMISSION_NamaLengkap,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Nama Lengkap',
                 'class' => '',
                 'isDate' => false,
+                'header_name' => 'nama_lengkap',
             ],
             'DATATABLE_' . self::PERMISSION_TanggalLahir => [
+                'column_name' => self::PERMISSION_TanggalLahir,
                 'validator' => 'nullable|date',
                 'validator_message' => [
                     'date' => 'Format Tanggal Lahir Tidak Sesuai'
@@ -163,8 +174,10 @@ class Exata extends Model
                 'name' => 'Tanggal Lahir',
                 'class' => 'text-center',
                 'isDate' => true,
+                'header_name' => 'tgl_lahir',
             ],
             'DATATABLE_' . self::PERMISSION_Gender => [
+                'column_name' => self::PERMISSION_Gender,
                 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_GENDER_CHOICE)),
                 'validator_message' => [
                     'in' => 'Nilai Gender Tidak Sesuai'
@@ -172,8 +185,10 @@ class Exata extends Model
                 'name' => 'Gender',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'l_p',
             ],
             'DATATABLE_' . self::PERMISSION_Pendidikan => [
+                'column_name' => self::PERMISSION_Pendidikan,
                 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_PENDIDIKAN_CHOICE)),
                 'validator_message' => [
                     'in' => 'Nilai Pendidikan Tidak Sesuai'
@@ -181,8 +196,10 @@ class Exata extends Model
                 'name' => 'Pendidikan',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'pendidikan',
             ],
             'DATATABLE_' . self::PERMISSION_LevelBahasa => [
+                'column_name' => self::PERMISSION_LevelBahasa,
                 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_LEVEL_BAHASA_CHOICE)),
                 'validator_message' => [
                     'in' => 'Nilai Level Bahasa Tidak Sesuai'
@@ -190,22 +207,28 @@ class Exata extends Model
                 'name' => 'Level Bahasa',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'level_bahasa',
             ],
             'DATATABLE_' . self::PERMISSION_TahunTerbit => [
+                'column_name' => self::PERMISSION_TahunTerbit,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Tahun Terbit',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'tahun_lulus',
             ],
             'DATATABLE_' . self::PERMISSION_LamaDiJepang => [
+                'column_name' => self::PERMISSION_LamaDiJepang,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Lama Di Jepang',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'lama_di_jepang',
             ],
             'DATATABLE_' . self::PERMISSION_TanggalPulang => [
+                'column_name' => self::PERMISSION_TanggalPulang,
                 'validator' => 'nullable|date',
                 'validator_message' => [
                     'date' => 'Format Tanggal Pulang Tidak Sesuai'
@@ -213,8 +236,10 @@ class Exata extends Model
                 'name' => 'Tanggal Pulang',
                 'class' => 'text-center',
                 'isDate' => true,
+                'header_name' => 'tanggal_pulang',
             ],
             'DATATABLE_' . self::PERMISSION_Sensei => [
+                'column_name' => self::PERMISSION_Sensei,
                 'validator' => 'nullable|in:' . implode(',', ['YA', 'TIDAK']),
                 'validator_message' => [
                     'in' => 'Nilai Sensei Tidak Sesuai'
@@ -222,8 +247,10 @@ class Exata extends Model
                 'name' => 'Sensei',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'sensei',
             ],
             'DATATABLE_' . self::PERMISSION_Dokumen => [
+                'column_name' => self::PERMISSION_Dokumen,
                 'validator' => 'nullable|in:' . implode(',', ['YA', 'TIDAK']),
                 'validator_message' => [
                     'in' => 'Nilai Dokumen Tidak Sesuai'
@@ -231,8 +258,10 @@ class Exata extends Model
                 'name' => 'Dokumen',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'dokumen',
             ],
             'DATATABLE_' . self::PERMISSION_Penerjemah => [
+                'column_name' => self::PERMISSION_Penerjemah,
                 'validator' => 'nullable|in:' . implode(',', ['YA', 'TIDAK']),
                 'validator_message' => [
                     'in' => 'Nilai Penerjemah Tidak Sesuai'
@@ -240,29 +269,37 @@ class Exata extends Model
                 'name' => 'Penerjemah',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'penerjemah',
             ],
             'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
+                'column_name' => self::PERMISSION_EstimasiGaji,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Estimasi Gaji',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'estimasi_gaji',
             ],
             'DATATABLE_' . self::PERMISSION_Domisili => [
+                'column_name' => self::PERMISSION_Domisili,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Domisili',
                 'class' => '',
                 'isDate' => false,
+                'header_name' => 'domisili',
             ],
             'DATATABLE_' . self::PERMISSION_Penempatankerja => [
+                'column_name' => self::PERMISSION_Penempatankerja,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Preferensi Lokasi',
                 'class' => '',
                 'isDate' => false,
+                'header_name' => 'bersedia_di_kota',
             ],
             'DATATABLE_' . self::PERMISSION_TglSiapkerja => [
+                'column_name' => self::PERMISSION_TglSiapkerja,
                 'validator' => 'nullable|date',
                 'validator_message' => [
                     'date' => 'Format Tanggal Siap Bekerja Tidak Sesuai'
@@ -270,15 +307,19 @@ class Exata extends Model
                 'name' => 'Siap Bekerja',
                 'class' => 'text-center',
                 'isDate' => true,
+                'header_name' => 'siap_bekerja',
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
+                'column_name' => self::PERMISSION_BidangKerjadiJepang,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Bidang Kerjadi Jepang',
                 'class' => '',
                 'isDate' => false,
+                'header_name' => 'bidang_kerja_di_jepang',
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
+                'column_name' => self::PERMISSION_BidangKerjaPilihan,
                 // 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_JOB_PILIHAN_INDO_CHOICE)),
                 // 'validator_message' => [
                 //     'in' => 'Nilai Bidang Kerja Pilihan Tidak Sesuai'
@@ -286,22 +327,28 @@ class Exata extends Model
                 'name' => 'Bidang Kerja Pilihan',
                 'class' => '',
                 'isDate' => false,
+                'header_name' => 'bidang_kerja_pilihan',
             ],
             'DATATABLE_' . self::PERMISSION_Senmongkyu => [
+                'column_name' => self::PERMISSION_Senmongkyu,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Senmongkyu',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'senmongkyu',
             ],
             'DATATABLE_' . self::PERMISSION_BidangSenmongkyu => [
+                'column_name' => self::PERMISSION_BidangSenmongkyu,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Bidang Senmongkyu',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'bidang_senmongkyu',
             ],
             'DATATABLE_' . self::PERMISSION_JenisVisa => [
+                'column_name' => self::PERMISSION_JenisVisa,
                 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_JENIS_VISA_CHOICE)),
                 'validator_message' => [
                     'in' => 'Nilai Jenis Visa Tidak Sesuai'
@@ -309,57 +356,73 @@ class Exata extends Model
                 'name' => 'Jenis Visa',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'jenis_visa',
             ],
             'DATATABLE_' . self::PERMISSION_Provinsi => [
+                'column_name' => self::PERMISSION_Provinsi,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Provinsi',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'provinsi',
             ],
             'DATATABLE_' . self::PERMISSION_Kota => [
+                'column_name' => self::PERMISSION_Kota,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Kota',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'kota',
             ],
             'DATATABLE_' . self::PERMISSION_NamaTikTok => [
+                'column_name' => self::PERMISSION_NamaTikTok,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Nama TikTok',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'nama_tiktok',
             ],
             'DATATABLE_' . self::PERMISSION_NamaInstagram => [
+                'column_name' => self::PERMISSION_NamaInstagram,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Nama Instagram',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'nama_instagram',
             ],
             'DATATABLE_' . self::PERMISSION_NoTelpIndonesia => [
+                'column_name' => self::PERMISSION_NoTelpIndonesia,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'No Telp Indonesia',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'no_telp_indonesia',
             ],
             'DATATABLE_' . self::PERMISSION_NoTelpJepang => [
+                'column_name' => self::PERMISSION_NoTelpJepang,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'No Telp Jepang',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'no_telp_jepang',
             ],
             'DATATABLE_' . self::PERMISSION_Email => [
+                'column_name' => self::PERMISSION_Email,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Email',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'email',
             ],
             'DATATABLE_' . self::PERMISSION_PICSales => [
+                'column_name' => self::PERMISSION_PICSales,
                 // 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_SALES_CHOICE)),
                 // 'validator_message' => [
                 //     'in' => 'Nilai PIC/Sales Tidak Sesuai'
@@ -369,29 +432,36 @@ class Exata extends Model
                 'name' => 'PIC/Sales',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'pic_sales',
             ],
             'DATATABLE_' . self::PERMISSION_NamaLPK => [
+                'column_name' => self::PERMISSION_NamaLPK,
                 'validator' => '',
                 'validator_message' => [],
                 'name' => 'Nama LPK',
                 'class' => 'text-center',
                 'isDate' => false,
+                'header_name' => 'nama_lpk',
             ],
             // 'DATATABLE_' . self::PERMISSION_EstimasiGajiTop => [
+            // 'column_name' => self::PERMISSION_EstimasiGajiTop,
             // 'validator' => '',
             // 'validator_message' => [],
             //     'name' => 'Estimasi Gaji Top',
             //     'class' => 'text-center',
             //     'isNotImport' => true,
             //     'isDate' => false,
+            // 'header_name' => '',
             // ],
             // 'DATATABLE_' . self::PERMISSION_Keterangan => [
+            // 'column_name' => self::PERMISSION_Keterangan,
             // 'validator' => '',
             // 'validator_message' => [],
             //     'name' => 'Keterangan',
             //     'class' => 'text-center',
             //     'isNotImport' => true,
             //     'isDate' => false,
+            // 'header_name' => '',
             // ],
         ];
     }

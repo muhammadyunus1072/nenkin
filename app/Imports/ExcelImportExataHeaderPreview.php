@@ -12,6 +12,6 @@ class ExcelImportExataHeaderPreview implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-        $this->rows = $rows->skip(1)->values();
+        $this->rows = $rows;
     }
 }
