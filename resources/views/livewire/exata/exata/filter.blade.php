@@ -44,7 +44,7 @@
             <a href="{{asset('template_import.xlsx')}}" download="Template Import Seluruh Data"
                 class="btn btn-success btn-sm">
                 <i class="fa fa-file-excel"></i>
-                Download Template Import
+                Download Template Import Row
             </a>
         </div>
         <div class="col-auto">
