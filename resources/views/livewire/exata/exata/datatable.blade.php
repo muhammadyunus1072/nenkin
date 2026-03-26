@@ -53,7 +53,7 @@
                                                 <button type="button" wire:click="hideColumn({{$index}})" class="btn m-0 p-0">{{ $col['name'] }}</button>
                                             
                                             </div>
-                                            <button type="button" class="btn d-flex flex-column" wire:click="datatableSort('{{ $col['key'] }}')">
+                                            <button type="button" class="btn d-flex flex-column m-0 p-0" wire:click="datatableSort('{{ $col['key'] }}')">
                                                 <i
                                                     class="ki-duotone ki-up fs-4 m-0 p-0 ms-2
                                 {{ $isSortAscending ? 'text-dark' : 'text-secondary' }}"></i>
