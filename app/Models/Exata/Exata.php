@@ -360,10 +360,12 @@ class Exata extends Model
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_PICSales => [
-                'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_SALES_CHOICE)),
-                'validator_message' => [
-                    'in' => 'Nilai PIC/Sales Tidak Sesuai'
-                ],
+                // 'validator' => 'nullable|in:' . implode(',', array_values(Exata::FILTER_SALES_CHOICE)),
+                // 'validator_message' => [
+                //     'in' => 'Nilai PIC/Sales Tidak Sesuai'
+                // ],
+                'validator' => '',
+                'validator_message' => [],
                 'name' => 'PIC/Sales',
                 'class' => 'text-center',
                 'isDate' => false,

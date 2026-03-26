@@ -72,6 +72,8 @@ class Filter extends Component
         'Keterangan' => '',
     ];
 
+    public $importType;
+
     public $candidate_attachments = [];
 
 
@@ -84,6 +86,12 @@ class Filter extends Component
             ['exata_id', Crypt::decrypt($id)]
         ])->toArray();
     }
+
+    public function setImportBy($importType)
+    {
+        $this->importType = $importType;
+    }
+
     #[On('showFileCurriculumVitae')]
     public function showFileCurriculumVitae($id)
     {
@@ -150,6 +158,8 @@ class Filter extends Component
 
     public function updatedInputFile()
     {
+
+        // if ($this->importType = 'row') {
         $import = new ExcelImportExataPreview();
 
         Excel::import($import, $this->inputFile);
@@ -192,6 +202,9 @@ class Filter extends Component
             // $d['Estimasi Gaji Top'] = isset($estimasi_gaji[1]) ? $estimasi_gaji[1] : null;
 
             $validator = Validator::make($d, $val, $valmessage);
+            // }else{
+
+            // }
 
             $this->previewRows[] = [
                 'data' => $d,
