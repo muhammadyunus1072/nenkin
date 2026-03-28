@@ -1276,7 +1276,7 @@ class Exata extends Model
     protected static function onBoot()
     {
         self::creating(function ($model) {
-            $model->KodeUnik = NumberGenerator::generate($model);
+            $model->KodeUnik = NumberGenerator::generate(self::class, $model);
         });
     }
 

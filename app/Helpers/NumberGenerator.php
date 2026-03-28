@@ -14,8 +14,25 @@ class NumberGenerator
     const SEPARATOR = "/";
 
     public static function generate(
+        $className,
         $model,
     ) {
+
+        $lastModel = $className::withTrashed()->select($className::PERMISSION_KodeUnik)
+            ->orderBy('id', 'DESC')
+            ->lockForUpdate()
+            ->first();
+
+        if (!empty($lastModel)) {
+            $lastNumber = substr($lastModel->number, 6, -6);
+            $lastNumber = $lastNumber ? $lastNumber : 0;
+        } else {
+            $lastNumber = 0;
+        }
+
+        // Get Current Number
+        $currentNumber = strval($lastNumber + 1);
+
         $nama = strtoupper(preg_replace('/\s+/', '', $model->NamaLengkap));
         $domisili = strtoupper(preg_replace('/\s+/', '', $model->Domisili));
 
@@ -24,7 +41,7 @@ class NumberGenerator
 
         $tgl = $model->TanggalLahir ? \Carbon\Carbon::parse($model->TanggalLahir)->format('dmy') : null;
 
-        return $namaPart . $domisiliPart . $tgl;
+        return $namaPart . $domisiliPart . $currentNumber . $tgl;
     }
 
 
