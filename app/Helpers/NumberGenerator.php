@@ -22,9 +22,8 @@ class NumberGenerator
             ->orderBy('id', 'DESC')
             ->lockForUpdate()
             ->first();
-
         if (!empty($lastModel)) {
-            $lastNumber = substr($lastModel->number, 6, -6);
+            $lastNumber = substr($lastModel->KodeUnik, 6, -6);
             $lastNumber = $lastNumber ? $lastNumber : 0;
         } else {
             $lastNumber = 0;
