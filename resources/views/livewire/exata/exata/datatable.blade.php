@@ -30,7 +30,7 @@
                         <span class="path2"></span>
                         <span class="path3"></span>
                     </i>
-                        {{$kunciKolom?'Buka': 'Kunci'}} Kolom
+                        Kolom {{$kunciKolom ? 'terkunci':'Terbuka'}}
                 </button>
             </div>
         </div>
