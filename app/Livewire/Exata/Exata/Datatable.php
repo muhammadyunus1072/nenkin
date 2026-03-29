@@ -57,6 +57,7 @@ class Datatable extends Component
 
     // Toggle Column
     public $hideColumns = [];
+    public $kunciKolom = false;
 
     public function onMount()
     {
@@ -69,12 +70,21 @@ class Datatable extends Component
 
     public function hideColumn($index)
     {
-        $this->hideColumns[] = $index;
+        if (!$this->kunciKolom) {
+            $this->hideColumns[] = $index;
+        }
     }
 
     public function showAllColumns()
     {
-        $this->hideColumns = [];
+        if (!$this->kunciKolom) {
+            $this->hideColumns = [];
+        }
+    }
+
+    public function toggleKunciKolom()
+    {
+        $this->kunciKolom = !$this->kunciKolom;
     }
 
     #[On('on-delete-datatable-confirm')]

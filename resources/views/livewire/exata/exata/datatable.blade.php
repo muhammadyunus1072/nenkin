@@ -19,7 +19,18 @@
                             <span class='path4'></span>
                             <span class='path5'></span>
                         </i>
-                        Show All
+                        Show All {{count($hideColumns) > 0 ? '( '.count($hideColumns).' )' : ''}}
+                </button>
+            </div>
+        
+            <div class="col-auto d-flex align-items-end mb-2">
+                <button class="btn btn-{{$kunciKolom ? 'warning' : 'success'}} btn-sm" wire:click="toggleKunciKolom">
+                    <i class="ki-duotone ki-lock-3 fs-3">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                    </i>
+                        {{$kunciKolom?'Buka': 'Kunci'}} Kolom
                 </button>
             </div>
         </div>
