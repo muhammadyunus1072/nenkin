@@ -9,6 +9,7 @@ use App\Models\Exata\Exata;
 use App\Repositories\Account\UserRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Crypt;
@@ -217,7 +218,7 @@ class Datatable extends Component
     #[On('export')]
     public function export($type)
     {
-        $fileName = "Data Kandidat";
+        $fileName = "Data Kandidat " . Carbon::now()->format('Y-m-d H:i:s');
         return ExportHelper::export(
             $type,
             $fileName,
@@ -237,7 +238,7 @@ class Datatable extends Component
     #[On('export-preview')]
     public function exportPreview($type)
     {
-        $fileName = "Preview Kandidat";
+        $fileName = "Preview Kandidat " . Carbon::now()->format('Y-m-d H:i:s');
         return ExportHelper::export(
             $type,
             $fileName,
