@@ -222,7 +222,7 @@ class Datatable extends Component
         return ExportHelper::export(
             $type,
             $fileName,
-            $this->getQuery()->get()->toArray(),
+            $this->datatableGetData()->get()->toArray(),
             'app.exata.exata.export',
             [
                 'title' => 'Data Kandidat',
@@ -242,7 +242,7 @@ class Datatable extends Component
         return ExportHelper::export(
             $type,
             $fileName,
-            $this->getQuery()->get()->toArray(),
+            $this->datatableGetData()->get()->toArray(),
             'app.exata.exata.export-preview',
             [
                 'title' => 'Preview Kandidat',
