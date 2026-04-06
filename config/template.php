@@ -2,7 +2,7 @@
 
 return [
     'title' => env('APP_NAME', 'Template Project'),
-    'subtitle' => 'Software House',
+    'subtitle' => 'recuitment',
 
     'logo_auth' => 'files/images/LOGO J-EXPERT.svg',
     'logo_auth_background' => 'white',
