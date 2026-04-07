@@ -39,6 +39,7 @@ class PermissionHelper
 
     // EXATA
     const ACCESS_EXATA = 'exata';
+    const ACCESS_EXATA_FORM_CANDIDATE = 'exata_form_candidate';
     const ACCESS_EXATA_PERMISSION = 'permission_exata';
 
     const ACCESS_ALL = [
@@ -55,6 +56,7 @@ class PermissionHelper
 
         // EXATA
         self::ACCESS_EXATA,
+        self::ACCESS_EXATA_FORM_CANDIDATE,
         self::ACCESS_EXATA_PERMISSION,
     ];
 
@@ -72,6 +74,7 @@ class PermissionHelper
 
         // EXATA
         self::ACCESS_EXATA => "Data Exata",
+        self::ACCESS_EXATA_FORM_CANDIDATE => "Data Exata - Form Kandidat",
         self::ACCESS_EXATA_PERMISSION => "Data Ijin Exata",
     ];
 

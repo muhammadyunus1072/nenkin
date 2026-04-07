@@ -288,6 +288,17 @@
         Livewire.on('consoleLog', (data) => {
             console.log(data)
         });
+
+            window.copyToClipboard = function(text)
+            {
+                navigator.clipboard.writeText(text)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil Copy Link Form Kandidat!',
+                    });
+                });
+            }
     </script>
     @stack('js')
     <!--end::Javascript-->

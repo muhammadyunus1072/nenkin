@@ -37,6 +37,11 @@ return [
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
+            'text' => 'Form Kandidat',
+            'route'  => 'exata_form_candidate.index',
+            'icon' => 'ki-duotone ki-element-11',
+        ],
+        [
             'text' => 'Master Data Regency',
             'route'  => 'regency.index',
             'icon' => 'ki-duotone ki-element-11',

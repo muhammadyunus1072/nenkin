@@ -186,7 +186,7 @@
                     <label>Gender</label>
                     <select id="select2-gender" class="form-select" multiple>
                         @foreach (App\Models\Exata\Exata::FILTER_GENDER_CHOICE as $key => $name)    
-                            <option value="{{$name}}">{{$name}}</option>
+                            <option value="{{$key}}">{{$name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -254,7 +254,7 @@
                     <label>PIC / Sales</label>
                     <select id="select2-pic-sales" class="form-select" multiple>
                         @foreach (App\Models\Exata\Exata::FILTER_SALES_CHOICE as $key => $name)    
-                            <option value="{{$name}}">{{$name}}</option>
+                            <option value="{{$key}}">{{$name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -936,16 +936,5 @@
         $('#select2-attachment').on('select2:unselect', function(e) {
             @this.call('unSelectAttachment', e.params.data)
         });
-
-            window.copyToClipboard = function(text)
-            {
-                navigator.clipboard.writeText(text)
-                .then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil Copy Link Form Kandidat!',
-                    });
-                });
-            }
     </script>
 @endpush

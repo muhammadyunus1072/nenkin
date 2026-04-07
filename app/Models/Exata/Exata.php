@@ -976,8 +976,8 @@ class Exata extends Model
     const FILTER_GENDER_L = 'L';
     const FILTER_GENDER_P = 'P';
     const FILTER_GENDER_CHOICE = [
-        self::FILTER_GENDER_L => 'L',
-        self::FILTER_GENDER_P => 'P',
+        self::FILTER_GENDER_L => 'LAKI-LAKI',
+        self::FILTER_GENDER_P => 'PEREMPUAN',
     ];
 
     const FILTER_AVAILABLE_AVAILABLE = 'AVAILABEL';
@@ -1016,13 +1016,15 @@ class Exata extends Model
         self::FILTER_JENIS_VISA_Nursing_Care => 'NURSING CARE',
     ];
 
-    const FILTER_SALES_AINUL = 'AINUL_EXATA';
-    const FILTER_SALES_KIM = 'KIM_EXATA';
-    const FILTER_SALES_SLAMET = 'SLAMET_EXATA';
+    const FILTER_SALES_AINUL = 'AINUL';
+    const FILTER_SALES_FORM_KANDIDAT = 'FORM KANDIDAT';
+    const FILTER_SALES_KIM = 'KIM';
+    const FILTER_SALES_SLAMET = 'SLAMET';
     const FILTER_SALES_CHOICE = [
         self::FILTER_SALES_AINUL => 'AINUL EXATA - SALES 1',
         self::FILTER_SALES_KIM => 'KIM EXATA - SALES 2',
         self::FILTER_SALES_SLAMET => 'SELAMET EXATA - SALES 3',
+        self::FILTER_SALES_FORM_KANDIDAT => 'FORM KANDIDAT',
     ];
 
     const FILTER_PENDIDIKAN_SMA_SMK = 'SMA_SMK';

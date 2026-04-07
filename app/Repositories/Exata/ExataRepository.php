@@ -117,7 +117,9 @@ class ExataRepository extends MasterDataRepository
                 }
             })
             ->when(!empty($pic_sales), function ($query) use ($pic_sales) {
-                $query->whereIn('PICSales', $pic_sales);
+                foreach ($pic_sales as $item) {
+                    $query->orWhere('PICSales', 'like', '%' . $item . '%');
+                }
             })
             ->when(!empty($jenis_visa), function ($query) use ($jenis_visa) {
                 $query->whereIn('JenisVisa', $jenis_visa);
