@@ -244,11 +244,11 @@ class Form extends Component
                     'Dokumen' => $this->Dokumen ? 'YA' : 'TIDAK',
                     'Penerjemah' => $this->Penerjemah ? 'YA' : 'TIDAK',
                     'EstimasiGaji' => $this->EstimasiGaji,
-                    'Domisili' => $this->Domisili[0],
-                    'Penempatankerja' => implode(',', $this->Penempatankerja),
+                    'Domisili' => $this->Domisili ? $this->Domisili[0] : null,
+                    'Penempatankerja' => $this->Penempatankerja ? implode(',', $this->Penempatankerja) : null,
                     'TglSiapkerja' => $this->TglSiapkerja,
                     'BidangKerjadiJepang' => $this->BidangKerjadiJepang,
-                    'BidangKerjaPilihan' => implode(',', $this->BidangKerjaPilihan),
+                    'BidangKerjaPilihan' => $this->BidangKerjaPilihan ? implode(',', $this->BidangKerjaPilihan) : null,
                     'Senmongkyu' => $this->Senmongkyu ? 'YA' : 'TIDAK',
                     'BidangSenmongkyu' => $this->BidangSenmongkyu,
                     'JenisVisa' => $this->JenisVisa,
@@ -275,6 +275,7 @@ class Form extends Component
                     'TglInput' => now(),
                     'PICSales' => Exata::FILTER_SALES_FORM_KANDIDAT,
                 ];
+                dd($validateData);
                 $exata = ExataRepository::create($validateData);
                 $exata_id = $exata->id;
                 foreach ($this->sertifikat_bahasa_jepang as $sertifikat) {

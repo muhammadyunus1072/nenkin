@@ -5,6 +5,7 @@ namespace App\Models\Exata;
 use App\Helpers\NumberGenerator;
 use App\Models\Exata\ExataCurriculumVitae;
 use App\Models\Exata\ExataJapaneseLanguageCertificate;
+use App\Traits\Models\UppercaseAttributes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Muhammadyunus1072\TrackHistory\HasTrackHistory;
 
 class Exata extends Model
 {
-    use HasFactory, SoftDeletes, HasTrackHistory;
+    use HasFactory, SoftDeletes, HasTrackHistory, UppercaseAttributes;
 
     const PERMISSION_KodeUnik = 'KodeUnik';
     const PERMISSION_Ref = 'Ref';
@@ -56,6 +57,23 @@ class Exata extends Model
     const PERMISSION_FilterNoWa = 'FilterNoWa';
     const PERMISSION_Available = 'Available';
     const PERMISSION_Job = 'JOB';
+
+
+    protected array $uppercase = [
+        self::PERMISSION_Pipeline,
+        self::PERMISSION_NamaLengkap,
+        self::PERMISSION_BidangKerjadiJepang,
+        self::PERMISSION_Domisili,
+        self::PERMISSION_Penempatankerja,
+        self::PERMISSION_BidangSenmongkyu,
+        self::PERMISSION_Provinsi,
+        self::PERMISSION_Kota,
+        self::PERMISSION_NamaTikTok,
+        self::PERMISSION_NamaInstagram,
+        self::PERMISSION_Email,
+        self::PERMISSION_PICSales,
+        self::PERMISSION_NamaLPK,
+    ];
 
 
     const PERMISSION_SertifikatBahasaJepang = 'SertifikatBahasaJepang';
