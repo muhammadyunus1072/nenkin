@@ -3,6 +3,7 @@
 use App\Http\Controllers\Exata\ExataController;
 use App\Http\Controllers\Exata\ExataFormCandidateController;
 use App\Http\Controllers\Exata\ExataPermissionController;
+use App\Http\Controllers\Exata\ExataPreviewCandidateController;
 use App\Http\Controllers\MasterData\RegencyController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('{id}/edit', 'edit')->name('edit');
     });
     Route::group(["controller" => ExataFormCandidateController::class, "prefix" => "exata_form_candidate", "as" => "exata_form_candidate."], function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::get('{id}/edit', 'edit')->name('edit');
+    });
+    Route::group(["controller" => ExataPreviewCandidateController::class, "prefix" => "exata_preview_candidate", "as" => "exata_preview_candidate."], function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::get('{id}/edit', 'edit')->name('edit');

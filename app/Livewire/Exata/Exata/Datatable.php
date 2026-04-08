@@ -6,7 +6,9 @@ use App\Helpers\Alert;
 use App\Helpers\ExportHelper;
 use App\Helpers\PermissionHelper;
 use App\Models\Exata\Exata;
+use App\Models\Exata\ExataPreviewCandidate;
 use App\Repositories\Account\UserRepository;
+use App\Repositories\Exata\ExataPreviewCandidateRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
 use Carbon\Carbon;
@@ -88,20 +90,53 @@ class Datatable extends Component
         $this->kunciKolom = !$this->kunciKolom;
     }
 
-    #[On('on-delete-datatable-confirm')]
-    public function onDialogDeleteConfirm()
+    // #[On('on-delete-datatable-confirm')]
+    // public function onDialogDeleteConfirm()
+    // {
+
+    //     try {
+    //         DB::transaction(function () {
+
+    //             $this->getQuery()->delete();
+    //         });
+
+
+    //         DB::commit();
+
+    //         $this->dispatch('onSuccessEditBulk');
+
+    //         Alert::confirmation(
+    //             $this,
+    //             Alert::ICON_SUCCESS,
+    //             "Berhasil",
+    //             "Data Berhasil Dihapus",
+    //             "on-dialog-confirm",
+    //             "on-dialog-cancel",
+    //             "Oke",
+    //             "Tutup",
+    //         );
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         Alert::fail($this, "Gagal", $e->getMessage());
+    //     }
+    // }
+
+    public function addPreviewCandidate($exata_id)
     {
 
         try {
-            DB::transaction(function () {
-
-                $this->getQuery()->delete();
+            DB::transaction(function () use ($exata_id) {
+                $id = Crypt::decrypt($exata_id);
+                ExataPreviewCandidate::updateOrCreate(
+                    [
+                        'exata_id' => $id,
+                    ],
+                    [
+                        'exata_id' => $id
+                    ]
+                );
             });
-
-
             DB::commit();
-
-            $this->dispatch('onSuccessEditBulk');
 
             Alert::confirmation(
                 $this,
@@ -312,9 +347,22 @@ class Datatable extends Component
                             </button>
                         </div>
                         ";
+                    $btn_preview = $item->exataPreviewCandidate ? 'btn-primary' : 'btn-success';
+                    $addPreviewHtml = "
+                        <div class='col-auto mb-2'>
+                            <button class='btn " . $btn_preview . " btn-sm mx-0 px-1' 
+                                wire:click=\"addPreviewCandidate('$id')\"
+                            >
+                                <i class='ki-duotone ki-like-tag fs-3'>
+                                <span class='path1'></span>
+                                <span class='path2'></span>
+                                </i>
+                            </button>
+                        </div>
+                        ";
 
                     $html = "<div class='row d-flex justify-content-start flex-nowrap gap-0'>
-                        $editHtml $linkHtml
+                        $editHtml $linkHtml $addPreviewHtml
                     </div>";
 
                     return $html;

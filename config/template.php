@@ -37,6 +37,11 @@ return [
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
+            'text' => 'Preview Kandidat',
+            'route'  => 'exata_preview_candidate.index',
+            'icon' => 'ki-duotone ki-element-11',
+        ],
+        [
             'text' => 'Form Kandidat',
             'route'  => 'exata_form_candidate.index',
             'icon' => 'ki-duotone ki-element-11',

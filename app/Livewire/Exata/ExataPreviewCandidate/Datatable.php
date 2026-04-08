@@ -1,0 +1,214 @@
+<?php
+
+namespace App\Livewire\Exata\ExataPreviewCandidate;
+
+use App\Helpers\Alert;
+use App\Helpers\ExportHelper;
+use App\Helpers\PermissionHelper;
+use App\Models\Exata\Exata;
+use App\Models\Exata\ExataPreviewCandidate;
+use App\Repositories\Account\UserRepository;
+use App\Repositories\Exata\ExataPreviewCandidateRepository;
+use App\Repositories\Exata\ExataRepository;
+use App\Traits\WithDatatable;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+
+class Datatable extends Component
+{
+    use WithDatatable;
+
+    public $isCanUpdate;
+    public $isCanDelete;
+    // Delete Dialog
+    public $targetDeleteId;
+
+    // Toggle Column
+    public $hideColumns = [];
+    public $kunciKolom = false;
+
+    public function onMount()
+    {
+        $authUser = UserRepository::authenticatedUser();
+
+        $this->isCanUpdate = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA_PREVIEW_CANDIDATE, PermissionHelper::TYPE_UPDATE));
+        $this->isCanDelete = $authUser->hasPermissionTo(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA_PREVIEW_CANDIDATE, PermissionHelper::TYPE_DELETE));
+    }
+
+
+    public function hideColumn($index)
+    {
+        if (!$this->kunciKolom) {
+            $this->hideColumns[] = $index;
+        }
+    }
+
+    public function showAllColumns()
+    {
+        if (!$this->kunciKolom) {
+            $this->hideColumns = [];
+        }
+    }
+
+    public function toggleKunciKolom()
+    {
+        $this->kunciKolom = !$this->kunciKolom;
+    }
+
+    #[On('export')]
+    public function export($type)
+    {
+
+        return redirect()->route('exata_preview_candidate.create');
+    }
+
+    public function addPreviewCandidate($exata_id)
+    {
+
+        try {
+            DB::transaction(function () use ($exata_id) {
+                $id = Crypt::decrypt($exata_id);
+                ExataPreviewCandidateRepository::deleteBy([
+                    [
+                        'exata_id',
+                        $id
+                    ],
+                ]);
+            });
+            DB::commit();
+
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil Dihapus",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
+    }
+
+    #[On('on-delete-dialog-cancel')]
+    public function onDialogDeleteCancel()
+    {
+        $this->targetDeleteId = null;
+    }
+
+    public function showDeleteDialog($id)
+    {
+        $this->targetDeleteId = $id;
+
+        Alert::confirmation(
+            $this,
+            Alert::ICON_QUESTION,
+            "Hapus Data",
+            "Apakah Anda Yakin Ingin Menghapus Data Ini ?",
+            "on-delete-dialog-confirm",
+            "on-delete-dialog-cancel",
+            "Hapus",
+            "Batal",
+        );
+    }
+
+    #[On('refresh-table')]
+    public function refreshTable()
+    {
+        $this->resetPage();
+    }
+
+    public function getColumns(): array
+    {
+        $columns = [
+            [
+                'sortable' => false,
+                'searchable' => false,
+                'name' => '#',
+                'render' => function ($item, $index) {
+                    $i = $index + 1;
+                    return $i;
+                }
+            ]
+        ];
+        if ($this->isCanUpdate) {
+            $columns[] = [
+                'name' => 'Action',
+                'sortable' => false,
+                'searchable' => false,
+                'render' => function ($item) {
+                    $id = Crypt::encrypt($item->id);
+                    $routeLink = route('exata.edit', $id);
+                    $linkHtml = "
+                        <div class='col-auto mb-2'>
+                            <button
+                                class='btn btn-success btn-sm'
+                                onclick=\"copyToClipboard('$routeLink')\"
+                            >
+                                <i class='ki-duotone ki-archive-tick fs-3'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                </i>
+                                Link
+                            </button>
+                        </div>
+                        ";
+                    $id = Crypt::encrypt($item->exata_id);
+                    $btn_preview = $item->exataPreviewCandidate ? 'btn-primary' : 'btn-success';
+                    $addPreviewHtml = "
+                        <div class='col-auto mb-2'>
+                            <button class='btn " . $btn_preview . " btn-sm mx-0 px-1' 
+                                wire:click=\"addPreviewCandidate('$id')\"
+                            >
+                                <i class='ki-duotone ki-like-tag fs-3'>
+                                <span class='path1'></span>
+                                <span class='path2'></span>
+                                </i>
+                            </button>
+                        </div>
+                        ";
+
+                    $html = "<div class='row d-flex justify-content-start flex-nowrap gap-0'>
+                        $linkHtml $addPreviewHtml
+                    </div>";
+
+                    return $html;
+                },
+            ];
+        }
+
+        $authUser = UserRepository::authenticatedUser();
+        foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $access) {
+            if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
+                $columns[] = [
+                    'key' => str_replace('DATATABLE_', '', $key),
+                    'name' => $access['name'],
+                    'class' => isset($access['class']) ? $access['class'] : '',
+                    'render' => isset($access['render']) ? $access['render'] : '',
+                    'sortable' => isset($access['sortable']) ? $access['sortable'] : true,
+                    'searchable' => isset($access['searchable']) ? $access['sortable'] : true
+                ];
+            }
+        }
+        return $columns;
+    }
+
+    public function getQuery(): Builder
+    {
+        return ExataPreviewCandidateRepository::datatable();
+    }
+
+    public function getView(): string
+    {
+        return 'livewire.exata.exata-preview-candidate.datatable';
+    }
+}

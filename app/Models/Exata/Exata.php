@@ -1309,4 +1309,9 @@ class Exata extends Model
     {
         return $this->hasMany(ExataJapaneseLanguageCertificate::class, 'exata_id', 'id');
     }
+
+    public function exataPreviewCandidate()
+    {
+        return $this->hasOne(ExataPreviewCandidate::class, 'exata_id');
+    }
 }
