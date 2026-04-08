@@ -81,11 +81,18 @@
     </script>
     <style>
         @page {
-            size: auto;
+            size: A4 portrait;
+            /* size: A4 landscape; */
             margin: 0mm;
         }
+        @media print {
 
-        @media print {}
+            table {
+                width: 100% !important;
+                table-layout: auto !important;
+            }
+
+        }
 
         .print-page {
             page-break-before: always;
@@ -200,75 +207,11 @@
     <div class="watermark-bg">
         <img alt="Corporate Logo Watermark" class="w-full object-contain" data-alt="faded minimalist corporate logo graphic with geometric circular elements and professional abstract lines in soft blue tones" src="https://nenkin.turhamunselvia.site/files/images/LOGO%20J-EXPERT.svg"/>
     </div>
-      <main class="min-h-screen watermark-container">
-         <div class="content-layer mx-auto st shadow-sm rounded-lg overflow-hidden border border-outline-variant/15">
-        
-            {{-- HEADER --}}
-            <div class="header">
-                <div class="p-0 border-b border-outline-variant/10"
-                    style="display:flex; justify-content: space-evenly; align-items: center;">
-                    <img src="{{asset(config('template.logo_panel'))}}"
-                        style="width:300px; height:120px; object-fit:contain;">
-                    <div>
-                        <h1 style="font-weight:800; font-size:28px;">
-                            LPK HADETAMA
-                        </h1>
-                        <p style="margin-top:4px;">
-                        </p>
-                        <div style="margin-top:8px;">
-                            <div>International Human Resource & Language Center</div>
-                            <div>Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat</div>
-                            <div>+62 812 2000 4752 | +62 21 8899 7766</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- CONTENT --}}
-            <table class="report-container">
-                <thead class="report-header">
-                    <tr>
-                        <th class="report-header-cell">
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody class="report-content">
-                    <tr>
-                        <td class="report-content-cell">
-                            <div class="main">
-                                @yield('content')
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            {{-- FOOTER --}}
-            <div class="footer">        
-                <!-- Signature/Approval Area (Editorial Touch) -->
-                <div class="mt-12 px-12 pb-8">
-                    <div class="flex flex-col">
-                        <p class="font-headline font-bold text-lg text-center">Contact Person:</p>
-                        <p class="font-headline font-extrabold text-2xl text-primary tracking-tight m-0">Tanjung - 0812 2000 4752</p>
-                    </div>
-                </div>
-            </div>
-         </div>
-         
-      </main>
+    @yield('content')
 </body>
 
     {{-- JAVASCRIPT --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script>
-        $(() => {
-            window.print();
-            const afterPrint = setTimeout(() => {
-                window.close()
-            }, 500);
-        });
-    </script>
     @stack('js')
 </body>
 

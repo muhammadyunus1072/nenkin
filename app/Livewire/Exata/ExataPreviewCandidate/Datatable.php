@@ -33,6 +33,9 @@ class Datatable extends Component
     public $hideColumns = [];
     public $kunciKolom = false;
 
+    public $exata_id;
+    public $poin_rekomendasi;
+
     public function onMount()
     {
         $authUser = UserRepository::authenticatedUser();
@@ -121,6 +124,43 @@ class Datatable extends Component
         );
     }
 
+    public function edit($id)
+    {
+        $this->exata_id = $id;
+        $this->poin_rekomendasi = ExataPreviewCandidateRepository::findBy([
+            ['exata_id', Crypt::decrypt($id)]
+        ])->poin_rekomendasi;
+    }
+
+    public function save()
+    {
+        try {
+            DB::transaction(function () {
+                $id = Crypt::decrypt($this->exata_id);
+                ExataPreviewCandidateRepository::updateBy([
+                    ['exata_id', $id]
+                ], [
+                    'poin_rekomendasi' => $this->poin_rekomendasi
+                ]);
+            });
+            DB::commit();
+
+            Alert::confirmation(
+                $this,
+                Alert::ICON_SUCCESS,
+                "Berhasil",
+                "Data Berhasil disimpan",
+                "on-dialog-confirm",
+                "on-dialog-cancel",
+                "Oke",
+                "Tutup",
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::fail($this, "Gagal", $e->getMessage());
+        }
+    }
+
     #[On('refresh-table')]
     public function refreshTable()
     {
@@ -162,7 +202,24 @@ class Datatable extends Component
                             </button>
                         </div>
                         ";
+
                     $id = Crypt::encrypt($item->exata_id);
+                    $editHtml = "
+                        <div class='col-auto mb-2'>
+                            <button
+                                class='btn btn-warning btn-sm'
+                                data-bs-toggle='modal'
+                                data-bs-target='#editModal'
+                                wire:click=\"edit('" . $id . "')\"
+                            >
+                                <i class='ki-duotone ki-pencil'>
+                                    <span class='path1'></span>
+                                    <span class='path2'></span>
+                                </i>
+                                Edit
+                            </button>
+                        </div>
+                        ";
                     $btn_preview = $item->exataPreviewCandidate ? 'btn-primary' : 'btn-success';
                     $addPreviewHtml = "
                         <div class='col-auto mb-2'>
@@ -178,7 +235,7 @@ class Datatable extends Component
                         ";
 
                     $html = "<div class='row d-flex justify-content-start flex-nowrap gap-0'>
-                        $linkHtml $addPreviewHtml
+                        $editHtml $linkHtml $addPreviewHtml
                     </div>";
 
                     return $html;
@@ -186,8 +243,13 @@ class Datatable extends Component
             ];
         }
 
+        $columns[] = [
+            'key' => 'poin_rekomendasi',
+            'name' => 'Point of Recommendation',
+        ];
+
         $authUser = UserRepository::authenticatedUser();
-        foreach (Exata::EXATA_DATATABLE_CHOICE() as $key => $access) {
+        foreach (Exata::EXATA_DATATABLE_PREVIEW_CHOICE() as $key => $access) {
             if ($authUser->hasPermissionTo("exata_" . $key . ".read")) {
                 $columns[] = [
                     'key' => str_replace('DATATABLE_', '', $key),

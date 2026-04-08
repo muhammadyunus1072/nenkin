@@ -14,6 +14,7 @@ class ExataPreviewCandidate extends Model
 
     protected $fillable = [
         'exata_id',
+        'poin_rekomendasi',
     ];
 
     protected $guarded = ['id'];

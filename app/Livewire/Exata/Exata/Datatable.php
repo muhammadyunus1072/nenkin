@@ -8,7 +8,6 @@ use App\Helpers\PermissionHelper;
 use App\Models\Exata\Exata;
 use App\Models\Exata\ExataPreviewCandidate;
 use App\Repositories\Account\UserRepository;
-use App\Repositories\Exata\ExataPreviewCandidateRepository;
 use App\Repositories\Exata\ExataRepository;
 use App\Traits\WithDatatable;
 use Carbon\Carbon;
@@ -142,7 +141,7 @@ class Datatable extends Component
                 $this,
                 Alert::ICON_SUCCESS,
                 "Berhasil",
-                "Data Berhasil Dihapus",
+                "Data Berhasil Disimpan",
                 "on-dialog-confirm",
                 "on-dialog-cancel",
                 "Oke",
