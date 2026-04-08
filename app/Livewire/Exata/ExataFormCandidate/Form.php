@@ -105,10 +105,16 @@ class Form extends Component
     }
 
     #[On('on-dialog-confirm')]
-    public function onDialogConfirm() {}
+    public function onDialogConfirm()
+    {
+        return redirect()->route('exata_form_candidate.form', $this->objId);
+    }
 
     #[On('on-dialog-cancel')]
-    public function onDialogCancel() {}
+    public function onDialogCancel()
+    {
+        return redirect()->route('exata_form_candidate.form', $this->objId);
+    }
 
     public function checkPassword()
     {
