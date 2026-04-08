@@ -128,6 +128,18 @@ class Datatable extends Component
                 'key' => 'password',
                 'name' => 'Password'
             ],
+            [
+                'key' => 'status',
+                'name' => 'Status'
+            ],
+            [
+                'sortable' => false,
+                'searcable' => false,
+                'name' => 'Kode Unik Kandidat',
+                'render' => function ($item) {
+                    return $item->exata ? $item->exata->KodeUnik : '-';
+                }
+            ],
 
             [
                 'sortable' => false,

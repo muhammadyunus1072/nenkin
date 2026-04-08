@@ -16,7 +16,13 @@ class ExataFormCandidate extends Model
         'user_id',
         'password',
         'expired_at',
+        'status',
+        'exata_id',
     ];
+
+    const STATUS_CREATED = 'CREATED';
+    const STATUS_SUBMITTED = 'SUBMITTED';
+    const STATUS_EXPIRED = 'EXPIRED';
 
     protected $guarded = ['id'];
 
@@ -35,5 +41,10 @@ class ExataFormCandidate extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function exata()
+    {
+        return $this->belongsTo(Exata::class, 'exata_id', 'id');
     }
 }

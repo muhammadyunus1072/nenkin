@@ -5,6 +5,7 @@ namespace App\Livewire\Exata\ExataFormCandidate;
 use App\Helpers\Alert;
 use App\Helpers\FilePathHelper;
 use App\Models\Exata\Exata;
+use App\Models\Exata\ExataFormCandidate;
 use App\Repositories\Exata\ExataCurriculumVitaeRepository;
 use App\Repositories\Exata\ExataFormCandidateRepository;
 use App\Repositories\Exata\ExataJapaneseLanguageCertificateRepository;
@@ -13,7 +14,6 @@ use Exception;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -23,6 +23,7 @@ class Form extends Component
     use WithFileUploads;
 
     public $objId;
+    public $exata_id;
 
     public $candidate_profile;
 
@@ -88,6 +89,13 @@ class Form extends Component
                 abort(404, 'Form Tidak Tersedia');
             }
             if ($form->expired_at && now()->greaterThan($form->expired_at)) {
+                ExataFormCandidateRepository::update(
+                    Crypt::decrypt($this->objId),
+                    ['status' => ExataFormCandidate::STATUS_EXPIRED]
+                );
+                abort(403, 'Form sudah expired');
+            }
+            if ($form->exata_id && $form->status == ExataFormCandidate::STATUS_SUBMITTED) {
                 abort(403, 'Form sudah expired');
             }
             $this->password = $form->password;
@@ -275,7 +283,13 @@ class Form extends Component
                     'TglInput' => now(),
                     'PICSales' => Exata::FILTER_SALES_FORM_KANDIDAT,
                 ];
-                dd($validateData);
+                // if ($this->exata_id) {
+
+                //     $exata = ExataRepository::update($this->exata_id, $validateData);
+                //     $exata_id = $exata->id;
+                // } else {
+
+                //     }
                 $exata = ExataRepository::create($validateData);
                 $exata_id = $exata->id;
                 foreach ($this->sertifikat_bahasa_jepang as $sertifikat) {
@@ -303,7 +317,10 @@ class Form extends Component
 
                 ExataFormCandidateRepository::update(
                     Crypt::decrypt($this->objId),
-                    ['expired_at' => now()]
+                    [
+                        'status' => ExataFormCandidate::STATUS_SUBMITTED,
+                        'exata_id' => $exata_id,
+                    ]
                 );
             });
 

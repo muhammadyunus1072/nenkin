@@ -3,6 +3,7 @@
 namespace App\Livewire\Exata\ExataFormCandidate;
 
 use App\Helpers\Alert;
+use App\Models\Exata\ExataFormCandidate;
 use App\Repositories\Exata\ExataFormCandidateRepository;
 use App\Repositories\MasterData\Regency\RegencyRepository;
 use Carbon\Carbon;
@@ -60,6 +61,7 @@ class Detail extends Component
                 $validateData = [
                     'expired_at' => $this->expired_at,
                     'password' => $this->password,
+                    'status' => ExataFormCandidate::STATUS_CREATED,
                     'user_id' => Auth::user()->id,
                 ];
                 $vehicle_id = null;
