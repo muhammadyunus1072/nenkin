@@ -7,17 +7,14 @@
                 style="display:flex; justify-content: space-evenly; align-items: center;"
                 >
                 <img src="{{asset(config('template.logo_panel'))}}"
-                    style="width:300px; height:120px; object-fit:contain;">
+                    style="width:200px; height:80px; object-fit:contain;">
                 <div>
-                    <h1 style="font-weight:800; font-size:28px;">
+                    <h1 style="font-weight:800; font-size:20px;">
                         {!! $nama_lpk !!}
                     </h1>
-                    <p style="margin-top:4px;">
-                    </p>
-                    <div style="margin-top:8px;">
-                        {!! $alamat_lpk !!}
-                        <br>
-                        {!! $telp_lpk !!}
+                    <div style="margin-top:5px;">
+                        <p class="text-[13px]">{!! nl2br(e($alamat_lpk)) !!}</p>
+                        <p class="text-[13px] mt-1">{!! nl2br(e($telp_lpk)) !!}</p>
                         {{-- <div>International Human Resource & Language Center</div>
                         <div>Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat</div> --}}
                         {{-- <div>+62 812 2000 4752 | +62 21 8899 7766</div> --}}
@@ -30,13 +27,13 @@
                         Save PDF
                     </button>
                 </div>
-                <div class="">
-                    <input type="text" placeholder="Nama LPK" wire:model.live="nama_lpk" class="px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="w-5/12">
+                    <input type="text" placeholder="Nama LPK" wire:model.live="nama_lpk" class="w-full px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                <div class="w-3/12">
-                    <textarea placeholder="Nama LPK" wire:model.live="alamat_lpk" cols="30" rows="10" class="w-full px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <div class="w-5/12">
+                    <textarea placeholder="Nama LPK" wire:model.live="alamat_lpk" cols="30" rows="3" class="w-full px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
-                <div class="w-3/12">
+                <div class="w-5/12">
                     <input type="text" placeholder="Nama LPK" wire:model.live="telp_lpk" class="w-full px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
@@ -80,22 +77,22 @@
                                         @foreach ($data as $index => $item)
                                             <!-- Row 1 -->
                                             <tr class="border-b border-outline-variant/10" style="border: 3px dashed #cfe1fd;">
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['KodeUnik']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{    Carbon\Carbon::parse($item['TanggalLahir'])->age }}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Gender'] == 'L' ? 'Pria' : 'Wanita'}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Pendidikan']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Domisili']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Penempatankerja']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['LevelBahasa']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['LamaDiJepang']}}</td>
-                                                <td class="px-0 py-5 text-[8px]">{{$item['BidangKerjadiJepang']}}</td>
-                                                {{-- <td class="px-0 py-5 text-[8px]">{{$item['BidangKerjaPilihan']}}</td> --}}
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Sensei']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['StaffDokumen']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['Penerjemah']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['TglSiapkerja']}}</td>
-                                                <td class="px-0 py-5 text-[8px] text-center">{{$item['EstimasiGaji']}}</td>
-                                                <td class="px-0 py-5 text-[8px]">{!! nl2br(e($item['poin_rekomendasi'])) !!}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['KodeUnik']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{    Carbon\Carbon::parse($item['TanggalLahir'])->age }}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Gender'] == 'L' ? 'Pria' : 'Wanita'}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Pendidikan']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Domisili']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Penempatankerja']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['LevelBahasa']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['LamaDiJepang']}}</td>
+                                                <td class="px-0 py-1 text-[8px]">{{$item['BidangKerjadiJepang']}}</td>
+                                                {{-- <td class="px-0 py-1 text-[8px]">{{$item['BidangKerjaPilihan']}}</td> --}}
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Sensei']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Dokumen']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Penerjemah']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['TglSiapkerja']}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['EstimasiGaji']}}</td>
+                                                <td class="px-0 py-1 text-[8px]">{!! nl2br(e($item['poin_rekomendasi'])) !!}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -105,15 +102,22 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th class="report-footer-cell">
+                    </th>
+                </tr>
+            </tfoot>
         </table>
 
         {{-- FOOTER --}}
         <div class="footer">        
             <!-- Signature/Approval Area (Editorial Touch) -->
-            <div class="mt-12 px-12 pb-0">
-                <div class="flex flex-col">
-                    <p class="font-headline font-bold text-lg text-center my-0">Contact Person:</p>
-                    <p class="font-headline font-extrabold text-xl text-primary tracking-tight m-0">Tanjung - 0812 2000 4752</p>
+            <div class="mt-12 px-12 pb-0 w-full">
+                <div class="flex flex-col w-full gap-0">
+                    <p class="font-bold text-lg text-center mb-0 pb-0">Contact Person:</p>
+                    <p class="font-extrabold text-xl text-center text-primary tracking-tight mt-0 pt-0">Tanjung - 0812 2000 4752</p>
+                    <p class="font-extrabold text-[14px] tracking-tight text-center m-0">* Data updated as of {{Carbon\Carbon::now()->format('F d, Y');}}</p>
                 </div>
             </div>
         </div>
@@ -121,9 +125,9 @@
 
 @push('css')
 <style>
-    tr:nth-child(8n) {
+    /* tr:nth-child(8n) {
         page-break-after: always;
-    }
+    } */
 </style>
     
 @endpush

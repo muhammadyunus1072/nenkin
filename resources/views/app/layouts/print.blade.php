@@ -106,7 +106,7 @@
         }
 
         .report-header-cell {
-            height: 140px;
+            height: 100px;
         }
 
         .report-footer-cell {

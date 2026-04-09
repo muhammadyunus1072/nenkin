@@ -13,7 +13,8 @@ class Detail extends Component
     public $data;
 
     public $nama_lpk = 'LPK HADITAMA';
-    public $alamat_lpk = 'International Human Resource & Language Center </br>Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat';
+    public $alamat_lpk = 'International Human Resource & Language Center 
+Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat';
     public $telp_lpk = '+62 812 2000 4752 | +62 21 8899 7766';
 
     public function mount()
