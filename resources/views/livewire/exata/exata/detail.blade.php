@@ -27,46 +27,101 @@
             <div class="col-md-3">
                 <label for="tinggi_badan">Tinggi Badan</label>
                 
-                <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="Tinggi Badan" aria-label="Tinggi Badan" id="tinggi_badan" wire:model="tinggi_badan">
+                <div class="input-group mb-3 @error('tinggi_badan') is-invalid @enderror">
+                    <input type="number" class="@error('tinggi_badan') is-invalid @enderror form-control" placeholder="Tinggi Badan" aria-label="Tinggi Badan" id="tinggi_badan" wire:model="tinggi_badan">
+
                     <span class="input-group-text">Kg</span>
                 </div>
+                @error('tinggi_badan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-3">
                 <label for="berat_badan">Berat Badan</label>
                 
-                <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="Berat Badan" aria-label="Berat Badan" id="berat_badan" wire:model="berat_badan">
+                <div class="input-group mb-3 @error('berat_badan') is-invalid @enderror ">
+                    <input type="number" class="@error('berat_badan') is-invalid @enderror form-control" placeholder="Berat Badan" aria-label="Berat Badan" id="berat_badan" wire:model="berat_badan">
+
                     <span class="input-group-text">Cm</span>
                 </div>
+
+                @error('berat_badan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="skill_bahasa_lain">Skill Bahasa Lain</label>
-                <input type="text" id="skill_bahasa_lain" wire:model="skill_bahasa_lain" class="form-control" placeholder="contoh: Bahasa Inggris, Mandarin, Dll">
+                <input type="text" id="skill_bahasa_lain" wire:model="skill_bahasa_lain" class="@error('skill_bahasa_lain') is-invalid @enderror form-control" placeholder="contoh: Bahasa Inggris, Mandarin, Dll">
+
+                @error('skill_bahasa_lain')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="skill_komputer">Skill Komputer</label>
-                <input type="text" id="skill_komputer" wire:model="skill_komputer" class="form-control" placeholder="contoh: MS Office, Editing Video, Dll">
+                <input type="text" id="skill_komputer" wire:model="skill_komputer" class="@error('skill_komputer') is-invalid @enderror form-control" placeholder="contoh: MS Office, Editing Video, Dll">
+
+                @error('skill_komputer')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="pencapaian_tertinggi">Pencapaian Tertinggi Selama Bekerja</label>
-                <input type="text" id="pencapaian_tertinggi" wire:model="pencapaian_tertinggi" class="form-control" placeholder="Pencapaian Tertinggi Selama Bekerja">
+                <input type="text" id="pencapaian_tertinggi" wire:model="pencapaian_tertinggi" class="@error('pencapaian_tertinggi') is-invalid @enderror form-control" placeholder="Pencapaian Tertinggi Selama Bekerja">
+
+                @error('pencapaian_tertinggi')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="value_saat_di_jepang">Value saat berada di Jepang yang diterapkan di kegiatan sehari-hari </label>
-                <input type="text" id="value_saat_di_jepang" wire:model="value_saat_di_jepang" class="form-control" placeholder="Value saat berada di Jepang yang diterapkan di kegiatan sehari-hari ">
+                <input type="text" id="value_saat_di_jepang" wire:model="value_saat_di_jepang" class="@error('value_saat_di_jepang') is-invalid @enderror form-control" placeholder="Value saat berada di Jepang yang diterapkan di kegiatan sehari-hari ">
+
+                @error('value_saat_di_jepang')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="soft_skill">Soft Skill </label>
-                <input type="text" id="soft_skill" wire:model="soft_skill" class="form-control" placeholder="Soft Skill ">
+                <input type="text" id="soft_skill" wire:model="soft_skill" class="@error('soft_skill') is-invalid @enderror form-control" placeholder="Soft Skill ">
+
+                @error('soft_skill')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="skill_lainnya">Skill Lainnya </label>
-                <input type="text" id="skill_lainnya" wire:model="skill_lainnya" class="form-control" placeholder="Skill Lainnya ">
+                <input type="text" id="skill_lainnya" wire:model="skill_lainnya" class="@error('skill_lainnya') is-invalid @enderror form-control" placeholder="Skill Lainnya ">
+
+                @error('skill_lainnya')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-6 mb-2">
                 <label for="pengalaman_kerja">Pengalaman Kerja </label>
-                <input type="text" id="pengalaman_kerja" wire:model="pengalaman_kerja" class="form-control" placeholder="Pengalaman Kerja ">
+                <input type="text" id="pengalaman_kerja" wire:model="pengalaman_kerja" class="@error('pengalaman_kerja') is-invalid @enderror form-control" placeholder="Pengalaman Kerja ">
+
+                @error('pengalaman_kerja')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             <div class="col-md-6">
@@ -163,13 +218,16 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label>CV</label>
-                    <input type="file" wire:model="cv" multiple class="form-control">
-    
-                    @error('cv.*')
-                        <div class="text-danger">{{ $message }}</div>
+                    <input type="file" wire:model="cv" multiple class="form-control @error('cv') is-invalid @enderror">
+
+                    @error('cv')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
                     @enderror
                 </div>
     
+
                 {{-- Preview --}}
                 <div class="row mt-3">
                     @foreach ($cv as $index => $image)

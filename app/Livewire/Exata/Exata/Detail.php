@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
 
 class Detail extends Component
 {
@@ -24,22 +25,57 @@ class Detail extends Component
     public $candidate_profile;
 
     // Form Input
-    public $sertifikat_bahasa_jepang = [];
     public $cv = [];
-    public $sertifikat_bahasa_jepang_old = [];
     public $cv_old = [];
-    public $sertifikat_bahasa_jepang_removes = [];
     public $cv_removes = [];
+
+    public $sertifikat_bahasa_jepang = [];
+    public $sertifikat_bahasa_jepang_old = [];
+    public $sertifikat_bahasa_jepang_removes = [];
+
+    #[Validate('required', message: 'Tinggi badan harus diisi', onUpdate: false)]
     public $tinggi_badan;
+
+    #[Validate('required', message: 'Berat badan harus diisi', onUpdate: false)]
     public $berat_badan;
+
+    #[Validate('required', message: 'Skill bahasa lain harus diisi', onUpdate: false)]
     public $skill_bahasa_lain;
+
+    #[Validate('required', message: 'Skill komputer harus diisi', onUpdate: false)]
     public $skill_komputer;
+
+    #[Validate('required', message: 'Pencapaian tertinggi harus diisi', onUpdate: false)]
     public $pencapaian_tertinggi;
+
+    #[Validate('required', message: 'Value saat di Jepang harus diisi', onUpdate: false)]
     public $value_saat_di_jepang;
+
+    #[Validate('required', message: 'Soft Skill harus diisi', onUpdate: false)]
     public $soft_skill;
+
+    #[Validate('required', message: 'Skill Lainnya harus diisi', onUpdate: false)]
     public $skill_lainnya;
+
+    #[Validate('required', message: 'Pengalaman kerja harus diisi', onUpdate: false)]
     public $pengalaman_kerja;
 
+    protected function rules()
+    {
+        return [
+            'cv' => [
+                function ($attribute, $value, $fail) {
+
+                    $newEmpty = empty($this->cv);
+                    $oldEmpty = empty($this->cv_old);
+
+                    if ($newEmpty && $oldEmpty) {
+                        $fail('CV harus diisi');
+                    }
+                },
+            ],
+        ];
+    }
     public function mount()
     {
         if ($this->objId) {
@@ -114,7 +150,9 @@ class Detail extends Component
 
     public function store()
     {
+        $this->validate();
         try {
+
             DB::transaction(function () {
                 // Form Candidate
                 $validateData = [

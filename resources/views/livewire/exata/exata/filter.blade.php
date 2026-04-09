@@ -317,11 +317,17 @@
                                             }
 
                                             $ext = strtolower($ext);
-                                            
                                         @endphp
                                         @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
                 
                                             <img src="{{ $url }}" class="img-fluid rounded">
+                                        @elseif(in_array($ext, ['pdf']))
+                                            <iframe
+                                                src="{{ route('exata.view_pdf', ['id' => Crypt::encrypt($image['id']), 'type' => $candidate_attachment_type]) }}"
+                                                width="100%"
+                                                height="900"
+                                                style="border:none">
+                                            </iframe>
                                         @else
                                             <div class="border rounded p-4 text-center bg-light">
                                                 <i class="bi bi-file-earmark fs-1"></i>

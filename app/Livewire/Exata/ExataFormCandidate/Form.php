@@ -15,6 +15,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -28,57 +29,134 @@ class Form extends Component
     public $candidate_profile;
 
     // Form J-Expert
+    #[Validate('required', message: 'Nama lengkap harus diisi', onUpdate: false)]
     public $NamaLengkap;
+
+    #[Validate('required', message: 'Tanggal lahir harus diisi', onUpdate: false)]
     public $TanggalLahir;
+
+    #[Validate('required', message: 'Gender harus diisi', onUpdate: false)]
     public $Gender;
+
+    #[Validate('required', message: 'Pendidikan harus diisi', onUpdate: false)]
     public $Pendidikan;
+
+    #[Validate('required', message: 'Level bahasa harus diisi', onUpdate: false)]
     public $LevelBahasa;
+
+    #[Validate('required', message: 'Tahun terbit harus diisi', onUpdate: false)]
     public $TahunTerbit;
+
+    #[Validate('required', message: 'Lama di Jepang harus diisi', onUpdate: false)]
     public $LamaDiJepang;
+
+    #[Validate('required', message: 'Tanggal pulang harus diisi', onUpdate: false)]
     public $TanggalPulang;
+
     public $Sensei;
+
     public $Dokumen;
+
     public $Penerjemah;
+
+    #[Validate('required', message: 'Estimasi gaji harus diisi', onUpdate: false)]
     public $EstimasiGaji;
+
+    #[Validate('required', message: 'Domisili harus diisi', onUpdate: false)]
     public $Domisili;
+
+    #[Validate('required', message: 'Penempatan kerja harus diisi', onUpdate: false)]
     public $Penempatankerja;
+
+    #[Validate('required', message: 'Tanggal siap kerja harus diisi', onUpdate: false)]
     public $TglSiapkerja;
+
+    #[Validate('required', message: 'Bidang kerja di Jepang harus diisi', onUpdate: false)]
     public $BidangKerjadiJepang;
+
+    #[Validate('required', message: 'Bidang kerja pilihan harus diisi', onUpdate: false)]
     public $BidangKerjaPilihan;
+
     public $Senmongkyu;
+
     public $BidangSenmongkyu;
+
     public $JenisVisa;
+
+    #[Validate('required', message: 'Provinsi harus diisi', onUpdate: false)]
     public $Provinsi;
+
+    #[Validate('required', message: 'Kota harus diisi', onUpdate: false)]
     public $Kota;
+
+    #[Validate('required', message: 'Nama TikTok harus diisi', onUpdate: false)]
     public $NamaTikTok;
+
+    #[Validate('required', message: 'Nama Instagram harus diisi', onUpdate: false)]
     public $NamaInstagram;
+
+    #[Validate('required', message: 'No Telp Indonesia harus diisi', onUpdate: false)]
     public $NoTelpIndonesia;
+
     public $NoTelpJepang;
+
+    #[Validate('required|email', message: 'Email harus diisi dengan format benar', onUpdate: false)]
     public $Email;
-    public $PICSales;
+
+    #[Validate('required', message: 'Nama LPK harus diisi', onUpdate: false)]
     public $NamaLPK;
 
-    // Form Input
+    #[Validate('required', message: 'Tinggi badan harus diisi', onUpdate: false)]
+    public $tinggi_badan;
+
+    #[Validate('required', message: 'Berat badan harus diisi', onUpdate: false)]
+    public $berat_badan;
+
+    #[Validate('required', message: 'Skill bahasa lain harus diisi', onUpdate: false)]
+    public $skill_bahasa_lain;
+
+    #[Validate('required', message: 'Skill komputer harus diisi', onUpdate: false)]
+    public $skill_komputer;
+
+    #[Validate('required', message: 'Pencapaian tertinggi harus diisi', onUpdate: false)]
+    public $pencapaian_tertinggi;
+
+    #[Validate('required', message: 'Value saat di Jepang harus diisi', onUpdate: false)]
+    public $value_saat_di_jepang;
+
+    #[Validate('required', message: 'Soft skill harus diisi', onUpdate: false)]
+    public $soft_skill;
+
+    #[Validate('required', message: 'Skill lainnya harus diisi', onUpdate: false)]
+    public $skill_lainnya;
+
+    #[Validate('required', message: 'Pengalaman kerja harus diisi', onUpdate: false)]
+    public $pengalaman_kerja;
+
     public $sertifikat_bahasa_jepang = [];
     public $cv = [];
     public $sertifikat_bahasa_jepang_old = [];
     public $cv_old = [];
     public $sertifikat_bahasa_jepang_removes = [];
     public $cv_removes = [];
-    public $tinggi_badan;
-    public $berat_badan;
-    public $skill_bahasa_lain;
-    public $skill_komputer;
-    public $pencapaian_tertinggi;
-    public $value_saat_di_jepang;
-    public $soft_skill;
-    public $skill_lainnya;
-    public $pengalaman_kerja;
 
     public $password;
     public $input_password;
     public $max_attempts = 3;
     public $authorized = false;
+
+    protected function rules()
+    {
+        return [
+            'cv' => [
+                function ($attribute, $value, $fail) {
+                    if (empty($this->cv) && empty($this->cv_old)) {
+                        $fail('CV harus diisi');
+                    }
+                }
+            ],
+        ];
+    }
 
     public function mount()
     {
@@ -241,6 +319,7 @@ class Form extends Component
 
     public function store()
     {
+        $this->validate();
         try {
             DB::transaction(function () {
                 // Form Candidate
@@ -273,7 +352,6 @@ class Form extends Component
                     'NoTelpIndonesia' => $this->NoTelpIndonesia,
                     'NoTelpJepang' => $this->NoTelpJepang,
                     'Email' => $this->Email,
-                    'PICSales' => $this->PICSales,
                     'NamaLPK' => $this->NamaLPK,
 
                     'TinggiBadan' => $this->tinggi_badan ? $this->tinggi_badan : null,
@@ -289,13 +367,6 @@ class Form extends Component
                     'TglInput' => now(),
                     'PICSales' => Exata::FILTER_SALES_FORM_KANDIDAT,
                 ];
-                // if ($this->exata_id) {
-
-                //     $exata = ExataRepository::update($this->exata_id, $validateData);
-                //     $exata_id = $exata->id;
-                // } else {
-
-                //     }
                 $exata = ExataRepository::create($validateData);
                 $exata_id = $exata->id;
                 foreach ($this->sertifikat_bahasa_jepang as $sertifikat) {

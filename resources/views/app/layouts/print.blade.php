@@ -80,11 +80,7 @@
         }
     </script>
     <style>
-        @page {
-            size: A4 portrait;
-            /* size: A4 landscape; */
-            margin: 0mm;
-        }
+        
         @media print {
 
             table {
@@ -165,17 +161,21 @@
         white-space: nowrap;
         direction: ltr;
         }
-        @media print {
         @page {
-        size: landscape;
-        margin: 0;
+            @bottom-center {
+                /* content: 'Printed on: {{ \Carbon\Carbon::now()->format('M d, Y') }}'; */
+                content: '' counter(page) ' of ' counter(pages);
+                border-top: 1px solid #000;
+                margin-bottom: 15px;
+            }
         }
-        body {
-        background: white;
-        }
-        .no-print {
-        display: none;
-        }
+        @media print {
+
+            @page {
+                size: A4 landscape;
+                margin: 10mm;
+            }
+
         }
         .watermark-container {
         position: relative;
@@ -210,7 +210,6 @@
     @yield('content')
 </body>
 
-@livewireScripts
     {{-- JAVASCRIPT --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     @stack('js')

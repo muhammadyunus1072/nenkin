@@ -15,9 +15,6 @@
                     <div style="margin-top:5px;">
                         <p class="text-[13px]">{!! nl2br(e($alamat_lpk)) !!}</p>
                         <p class="text-[13px] mt-1">{!! nl2br(e($telp_lpk)) !!}</p>
-                        {{-- <div>International Human Resource & Language Center</div>
-                        <div>Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat</div> --}}
-                        {{-- <div>+62 812 2000 4752 | +62 21 8899 7766</div> --}}
                     </div>
                 </div>
             </div>
@@ -56,7 +53,7 @@
                                     <table class="w-full table-fixed">
                                         <thead>
                                             <tr class="bg-primary-container text-on-primary">
-                                                <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Kodeunik</th>
+                                                <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Kode</th>
                                                 <th class="w-[60px] px-0 text-[10px] py-4 text-center break-words">Usia</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Gender</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Pendidikan</th>
@@ -64,7 +61,7 @@
                                                 <th class="w-[130px] px-0 text-[10px] py-4 text-center break-words">Penempatan</th>
                                                 <th class="w-[120px] px-0 text-[10px] py-4 text-center break-words">Level Bahasa</th>
                                                 <th class="w-[120px] px-0 text-[10px] py-4 text-center break-words">Lama di Jepang</th>
-                                                <th class="w-[180px] px-0 text-[10px] py-4 text-start break-words">Bidang kerja Jepang</th>
+                                                <th class="w-[180px] px-0 text-[10px] py-4 text-start break-words">Bidang Kerja Jepang</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Sensei</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Admin</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Penerjemah</th>
@@ -110,37 +107,29 @@
             </tfoot>
         </table>
 
+        <p class="text-center mb-0 pb-0 page-number"></p>
         {{-- FOOTER --}}
         <div class="footer">        
-            <!-- Signature/Approval Area (Editorial Touch) -->
             <div class="mt-12 px-12 pb-0 w-full">
                 <div class="flex flex-col w-full gap-0">
                     <p class="font-bold text-lg text-center mb-0 pb-0">Contact Person:</p>
                     <p class="font-extrabold text-xl text-center text-primary tracking-tight mt-0 pt-0">Tanjung - 0812 2000 4752</p>
-                    <p class="font-extrabold text-[14px] tracking-tight text-center m-0">* Data updated as of {{Carbon\Carbon::now()->format('F d, Y');}}</p>
+                    <p class="font-extrabold text-[14px] tracking-tight text-end m-0">* Data updated as of {{Carbon\Carbon::now()->format('F d, Y');}}</p>
                 </div>
             </div>
         </div>
     </div>
 
-@push('css')
-<style>
-    /* tr:nth-child(8n) {
-        page-break-after: always;
-    } */
-</style>
-    
+@push('js')
+    <script>
+        function printPDF(){
+            $('#input').hide()
+            $(() => {
+                window.print();
+                const afterPrint = setTimeout(() => {
+                    window.close()
+                }, 500);
+            });
+        }
+    </script>
 @endpush
-    @push('js')
-        <script>
-            function printPDF(){
-                $('#input').hide()
-                $(() => {
-                    window.print();
-                    const afterPrint = setTimeout(() => {
-                        window.close()
-                    }, 500);
-                });
-            }
-        </script>
-    @endpush

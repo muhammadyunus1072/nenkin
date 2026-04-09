@@ -19,6 +19,7 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
     Route::group(["controller" => ExataController::class, "prefix" => "exata", "as" => "exata."], function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
+        Route::get('pdf/view/{id}/{type}', 'view_pdf')->name('view_pdf');
 
         Route::get('/regency/get', [RegencyController::class, 'search'])->name('get.regency');
     });

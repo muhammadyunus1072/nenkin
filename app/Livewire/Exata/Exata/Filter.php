@@ -76,6 +76,7 @@ class Filter extends Component
     public $importType;
 
     public $candidate_attachments = [];
+    public $candidate_attachment_type;
 
 
     public function mount() {}
@@ -86,6 +87,7 @@ class Filter extends Component
         $this->candidate_attachments = ExataJapaneseLanguageCertificateRepository::getBy([
             ['exata_id', Crypt::decrypt($id)]
         ])->toArray();
+        $this->candidate_attachment_type = Exata::FILTER_ATTACHMENT_SERTIFIKAT_BAHASA_JEPANG;
     }
 
     public function setImportBy($importType)
@@ -99,6 +101,7 @@ class Filter extends Component
         $this->candidate_attachments = ExataCurriculumVitaeRepository::getBy([
             ['exata_id', Crypt::decrypt($id)]
         ])->toArray();
+        $this->candidate_attachment_type = Exata::FILTER_ATTACHMENT_CV;
     }
 
     #[On('editData')]
