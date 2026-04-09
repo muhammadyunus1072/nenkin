@@ -61,13 +61,13 @@
                                                 <th class="w-[130px] px-0 text-[10px] py-4 text-center break-words">Penempatan</th>
                                                 <th class="w-[120px] px-0 text-[10px] py-4 text-center break-words">Level Bahasa</th>
                                                 <th class="w-[120px] px-0 text-[10px] py-4 text-center break-words">Lama di Jepang</th>
-                                                <th class="w-[180px] px-0 text-[10px] py-4 text-start break-words">Bidang Kerja Jepang</th>
+                                                <th class="w-[180px] px-0 text-[10px] py-4 text-center break-words">Bidang Kerja Jepang</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Sensei</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Admin</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Penerjemah</th>
                                                 <th class="w-[140px] px-0 text-[10px] py-4 text-center break-words">Available Start</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Salary</th>
-                                                <th class="w-[200px] px-0 text-[10px] py-4 text-start break-words">Points of Recommendation</th>
+                                                <th class="w-[200px] px-0 text-[10px] py-4 text-center break-words">Points of Recommendation</th>
                                             </tr>
                                         </thead>
                                     <tbody class="text-[11px]">
