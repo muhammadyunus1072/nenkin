@@ -26,8 +26,7 @@ class Datatable extends Component
 
     public $isCanUpdate;
     public $isCanDelete;
-    // Delete Dialog
-    public $targetDeleteId;
+
 
     // Toggle Column
     public $hideColumns = [];
@@ -102,16 +101,26 @@ class Datatable extends Component
         }
     }
 
-    #[On('on-delete-dialog-cancel')]
-    public function onDialogDeleteCancel()
+    #[On('on-delete-dialog-confirm')]
+    public function onDialogDeleteConfirm()
     {
-        $this->targetDeleteId = null;
+        if (!$this->isCanDelete) {
+            return;
+        }
+
+        DB::table('exata_preview_candidates')->truncate();
+        DB::table('_history_exata_preview_candidates')->truncate();
+        $this->dispatch('refresh-table');
+
+        Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
-    public function showDeleteDialog($id)
-    {
-        $this->targetDeleteId = $id;
+    #[On('on-delete-dialog-cancel')]
+    public function onDialogDeleteCancel() {}
 
+    #[On('showDeleteDialog')]
+    public function showDeleteDialog()
+    {
         Alert::confirmation(
             $this,
             Alert::ICON_QUESTION,
@@ -144,7 +153,7 @@ class Datatable extends Component
                 ]);
             });
             DB::commit();
-
+            $this->dispatch('onSuccessEdit');
             Alert::confirmation(
                 $this,
                 Alert::ICON_SUCCESS,

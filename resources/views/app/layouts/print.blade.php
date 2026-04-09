@@ -210,6 +210,7 @@
     @yield('content')
 </body>
 
+@livewireScripts
     {{-- JAVASCRIPT --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     @stack('js')

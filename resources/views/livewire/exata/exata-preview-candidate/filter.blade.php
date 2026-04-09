@@ -13,10 +13,19 @@
         </div>
         <div class="col-auto">
             <button class="btn btn-danger btn-sm"
-                 wire:click="truncateTable"
+                x-data
+                @click="$dispatch('showDeleteDialog')"
                 >
                 <i class="fa fa-trash"></i>
                     Hapus Semua Data
             </button>
         </div>
 </div>
+
+@push('js')
+    <script>
+        Livewire.on('onSuccessEdit', () => {
+            $('#editModal').modal('hide');
+        })
+    </script>
+@endpush
