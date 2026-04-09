@@ -162,10 +162,15 @@
         direction: ltr;
         }
         @page {
+
+            @bottom-right {
+                content: '* Data updated as of {{ \Carbon\Carbon::now()->format('F d, Y'); }}';
+                margin-bottom: 15px;                  
+                font-style: italic;
+
+            }
             @bottom-center {
-                /* content: 'Printed on: {{ \Carbon\Carbon::now()->format('M d, Y') }}'; */
                 content: '' counter(page) ' of ' counter(pages);
-                border-top: 1px solid #000;
                 margin-bottom: 15px;
             }
         }

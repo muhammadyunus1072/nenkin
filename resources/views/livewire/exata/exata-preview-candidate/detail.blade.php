@@ -114,7 +114,6 @@
                 <div class="flex flex-col w-full gap-0">
                     <p class="font-bold text-lg text-center mb-0 pb-0">Contact Person:</p>
                     <p class="font-extrabold text-xl text-center text-primary tracking-tight mt-0 pt-0">Tanjung - 0812 2000 4752</p>
-                    <p class="font-extrabold text-[14px] tracking-tight text-end m-0">* Data updated as of {{Carbon\Carbon::now()->format('F d, Y');}}</p>
                 </div>
             </div>
         </div>
