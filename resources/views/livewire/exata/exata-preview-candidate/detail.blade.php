@@ -21,9 +21,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row flex items-center flex-col" id="input">
+            <div class="row flex items-center flex-col mt-[60px]" id="input">
                 <div class="">
-                    <button class="bg-blue-600  mb-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200" onclick="printPDF()">
+                    <button class="bg-green-600  mb-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200" onclick="printPDF()">
                         Save PDF
                     </button>
                 </div>
