@@ -109,6 +109,7 @@
                             <div class="col-md-6 mb-3">
                                 <label>Gender</label>
                                 <select wire:model="Gender" class="form-select">
+                                    <option value="">-- ISI --</option>
                                     @foreach (App\Models\Exata\Exata::FILTER_GENDER_CHOICE as $key => $name)    
                                         <option value="{{$key}}">{{$name}}</option>
                                     @endforeach
@@ -119,6 +120,7 @@
                             <div class="col-md-6 mb-3">
                                 <label>Pendidikan</label>
                                 <select Wire:model="Pendidikan" class="form-select">
+                                    <option value="">-- ISI --</option>
                                     @foreach (App\Models\Exata\Exata::FILTER_PENDIDIKAN_CHOICE as $key => $name)    
                                         <option value="{{$key}}">{{$name}}</option>
                                     @endforeach
@@ -129,6 +131,7 @@
                             <div class="col-md-6 mb-3">
                                 <label>Level Bahasa</label>
                                 <select wire:model="LevelBahasa" class="form-select">
+                                    <option value="">-- ISI --</option>
                                     @foreach (App\Models\Exata\Exata::FILTER_LEVEL_BAHASA_CHOICE as $key => $name)    
                                         <option value="{{$key}}">{{$name}}</option>
                                     @endforeach
