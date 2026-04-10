@@ -473,9 +473,18 @@
 
 @push('js')
     <script>
+document.addEventListener('livewire:init', () => {
 
-        Livewire.on('onAuthorized', (data) => {
-            // Domisili
+    Livewire.on('onAuthorized', () => {
+
+        setTimeout(() => initSelect2(), 100);
+
+    });
+
+});
+
+function initSelect2() {
+// Domisili
             $('#select2-domisili').select2({
                 placeholder: "-- Pilih --",
                 ajax: {
@@ -555,6 +564,7 @@
             $('#select2-BidangKerjaPilihan').on('select2:unselect', function(e) {
                 @this.call('unSelectBidangKerjaPilihan', e.params.data)
             });
-        });
+
+}
     </script>
 @endpush
