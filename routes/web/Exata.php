@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(["controller" => ExataController::class, "prefix" => "exata", "as" => "exata."], function () {
     Route::get('{id}/edit', 'edit')->name('edit');
 });
-Route::group(["controller" => RegencyController::class, "prefix" => "exata", "as" => "exata."], function () {
+Route::group(["controller" => RegencyController::class, "prefix" => "exata", "as" => "public."], function () {
     Route::get('/regency/get', 'search')->name('get.regency');
 });
 Route::group(["controller" => ExataFormCandidateController::class, "prefix" => "exata_form_candidate", "as" => "exata_form_candidate."], function () {

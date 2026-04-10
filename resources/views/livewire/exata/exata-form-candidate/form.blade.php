@@ -488,7 +488,7 @@ function initSelect2() {
             $('#select2-domisili').select2({
                 placeholder: "-- Pilih --",
                 ajax: {
-                    url: "{{ route('exata.get.regency') }}",
+                    url: "{{ route('public.get.regency') }}",
                     dataType: "json",
                     type: "GET",
                     headers: {
@@ -530,7 +530,7 @@ function initSelect2() {
             $('#select2-preferensi-lokasi').select2({
                 placeholder: "-- Pilih --",
                 ajax: {
-                    url: "{{ route('exata.get.regency') }}",
+                    url: "{{ route('public.get.regency') }}",
                     dataType: "json",
                     type: "GET",
                     headers: {
