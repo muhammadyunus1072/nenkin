@@ -573,7 +573,7 @@ class Exata extends Model
             ],
             'DATATABLE_' . self::PERMISSION_EstimasiGaji => [
                 'name' => 'Estimasi gaji',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
                 'render' => function ($item) {
@@ -594,13 +594,13 @@ class Exata extends Model
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjadiJepang => [
                 'name' => 'Bidang kerja di Jepang',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_BidangKerjaPilihan => [
                 'name' => 'Bidang kerja pilihan',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
             ],
@@ -628,19 +628,19 @@ class Exata extends Model
             ],
             'DATATABLE_' . self::PERMISSION_SoftSkill => [
                 'name' => 'Soft skill',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_SkillKomputer => [
                 'name' => 'Skill komputer',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
             ],
             'DATATABLE_' . self::PERMISSION_Keterangan => [
                 'name' => 'Keterangan',
-                'class' => 'text-center',
+                'class' => '',
                 'isNotImport' => true,
                 'isDate' => false,
             ],
