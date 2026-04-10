@@ -167,7 +167,7 @@
                     @enderror
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label>Bidang Kerja di Jepang</label>>
+                    <label>Bidang Kerja di Jepang</label>
                     <input type="text" placeholder="isi" wire:model="BidangKerjadiJepang"
                         class="form-control @error('BidangKerjadiJepang') is-invalid @enderror">
                     @error('BidangKerjadiJepang')
