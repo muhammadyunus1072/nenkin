@@ -40,7 +40,7 @@
                         class="form-control @error('Gender') is-invalid @enderror">
                         <option value="">-- ISI --</option>
                         @foreach (App\Models\Exata\Exata::FILTER_GENDER_CHOICE as $key => $name)
-                        <option value="{{$name}}">{{$name}}</option>
+                        <option value="{{$key}}">{{$name}}</option>
                         @endforeach
                     </select>
                     @error('Gender')

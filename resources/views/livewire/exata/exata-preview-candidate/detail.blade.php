@@ -76,7 +76,7 @@
                                             <tr class="border-b border-outline-variant/10" style="border: 3px dashed #cfe1fd;">
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['KodeUnik']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{    Carbon\Carbon::parse($item['TanggalLahir'])->age }}</td>
-                                                <td class="px-0 py-1 text-[8px] text-center">{{$item['Gender'] == 'L' ? 'Pria' : 'Wanita'}}</td>
+                                                <td class="px-0 py-1 text-[8px] text-center">{{($item['Gender'] == 'L' || $item['Gender'] == 'LAKI-LAKI' ) ? 'Pria' : 'Wanita'}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['Pendidikan']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['Domisili']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['Penempatankerja']}}</td>

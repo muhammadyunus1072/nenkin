@@ -3,10 +3,8 @@
 namespace App\Livewire\Exata\ExataPreviewCandidate;
 
 use App\Helpers\Alert;
-use App\Helpers\ExportHelper;
 use App\Helpers\PermissionHelper;
 use App\Models\Exata\Exata;
-use App\Models\Exata\ExataPreviewCandidate;
 use App\Repositories\Account\UserRepository;
 use App\Repositories\Exata\ExataPreviewCandidateRepository;
 use App\Repositories\Exata\ExataRepository;
