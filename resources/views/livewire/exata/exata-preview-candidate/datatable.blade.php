@@ -137,7 +137,7 @@
 
                             {{-- Lama di Jepang --}}
                             <div class="col-md-6 mb-3">
-                                <label>Lama di Jepang (Tahun)</label>
+                                <label>Lama di Jepang (Bulan)</label>
                                 <input type="number" class="form-control"
                                     wire:model="LamaDiJepang">
                             </div>
