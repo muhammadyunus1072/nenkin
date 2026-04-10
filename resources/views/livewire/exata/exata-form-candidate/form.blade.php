@@ -491,6 +491,13 @@ function initSelect2() {
                     url: "{{ route('exata.get.regency') }}",
                     dataType: "json",
                     type: "GET",
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    delay: 250,
+                    cache: true,
+
                     data: function(params) {
                         return {
                             search: params.term
@@ -526,6 +533,13 @@ function initSelect2() {
                     url: "{{ route('exata.get.regency') }}",
                     dataType: "json",
                     type: "GET",
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    delay: 250,
+                    cache: true,
+
                     data: function(params) {
                         return {
                             search: params.term
