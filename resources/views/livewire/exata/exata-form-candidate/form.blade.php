@@ -514,11 +514,6 @@ function initSelect2() {
                             })
                         };
                     },
-
-                    error: function(xhr) {
-                        console.log('SELECT2 ERROR:', xhr);
-                        alert('Error status: ' + xhr.status);
-                    }
                 },
                 cache: true
             });
