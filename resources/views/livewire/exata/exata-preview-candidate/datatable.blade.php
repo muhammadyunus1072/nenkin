@@ -133,7 +133,7 @@
                                 <select wire:model="LevelBahasa" class="form-select">
                                     <option value="">-- ISI --</option>
                                     @foreach (App\Models\Exata\Exata::FILTER_LEVEL_BAHASA_CHOICE as $key => $name)    
-                                        <option value="{{$key}}">{{$name}}</option>
+                                        <option value="{{$name}}">{{$name}}</option>
                                     @endforeach
                                 </select>
                             </div>
