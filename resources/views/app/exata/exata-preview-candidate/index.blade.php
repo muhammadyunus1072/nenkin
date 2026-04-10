@@ -21,12 +21,13 @@
 
 @section('content')
 
-    <div class="card">
-        <div class="card-header">
-            <livewire:exata.exata-preview-candidate.filter>
-        </div>
-        <div class="card-body">
-            <livewire:exata.exata-preview-candidate.datatable lazy>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <livewire:exata.exata-preview-candidate.filter>
     </div>
+    <div class="card-body">
+        <livewire:exata.exata-preview-candidate.datatable>
+    </div>
+</div>
+    
 @stop

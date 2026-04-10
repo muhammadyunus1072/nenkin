@@ -83,7 +83,7 @@
     </div>
     <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         wire:ignore.self>
-        <div class="modal-dialog modal-md" style="overflow: scroll">
+        <div class="modal-dialog modal-xl" style="overflow: scroll">
             <div class="modal-content" style="overflow: scroll">
                 <div class="modal-header">
                     <h5 class="modal-title" id="bulkModalLabel">Edit Point of Recommendation</h5>
@@ -91,12 +91,151 @@
                 </div>
                 <form wire:submit.prevent="save">
                     <div class="modal-body import_modal">
-                            <div class="row">
+                        <div class="row">
+                            {{-- Kode Unik --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Kode Unik</label>
+                                <p class="form-control">{{$KodeUnik}}</p>
+                            </div>
+
+                            {{-- Tanggal Lahir --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Tanggal Lahir</label>
+                                <input type="date" class="form-control"
+                                    wire:model="TanggalLahir">
+                            </div>
+
+                            {{-- Gender --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Gender</label>
+                                <select wire:model="Gender" class="form-select">
+                                    @foreach (App\Models\Exata\Exata::FILTER_GENDER_CHOICE as $key => $name)    
+                                        <option value="{{$key}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Pendidikan --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Pendidikan</label>
+                                <select Wire:model="Pendidikan" class="form-select">
+                                    @foreach (App\Models\Exata\Exata::FILTER_PENDIDIKAN_CHOICE as $key => $name)    
+                                        <option value="{{$key}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Level Bahasa --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Level Bahasa</label>
+                                <select wire:model="LevelBahasa" class="form-select">
+                                    @foreach (App\Models\Exata\Exata::FILTER_LEVEL_BAHASA_CHOICE as $key => $name)    
+                                        <option value="{{$key}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Lama di Jepang --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Lama di Jepang (Tahun)</label>
+                                <input type="number" class="form-control"
+                                    wire:model="LamaDiJepang">
+                            </div>
+
+                            {{-- Estimasi Gaji --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Estimasi Gaji</label>
+                                <input type="number" class="form-control"
+                                    wire:model="EstimasiGaji">
+                            </div>
+
+                            {{-- Domisili --}}
+                            <div class="col-md-6 mb-3" wire:ignore>
+                                <label>Domisili</label>
+                                <input type="text" class="form-control" wire:model="Domisili">
+                            </div>
+
+                            {{-- Tanggal Siap Kerja --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Tanggal Siap Kerja</label>
+                                <input type="date" class="form-control"
+                                    wire:model="TglSiapkerja">
+                            </div>
+
+                            {{-- Bidang Kerja di Jepang --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Bidang Kerja di Jepang</label>
+                                <input type="text" class="form-control"
+                                    wire:model="BidangKerjadiJepang">
+                            </div>
+
+                            {{-- Bidang Kerja Pilihan --}}
+                            <div class="col-md-6 mb-3" wire:ignore>
+                                <label>Bidang Kerja Pilihan</label>
+                                <select id="select2-BidangKerjaPilihan" class="form-select" multiple>
+                                    @foreach (App\Models\Exata\Exata::FILTER_JOB_PILIHAN_INDO_CHOICE as $key => $name)    
+                                        <option value="{{$name}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-check m-2">
+                                            <input class="form-check-input" type="checkbox" wire:model="Sensei">
+                                            <label class="form-label ms-2 mb-2">
+                                                Sensei
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check m-2">
+                                            <input class="form-check-input" type="checkbox" wire:model="Dokumen">
+                                            <label class="form-label ms-2 mb-2">
+                                                Dokumen
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check m-2">
+                                            <input class="form-check-input" type="checkbox" wire:model="Penerjemah">
+                                            <label class="form-label ms-2 mb-2">
+                                                Penerjemah
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Soft Skill --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Soft Skill</label>
+                                <textarea class="form-control"
+                                    wire:model="SoftSkill"></textarea>
+                            </div>
+
+                            {{-- Skill Komputer --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Skill Komputer</label>
+                                <textarea class="form-control"
+                                    wire:model="SkillKomputer"></textarea>
+                            </div>
+
+                            {{-- Keterangan --}}
+                            <div class="col-md-6 mb-3">
+                                <label>Keterangan</label>
+                                <textarea class="form-control"
+                                    wire:model="Keterangan"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <label>Point of Recommendation</label>
                                 <textarea placeholder="Point of Recommendation" class="form-control" cols="30" rows="4" wire:model="poin_rekomendasi"></textarea>
-                                <div class="form-text">Enter/Pindah baris {{'</br>'}}</div>
                             </div>
-                        
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -109,3 +248,31 @@
         </div>
     </div>
 </div>
+
+@push('js')
+    
+    <script>
+        initSelect2();
+        
+
+        function initSelect2() {
+            $('#select2-BidangKerjaPilihan').select2({
+                placeholder: "-- Pilih --",
+                dropdownParent: $('#editModal'),
+                cache: true
+            });
+            $('#select2-BidangKerjaPilihan').on('select2:select', function(e) {
+                @this.call('selectBidangKerjaPilihan', e.params.data)
+            });
+    
+            $('#select2-BidangKerjaPilihan').on('select2:unselect', function(e) {
+                @this.call('unSelectBidangKerjaPilihan', e.params.data)
+            });
+            window.addEventListener('set-select2-BidangKerjaPilihan', event => {
+                
+                let bidang = event.detail[0] ?? [];
+                $('#select2-BidangKerjaPilihan').val(bidang).trigger('change');
+            });
+        }
+    </script>
+@endpush

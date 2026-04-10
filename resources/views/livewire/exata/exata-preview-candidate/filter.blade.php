@@ -20,6 +20,7 @@
                     Hapus Semua Data
             </button>
         </div>
+    </div>
 </div>
 
 @push('js')

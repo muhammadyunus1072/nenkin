@@ -34,6 +34,26 @@ class Datatable extends Component
 
     public $exata_id;
     public $poin_rekomendasi;
+    public $KodeUnik;
+    public $TanggalLahir;
+    public $Gender;
+    public $Pendidikan;
+    public $LevelBahasa;
+    public $LamaDiJepang;
+    public $EstimasiGaji;
+    public $Domisili;
+    public $TglSiapkerja;
+    public $BidangKerjadiJepang;
+    public $BidangKerjaPilihan;
+    public $Sensei;
+    public $Dokumen;
+    public $Penerjemah;
+    public $SoftSkill;
+    public $SkillKomputer;
+    public $Keterangan;
+
+    public $Domisili_old = [];
+    public $BidangKerjaPilihan_old = [];
 
     public function onMount()
     {
@@ -68,6 +88,31 @@ class Datatable extends Component
     {
 
         return redirect()->route('exata_preview_candidate.create');
+    }
+
+
+    public function selectDomisili($data)
+    {
+        $this->Domisili = $data['id'];
+    }
+    public function unSelectDomisili($data)
+    {
+        $index = array_search($data['id'], $this->Domisili);
+        if ($index !== false) {
+            unset($this->Domisili[$index]);
+        }
+    }
+
+    public function selectBidangKerjaPilihan($data)
+    {;
+        $this->BidangKerjaPilihan[] = $data['id'];
+    }
+    public function unSelectBidangKerjaPilihan($data)
+    {
+        $index = array_search($data['id'], $this->BidangKerjaPilihan);
+        if ($index !== false) {
+            unset($this->BidangKerjaPilihan[$index]);
+        }
     }
 
     public function addPreviewCandidate($exata_id)
@@ -139,13 +184,70 @@ class Datatable extends Component
         $this->poin_rekomendasi = ExataPreviewCandidateRepository::findBy([
             ['exata_id', Crypt::decrypt($id)]
         ])->poin_rekomendasi;
+
+        $exata = ExataRepository::find(Crypt::decrypt($id));
+
+        $this->KodeUnik = $exata->KodeUnik;
+        $this->TanggalLahir = $exata->TanggalLahir;
+        $this->Gender = $exata->Gender;
+        $this->Pendidikan = $exata->Pendidikan;
+        $this->LevelBahasa = $exata->LevelBahasa;
+        $this->LamaDiJepang = $exata->LamaDiJepang;
+        $this->EstimasiGaji = $exata->EstimasiGaji;
+        $this->Domisili = $exata->Domisili;
+        $this->TglSiapkerja = $exata->TglSiapkerja;
+        $this->BidangKerjadiJepang = $exata->BidangKerjadiJepang;
+
+        $this->Sensei = $exata->Sensei == 'YA' ? true : false;
+        $this->Dokumen = $exata->Dokumen == 'YA' ? true : false;
+        $this->Penerjemah = $exata->Penerjemah == 'YA' ? true : false;
+        $this->SoftSkill = $exata->SoftSkill;
+        $this->SkillKomputer = $exata->SkillKomputer;
+        $this->Keterangan = $exata->Keterangan;
+        $pilihan = collect(Exata::FILTER_JOB_PILIHAN_INDO_CHOICE)
+            ->filter(function ($label) use ($exata) {
+                return str_contains($exata->BidangKerjaPilihan, $label);
+            })
+            ->keys()
+            ->values()
+            ->toArray();
+        $this->BidangKerjaPilihan = $pilihan;
+
+        $this->dispatch(
+            'consoleLog',
+            $this->BidangKerjaPilihan
+        );
+        $this->dispatch(
+            'set-select2-BidangKerjaPilihan',
+            $pilihan
+        );
     }
 
     public function save()
     {
         try {
             DB::transaction(function () {
+
+                $validateData = [
+                    'TanggalLahir' => $this->TanggalLahir,
+                    'Gender' => $this->Gender,
+                    'Pendidikan' => $this->Pendidikan,
+                    'LevelBahasa' => $this->LevelBahasa,
+                    'LamaDiJepang' => $this->LamaDiJepang,
+                    'EstimasiGaji' => $this->EstimasiGaji,
+                    'Domisili' => $this->Domisili,
+                    'TglSiapkerja' => $this->TglSiapkerja,
+                    'BidangKerjadiJepang' => $this->BidangKerjadiJepang,
+                    'BidangKerjaPilihan' => implode(',', $this->BidangKerjaPilihan),
+                    'Sensei' => $this->Sensei ? 'YA' : 'TIDAK',
+                    'Dokumen' => $this->Dokumen ? 'YA' : 'TIDAK',
+                    'Penerjemah' => $this->Penerjemah ? 'YA' : 'TIDAK',
+                    'SoftSkill' => $this->SoftSkill,
+                    'SkillKomputer' => $this->SkillKomputer,
+                    'Keterangan' => $this->Keterangan,
+                ];
                 $id = Crypt::decrypt($this->exata_id);
+                ExataRepository::update($id, $validateData);
                 ExataPreviewCandidateRepository::updateBy([
                     ['exata_id', $id]
                 ], [
