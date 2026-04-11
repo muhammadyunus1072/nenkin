@@ -1,5 +1,5 @@
 <div>
-    <div class="row justify-content-between mb-3">
+    <div class="row justify-content-between mb-0">
         <div class="row col-auto d-flex flex-nowrap">
             <div class="col-auto mb-2 {{ !isset($show_filter) || $show_filter == true ? '' : 'd-none' }}">
                 <label>Show</label>

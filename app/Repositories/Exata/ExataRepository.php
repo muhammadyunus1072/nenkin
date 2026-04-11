@@ -49,8 +49,8 @@ class ExataRepository extends MasterDataRepository
                 });
             })
             ->when($estimasi_gaji, function ($query) use ($estimasi_gaji, $estimasi_gaji_top) {
-                $query->where('EstimasiGaji', '>=', $estimasi_gaji * 1000_000)
-                    ->where('EstimasiGaji', '<=', $estimasi_gaji_top ? $estimasi_gaji_top * 1000_000 : $estimasi_gaji * 1000_000);
+                $query->where('EstimasiGaji', '>=', $estimasi_gaji * 100_000)
+                    ->where('EstimasiGaji', '<=', $estimasi_gaji_top ? $estimasi_gaji_top * 100_000 : $estimasi_gaji * 100_000);
             })
             ->when($domisili, function ($query) use ($domisili) {
                 $query->where(function ($q) use ($domisili) {
