@@ -55,7 +55,7 @@
                                             <tr class="bg-primary-container text-on-primary">
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Kode</th>
                                                 <th class="w-[60px] px-0 text-[10px] py-4 text-center break-words">Usia</th>
-                                                <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Gender</th>
+                                                <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Jenis kelamin</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Pendidikan</th>
                                                 <th class="w-[120px] px-0 text-[10px] py-4 text-center break-words">Domisili</th>
                                                 <th class="w-[130px] px-0 text-[10px] py-4 text-center break-words">Penempatan</th>
@@ -65,9 +65,9 @@
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Sensei</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Admin</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Penerjemah</th>
-                                                <th class="w-[140px] px-0 text-[10px] py-4 text-center break-words">Available Start</th>
+                                                <th class="w-[140px] px-0 text-[10px] py-4 text-center break-words">Ketersediaan mulai kerja</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Salary</th>
-                                                <th class="w-[200px] px-0 text-[10px] py-4 text-center break-words">Points of Recommendation</th>
+                                                <th class="w-[200px] px-0 text-[10px] py-4 text-center break-words">Alasan direkomendasikan</th>
                                             </tr>
                                         </thead>
                                     <tbody class="text-[11px]">
