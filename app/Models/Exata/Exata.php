@@ -58,6 +58,38 @@ class Exata extends Model
     const PERMISSION_Available = 'Available';
     const PERMISSION_Job = 'JOB';
 
+    public function saveInfo($object, $data = null, $prefix = "")
+    {
+        if ($data) {
+            foreach ($data as $item) {
+                $object[$prefix . "" . $item] = $this->$item;
+            }
+        } else {
+
+            $object[$prefix . 'KodeUnik'] = $this->KodeUnik;
+            $object[$prefix . 'TanggalLahir'] = $this->TanggalLahir;
+            $object[$prefix . 'Gender'] = $this->Gender;
+            $object[$prefix . 'Pendidikan'] = $this->Pendidikan;
+            $object[$prefix . 'LevelBahasa'] = $this->LevelBahasa;
+            $object[$prefix . 'LamaDiJepang'] = $this->LamaDiJepang;
+            $object[$prefix . 'EstimasiGaji'] = $this->EstimasiGaji;
+            $object[$prefix . 'EstimasiGajiTop'] = $this->EstimasiGajiTop;
+            $object[$prefix . 'Domisili'] = $this->Domisili;
+            $object[$prefix . 'TglSiapkerja'] = $this->TglSiapkerja;
+            $object[$prefix . 'BidangKerjadiJepang'] = $this->BidangKerjadiJepang;
+            $object[$prefix . 'BidangKerjaPilihan'] = $this->BidangKerjaPilihan;
+            $object[$prefix . 'Sensei'] = $this->Sensei;
+            $object[$prefix . 'Dokumen'] = $this->Dokumen;
+            $object[$prefix . 'Penerjemah'] = $this->Penerjemah;
+
+            $object[$prefix . 'SkillKomputer'] = $this->SkillKomputer;
+            $object[$prefix . 'SoftSkill'] = $this->SoftSkill;
+            $object[$prefix . 'Keterangan'] = $this->Keterangan;
+        }
+
+        return $object;
+    }
+
 
     protected array $uppercase = [
         self::PERMISSION_Pipeline,

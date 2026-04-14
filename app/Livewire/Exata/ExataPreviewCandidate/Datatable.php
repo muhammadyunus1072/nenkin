@@ -30,7 +30,7 @@ class Datatable extends Component
     public $hideColumns = [];
     public $kunciKolom = false;
 
-    public $exata_id;
+    public $objId;
     public $poin_rekomendasi;
     public $KodeUnik;
     public $TanggalLahir;
@@ -113,18 +113,13 @@ class Datatable extends Component
         }
     }
 
-    public function addPreviewCandidate($exata_id)
+    public function addPreviewCandidate($id)
     {
 
         try {
-            DB::transaction(function () use ($exata_id) {
-                $id = Crypt::decrypt($exata_id);
-                ExataPreviewCandidateRepository::deleteBy([
-                    [
-                        'exata_id',
-                        $id
-                    ],
-                ]);
+            DB::transaction(function () use ($id) {
+                $id = Crypt::decrypt($id);
+                ExataPreviewCandidateRepository::delete($id);
             });
             DB::commit();
 
@@ -178,12 +173,9 @@ class Datatable extends Component
 
     public function edit($id)
     {
-        $this->exata_id = $id;
-        $this->poin_rekomendasi = ExataPreviewCandidateRepository::findBy([
-            ['exata_id', Crypt::decrypt($id)]
-        ])->poin_rekomendasi;
-
-        $exata = ExataRepository::find(Crypt::decrypt($id));
+        $this->objId = $id;
+        $exata = ExataPreviewCandidateRepository::find(Crypt::decrypt($this->objId));
+        $this->poin_rekomendasi = $exata->poin_rekomendasi;
 
         $this->KodeUnik = $exata->KodeUnik;
         $this->TanggalLahir = $exata->TanggalLahir;
@@ -243,14 +235,11 @@ class Datatable extends Component
                     'SoftSkill' => $this->SoftSkill,
                     'SkillKomputer' => $this->SkillKomputer,
                     'Keterangan' => $this->Keterangan,
-                ];
-                $id = Crypt::decrypt($this->exata_id);
-                ExataRepository::update($id, $validateData);
-                ExataPreviewCandidateRepository::updateBy([
-                    ['exata_id', $id]
-                ], [
                     'poin_rekomendasi' => $this->poin_rekomendasi
-                ]);
+                ];
+                $id = Crypt::decrypt($this->objId);
+
+                ExataPreviewCandidateRepository::update($id, $validateData);
             });
             DB::commit();
             $this->dispatch('onSuccessEdit');
@@ -295,7 +284,7 @@ class Datatable extends Component
                 'sortable' => false,
                 'searchable' => false,
                 'render' => function ($item) {
-                    $id = Crypt::encrypt($item->id);
+                    $id = Crypt::encrypt($item->exata_id);
                     $routeLink = route('exata.edit', $id);
                     $linkHtml = "
                         <div class='col-auto mb-2'>
@@ -312,7 +301,7 @@ class Datatable extends Component
                         </div>
                         ";
 
-                    $id = Crypt::encrypt($item->exata_id);
+                    $id = Crypt::encrypt($item->id);
                     $editHtml = "
                         <div class='col-auto mb-2'>
                             <button

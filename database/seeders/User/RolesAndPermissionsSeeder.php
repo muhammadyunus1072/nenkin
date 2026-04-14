@@ -33,6 +33,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
             PermissionHelper::ACCESS_EXATA => PermissionHelper::TYPE_ALL,
             PermissionHelper::ACCESS_EXATA_PERMISSION => PermissionHelper::TYPE_ALL,
+            PermissionHelper::ACCESS_EXATA_PREVIEW_CANDIDATE => PermissionHelper::TYPE_ALL,
+            PermissionHelper::ACCESS_EXATA_FORM_CANDIDATE => PermissionHelper::TYPE_ALL,
 
         ];
 
@@ -68,6 +70,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
                 PermissionHelper::ACCESS_EXATA => PermissionHelper::TYPE_ALL,
                 PermissionHelper::ACCESS_EXATA_PERMISSION => PermissionHelper::TYPE_ALL,
+                PermissionHelper::ACCESS_EXATA_FORM_CANDIDATE => PermissionHelper::TYPE_ALL,
+                PermissionHelper::ACCESS_EXATA_PREVIEW_CANDIDATE => PermissionHelper::TYPE_ALL,
             ],
             "Member" => [
                 PermissionHelper::ACCESS_DASHBOARD => [PermissionHelper::TYPE_READ]
