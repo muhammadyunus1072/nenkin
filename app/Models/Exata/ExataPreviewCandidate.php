@@ -24,6 +24,7 @@ class ExataPreviewCandidate extends Model
         'EstimasiGaji',
         'EstimasiGajiTop',
         'Domisili',
+        'Penempatankerja',
         'TglSiapkerja',
         'BidangKerjadiJepang',
         'BidangKerjaPilihan',

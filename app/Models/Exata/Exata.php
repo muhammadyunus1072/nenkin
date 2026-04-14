@@ -75,6 +75,7 @@ class Exata extends Model
             $object[$prefix . 'EstimasiGaji'] = $this->EstimasiGaji;
             $object[$prefix . 'EstimasiGajiTop'] = $this->EstimasiGajiTop;
             $object[$prefix . 'Domisili'] = $this->Domisili;
+            $object[$prefix . 'Penempatankerja'] = $this->Penempatankerja;
             $object[$prefix . 'TglSiapkerja'] = $this->TglSiapkerja;
             $object[$prefix . 'BidangKerjadiJepang'] = $this->BidangKerjadiJepang;
             $object[$prefix . 'BidangKerjaPilihan'] = $this->BidangKerjaPilihan;
@@ -614,6 +615,12 @@ class Exata extends Model
             ],
             'DATATABLE_' . self::PERMISSION_Domisili => [
                 'name' => 'Domisili',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
+            'DATATABLE_' . self::PERMISSION_Penempatankerja => [
+                'name' => 'Preferensi lokasi',
                 'class' => 'text-center',
                 'isNotImport' => true,
                 'isDate' => false,

@@ -40,6 +40,7 @@ class Datatable extends Component
     public $LamaDiJepang;
     public $EstimasiGaji;
     public $Domisili;
+    public $Penempatankerja;
     public $TglSiapkerja;
     public $BidangKerjadiJepang;
     public $BidangKerjaPilihan;
@@ -51,6 +52,7 @@ class Datatable extends Component
     public $Keterangan;
 
     public $Domisili_old = [];
+    public $Penempatankerja_old = [];
     public $BidangKerjaPilihan_old = [];
 
     public function onMount()
@@ -98,6 +100,18 @@ class Datatable extends Component
         $index = array_search($data['id'], $this->Domisili);
         if ($index !== false) {
             unset($this->Domisili[$index]);
+        }
+    }
+
+    public function selectPenempatankerja($data)
+    {
+        $this->Penempatankerja = $data['id'];
+    }
+    public function unSelectPenempatankerja($data)
+    {
+        $index = array_search($data['id'], $this->Penempatankerja);
+        if ($index !== false) {
+            unset($this->Penempatankerja[$index]);
         }
     }
 
@@ -185,6 +199,7 @@ class Datatable extends Component
         $this->LamaDiJepang = $exata->LamaDiJepang;
         $this->EstimasiGaji = $exata->EstimasiGaji;
         $this->Domisili = $exata->Domisili;
+        $this->Penempatankerja = $exata->Penempatankerja;
         $this->TglSiapkerja = $exata->TglSiapkerja;
         $this->BidangKerjadiJepang = $exata->BidangKerjadiJepang;
 
@@ -226,6 +241,7 @@ class Datatable extends Component
                     'LamaDiJepang' => $this->LamaDiJepang,
                     'EstimasiGaji' => $this->EstimasiGaji,
                     'Domisili' => $this->Domisili,
+                    'Penempatankerja' => $this->Penempatankerja,
                     'TglSiapkerja' => $this->TglSiapkerja,
                     'BidangKerjadiJepang' => $this->BidangKerjadiJepang,
                     'BidangKerjaPilihan' => implode(',', $this->BidangKerjaPilihan),

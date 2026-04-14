@@ -157,6 +157,11 @@
                                 <label>Domisili</label>
                                 <input type="text" class="form-control" wire:model="Domisili">
                             </div>
+                            {{-- Penempatankerja --}}
+                            <div class="col-md-6 mb-3" wire:ignore>
+                                <label>Preferensi Lokasi</label>
+                                <input type="text" class="form-control" wire:model="Penempatankerja">
+                            </div>
 
                             {{-- Tanggal Siap Kerja --}}
                             <div class="col-md-6 mb-3">
