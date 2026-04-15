@@ -58,6 +58,17 @@ class ExataPreviewCandidate extends Model
                 $model = $model->exata->saveInfo($model, false, '');
             }
         });
+        self::updated(function ($model) {
+            $exata = $model->exata;
+
+            if (!$exata) {
+                return;
+            }
+
+            $exata->update([
+                'poin_rekomendasi' => $model->poin_rekomendasi
+            ]);
+        });
     }
 
     public function exata()

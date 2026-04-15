@@ -58,6 +58,22 @@ class Exata extends Model
     const PERMISSION_Available = 'Available';
     const PERMISSION_Job = 'JOB';
 
+    const PERMISSION_SertifikatBahasaJepang = 'SertifikatBahasaJepang';
+    const PERMISSION_Cv = 'Cv';
+    const PERMISSION_TinggiBadan = 'TinggiBadan';
+    const PERMISSION_BeratBadan = 'BeratBadan';
+    const PERMISSION_SkillBahasaLain = 'SkillBahasaLain';
+    const PERMISSION_SkillKomputer = 'SkillKomputer';
+    const PERMISSION_PencapaianTertinggi = 'PencapaianTertinggi';
+    const PERMISSION_ValueSaatDiJepang = 'ValueSaatDiJepang';
+    const PERMISSION_SoftSkill = 'SoftSkill';
+    const PERMISSION_SkillLainnya = 'SkillLainnya';
+    const PERMISSION_PengalamanKerja = 'PengalamanKerja';
+
+    const PERMISSION_Attachment = 'Attachment';
+
+    const PERMISSION_PoinOfRecommendation = 'poin_rekomendasi';
+
     public function saveInfo($object, $data = null, $prefix = "")
     {
         if ($data) {
@@ -86,6 +102,7 @@ class Exata extends Model
             $object[$prefix . 'SkillKomputer'] = $this->SkillKomputer;
             $object[$prefix . 'SoftSkill'] = $this->SoftSkill;
             $object[$prefix . 'Keterangan'] = $this->Keterangan;
+            $object[$prefix . 'poin_rekomendasi'] = $this->poin_rekomendasi;
         }
 
         return $object;
@@ -109,19 +126,6 @@ class Exata extends Model
     ];
 
 
-    const PERMISSION_SertifikatBahasaJepang = 'SertifikatBahasaJepang';
-    const PERMISSION_Cv = 'Cv';
-    const PERMISSION_TinggiBadan = 'TinggiBadan';
-    const PERMISSION_BeratBadan = 'BeratBadan';
-    const PERMISSION_SkillBahasaLain = 'SkillBahasaLain';
-    const PERMISSION_SkillKomputer = 'SkillKomputer';
-    const PERMISSION_PencapaianTertinggi = 'PencapaianTertinggi';
-    const PERMISSION_ValueSaatDiJepang = 'ValueSaatDiJepang';
-    const PERMISSION_SoftSkill = 'SoftSkill';
-    const PERMISSION_SkillLainnya = 'SkillLainnya';
-    const PERMISSION_PengalamanKerja = 'PengalamanKerja';
-
-    const PERMISSION_Attachment = 'Attachment';
 
     const EXATA_FILTER_CHOICE = [
         'FILTER_' . self::PERMISSION_NamaLengkap => 'Nama Lengkap',
@@ -551,7 +555,6 @@ class Exata extends Model
     public static function EXATA_DATATABLE_PREVIEW_CHOICE()
     {
         return [
-
             'DATATABLE_' . self::PERMISSION_KodeUnik => [
                 'name' => 'Kode unik',
                 'class' => 'text-center',
@@ -1314,6 +1317,7 @@ class Exata extends Model
         'SoftSkill',
         'SkillLainnya',
         'PengalamanKerja',
+        'poin_rekomendasi',
     ];
 
     protected $guarded = ['id'];
