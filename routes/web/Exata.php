@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Exata\ExataAttachmentController;
 use App\Http\Controllers\Exata\ExataController;
 use App\Http\Controllers\Exata\ExataFormCandidateController;
 use App\Http\Controllers\Exata\ExataPermissionController;
@@ -40,5 +41,8 @@ Route::middleware(['auth', 'access_permission'])->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::get('{id}/edit', 'edit')->name('edit');
+    });
+    Route::group(["controller" => ExataAttachmentController::class, "prefix" => "exata_attachment", "as" => "exata_attachment."], function () {
+        Route::get('{exata_id}/{type}', 'detail')->name('index');
     });
 });

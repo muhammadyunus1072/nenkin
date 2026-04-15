@@ -75,34 +75,8 @@ class Filter extends Component
 
     public $importType;
 
-    public $candidate_attachments = [];
-    public $candidate_attachment_type;
-
 
     public function mount() {}
-
-    #[On('showFileJapaneseLanguageCertificate')]
-    public function showFileJapaneseLanguageCertificate($id)
-    {
-        $this->candidate_attachments = ExataJapaneseLanguageCertificateRepository::getBy([
-            ['exata_id', Crypt::decrypt($id)]
-        ])->toArray();
-        $this->candidate_attachment_type = Exata::FILTER_ATTACHMENT_SERTIFIKAT_BAHASA_JEPANG;
-    }
-
-    public function setImportBy($importType)
-    {
-        $this->importType = $importType;
-    }
-
-    #[On('showFileCurriculumVitae')]
-    public function showFileCurriculumVitae($id)
-    {
-        $this->candidate_attachments = ExataCurriculumVitaeRepository::getBy([
-            ['exata_id', Crypt::decrypt($id)]
-        ])->toArray();
-        $this->candidate_attachment_type = Exata::FILTER_ATTACHMENT_CV;
-    }
 
     #[On('editData')]
     public function editData($id)

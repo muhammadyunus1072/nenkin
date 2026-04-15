@@ -42,6 +42,7 @@ class PermissionHelper
     const ACCESS_EXATA_FORM_CANDIDATE = 'exata_form_candidate';
     const ACCESS_EXATA_PERMISSION = 'permission_exata';
     const ACCESS_EXATA_PREVIEW_CANDIDATE = 'exata_preview_candidate';
+    const ACCESS_EXATA_ATTACHMENT = 'exata_attachment';
 
     const ACCESS_ALL = [
         self::ACCESS_DASHBOARD,
@@ -60,6 +61,7 @@ class PermissionHelper
         self::ACCESS_EXATA_FORM_CANDIDATE,
         self::ACCESS_EXATA_PERMISSION,
         self::ACCESS_EXATA_PREVIEW_CANDIDATE,
+        self::ACCESS_EXATA_ATTACHMENT,
     ];
 
     const TRANSLATE_ACCESS = [
@@ -79,6 +81,7 @@ class PermissionHelper
         self::ACCESS_EXATA_FORM_CANDIDATE => "Data J-Expert - Form Kandidat",
         self::ACCESS_EXATA_PERMISSION => "Data Ijin J-Expert",
         self::ACCESS_EXATA_PREVIEW_CANDIDATE => "Preview Kandidat - J-Expert",
+        self::ACCESS_EXATA_ATTACHMENT => "Lampiran Kandidat - J-Expert",
     ];
 
 

@@ -705,14 +705,12 @@ class Exata extends Model
                     $id = Crypt::encrypt($item['id']);
                     $html = '';
                     if (!$item['exataJapaneseLanguageCertificates']->isEmpty()) {
-
+                        $route = route('exata_attachment.index', [$id, self::PERMISSION_SertifikatBahasaJepang]);
                         $html = "<div class='col-auto mb-2'>
-                            <button 
+                            <a 
                                 class='btn btn-primary btn-sm'
-                                data-bs-toggle='modal'
-                                data-bs-target='#showCandidateAttachmentModal'
-                                x-data
-                                @click=\"\$dispatch('showFileJapaneseLanguageCertificate', { id: '" . $id . "' })\"
+                                target='_BLANK'
+                                href='$route'
                             >
                             <i class='ki-duotone ki-eye fs-3'>
                                     <span class='path1'></span>
@@ -721,7 +719,7 @@ class Exata extends Model
                                     <span class='path4'></span>
                                     <span class='path5'></span>
                                 </i>
-                            </button>
+                            </a>
                         </div>";
                     }
 
@@ -740,14 +738,12 @@ class Exata extends Model
                     $id = Crypt::encrypt($item['id']);
                     $html = '';
                     if (!$item['exataCurriculumVitaes']->isEmpty()) {
-
+                        $route = route('exata_attachment.index', [$id, self::PERMISSION_Cv]);
                         $html = "<div class='col-auto mb-2'>
-                            <button 
+                            <a 
                                 class='btn btn-primary btn-sm'
-                                data-bs-toggle='modal'
-                                data-bs-target='#showCandidateAttachmentModal'
-                                x-data
-                                @click=\"\$dispatch('showFileCurriculumVitae', { id: '" . $id . "' })\"
+                                target='_BLANK'
+                                href='$route'
                             >
                             <i class='ki-duotone ki-eye fs-3'>
                                     <span class='path1'></span>
@@ -756,7 +752,7 @@ class Exata extends Model
                                     <span class='path4'></span>
                                     <span class='path5'></span>
                                 </i>
-                            </button>
+                            </a>
                         </div>";
                     }
 
