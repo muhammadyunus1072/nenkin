@@ -94,6 +94,11 @@ class Filter extends Component
         ];
     }
 
+    public function setImportBy($importType)
+    {
+        $this->importType = $importType;
+    }
+
     public function saveBulk()
     {
         $this->dispatch('saveBulk', $this->edit_bulk);
