@@ -17,6 +17,13 @@ class Detail extends Component
 Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat';
     public $telp_lpk = '+62 812 2000 4752 | +62 21 8899 7766';
 
+    public $showPoin = true;
+
+    public function togglePoin()
+    {
+        $this->showPoin = !$this->showPoin;
+    }
+
     public function mount()
     {
         $this->data = ExataPreviewCandidateRepository::datatable()->get();

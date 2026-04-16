@@ -23,6 +23,9 @@
                     <button class="bg-green-600  mb-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200" onclick="printPDF()">
                         Save PDF
                     </button>
+                    <button class="bg-blue-600  mb-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200" wire:click="togglePoin()">
+                        {{$showPoin ? 'Show' : 'Hide';}} Poin
+                    </button>
                 </div>
                 <div class="w-5/12">
                     <input type="text" placeholder="Nama LPK" wire:model.live="nama_lpk" class="w-full px-3 mb-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -67,7 +70,9 @@
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Penerjemah</th>
                                                 <th class="w-[140px] px-0 text-[10px] py-4 text-center break-words">Ketersediaan mulai kerja</th>
                                                 <th class="w-[100px] px-0 text-[10px] py-4 text-center break-words">Salary</th>
-                                                <th class="w-[200px] px-0 text-[10px] py-4 text-center break-words">Alasan direkomendasikan</th>
+                                                @if ($showPoin)
+                                                    <th class="w-[200px] px-0 text-[10px] py-4 text-center break-words">Alasan direkomendasikan</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                     <tbody class="text-[11px]">
@@ -89,7 +94,9 @@
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['Penerjemah']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['TglSiapkerja']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['EstimasiGaji']}}</td>
-                                                <td class="px-0 py-1 text-[8px]">{!! nl2br(e($item['poin_rekomendasi'])) !!}</td>
+                                                @if ($showPoin)
+                                                    <td class="px-0 py-1 text-[8px]">{!! nl2br(e($item['poin_rekomendasi'])) !!}</td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>
