@@ -30,7 +30,7 @@
                 <div class="input-group mb-3 @error('tinggi_badan') is-invalid @enderror">
                     <input type="number" class="@error('tinggi_badan') is-invalid @enderror form-control" placeholder="Tinggi Badan" aria-label="Tinggi Badan" id="tinggi_badan" wire:model="tinggi_badan">
 
-                    <span class="input-group-text">Kg</span>
+                    <span class="input-group-text">Cm</span>
                 </div>
                 @error('tinggi_badan')
                     <div class="invalid-feedback">
@@ -44,7 +44,7 @@
                 <div class="input-group mb-3 @error('berat_badan') is-invalid @enderror ">
                     <input type="number" class="@error('berat_badan') is-invalid @enderror form-control" placeholder="Berat Badan" aria-label="Berat Badan" id="berat_badan" wire:model="berat_badan">
 
-                    <span class="input-group-text">Cm</span>
+                    <span class="input-group-text">Kg</span>
                 </div>
 
                 @error('berat_badan')
