@@ -599,6 +599,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                
                                                 @foreach($previewPipelineRows as $i => $row)
                                                     @if ($row['error'])
                                                         <tr>
@@ -609,7 +610,7 @@
                                                                 @endforeach
                                                             <td>
                                                                 @foreach($row['error'] as $field => $msg)
-                                                                    <div>{{ $msg[0] }}</div>
+                                                                    <div>{{ json_encode($msg) }}</div>
                                                                 @endforeach
                                                             </td>
                                                         </tr>

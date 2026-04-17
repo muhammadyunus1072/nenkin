@@ -11,7 +11,6 @@ use Google\Cloud\Vision\V1\Feature;
 use Google\Cloud\Vision\V1\Image;
 use setasign\Fpdi\Fpdi;
 
-use function Symfony\Component\String\s;
 
 class VisionOcrService
 {
