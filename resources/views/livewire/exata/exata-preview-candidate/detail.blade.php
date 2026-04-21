@@ -56,6 +56,7 @@
                                     <table class="w-full table-fixed">
                                         <thead>
                                             <tr class="bg-primary-container text-on-primary">
+                                                <th class="w-[30px] px-0 text-[10px] py-4 text-center break-words">No</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Kode</th>
                                                 <th class="w-[60px] px-0 text-[10px] py-4 text-center break-words">Usia</th>
                                                 <th class="w-[80px] px-0 text-[10px] py-4 text-center break-words">Jenis kelamin</th>
@@ -79,6 +80,7 @@
                                         @foreach ($data as $index => $item)
                                             <!-- Row 1 -->
                                             <tr class="border-b border-outline-variant/10" style="border: 3px dashed #cfe1fd;">
+                                                <td class="px-0 py-1 text-[8px] text-center">{{ $loop->iteration }}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{$item['KodeUnik']}}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{    Carbon\Carbon::parse($item['TanggalLahir'])->age }}</td>
                                                 <td class="px-0 py-1 text-[8px] text-center">{{($item['Gender'] == 'L' || $item['Gender'] == 'LAKI-LAKI' ) ? 'Pria' : 'Wanita'}}</td>
