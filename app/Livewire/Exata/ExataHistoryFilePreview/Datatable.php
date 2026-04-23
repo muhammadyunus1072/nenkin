@@ -42,7 +42,7 @@ class Datatable extends Component
             return;
         }
 
-        RegencyRepository::delete($this->targetDeleteId);
+        HistoryFilePreviewRepository::delete($this->targetDeleteId);
         Alert::success($this, 'Berhasil', 'Data berhasil dihapus');
     }
 
