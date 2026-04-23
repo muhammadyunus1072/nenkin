@@ -413,7 +413,6 @@
                     <label>Sertifikat Bahasa Jepang</label>
                     <input type="file"
                         wire:model="sertifikat_bahasa_jepang"
-                        multiple
                         class="form-control @error('sertifikat_bahasa_jepang') is-invalid @enderror">
                     @error('sertifikat_bahasa_jepang')
                     <div class="text-danger">{{ $message }}</div>
@@ -423,7 +422,6 @@
                     <label>CV</label>
                     <input type="file"
                         wire:model="cv"
-                        multiple
                         class="form-control @error('cv') is-invalid @enderror">
                     @error('cv')
                     <div class="text-danger">{{ $message }}</div>

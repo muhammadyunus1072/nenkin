@@ -127,11 +127,13 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label>Sertifikat Bahasa Jepang</label>
-                    <input type="file" wire:model="sertifikat_bahasa_jepang" multiple class="form-control">
-    
-                    @error('sertifikat_bahasa_jepang.*')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    @if (!$sertifikat_bahasa_jepang_old)
+                        <input type="file" wire:model="sertifikat_bahasa_jepang" class="form-control">
+        
+                        @error('sertifikat_bahasa_jepang.*')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    @endif
                 </div>
                 
                 {{-- Preview --}}
@@ -218,13 +220,15 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label>CV</label>
-                    <input type="file" wire:model="cv" multiple class="form-control @error('cv') is-invalid @enderror">
+                    @if (!$cv_old)
+                        <input type="file" wire:model="cv" class="form-control @error('cv') is-invalid @enderror">
 
-                    @error('cv')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        @error('cv')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    @endif
                 </div>
     
 

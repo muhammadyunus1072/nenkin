@@ -43,6 +43,7 @@ class PermissionHelper
     const ACCESS_EXATA_PERMISSION = 'permission_exata';
     const ACCESS_EXATA_PREVIEW_CANDIDATE = 'exata_preview_candidate';
     const ACCESS_EXATA_ATTACHMENT = 'exata_attachment';
+    const ACCESS_EXATA_HISTORY_FILE_PREVIEW = 'exata_history_file_preview';
 
     const ACCESS_ALL = [
         self::ACCESS_DASHBOARD,
@@ -62,6 +63,7 @@ class PermissionHelper
         self::ACCESS_EXATA_PERMISSION,
         self::ACCESS_EXATA_PREVIEW_CANDIDATE,
         self::ACCESS_EXATA_ATTACHMENT,
+        self::ACCESS_EXATA_HISTORY_FILE_PREVIEW,
     ];
 
     const TRANSLATE_ACCESS = [
@@ -82,6 +84,7 @@ class PermissionHelper
         self::ACCESS_EXATA_PERMISSION => "Data Ijin J-Expert",
         self::ACCESS_EXATA_PREVIEW_CANDIDATE => "Preview Kandidat - J-Expert",
         self::ACCESS_EXATA_ATTACHMENT => "Lampiran Kandidat - J-Expert",
+        self::ACCESS_EXATA_HISTORY_FILE_PREVIEW => "Riwayat Preview Kandidat - J-Expert",
     ];
 
 
