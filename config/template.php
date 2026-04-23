@@ -41,11 +41,11 @@ return [
             'route'  => 'exata_preview_candidate.index',
             'icon' => 'ki-duotone ki-element-11',
         ],
-        // [
-        //     'text' => 'Riwayat Preview Kandidat',
-        //     'route'  => 'exata_history_file_preview.index',
-        //     'icon' => 'ki-duotone ki-element-11',
-        // ],
+        [
+            'text' => 'Riwayat Preview Kandidat',
+            'route'  => 'exata_history_file_preview.index',
+            'icon' => 'ki-duotone ki-element-11',
+        ],
         [
             'text' => 'Form Kandidat',
             'route'  => 'exata_form_candidate.index',
