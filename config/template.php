@@ -42,7 +42,7 @@ return [
             'icon' => 'ki-duotone ki-element-11',
         ],
         [
-            'text' => 'Riwayat Preview Kandidat',
+            'text' => 'History Upload Preview',
             'route'  => 'exata_history_file_preview.index',
             'icon' => 'ki-duotone ki-element-11',
         ],
