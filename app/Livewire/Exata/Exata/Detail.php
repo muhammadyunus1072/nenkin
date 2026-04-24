@@ -60,6 +60,9 @@ class Detail extends Component
     #[Validate('required', message: 'Pengalaman kerja harus diisi', onUpdate: false)]
     public $pengalaman_kerja;
 
+    #[Validate('required', message: 'Poin Rekomendasi harus diisi', onUpdate: false)]
+    public $poin_rekomendasi;
+
     protected function rules()
     {
         return [
@@ -105,6 +108,7 @@ class Detail extends Component
             $this->soft_skill = $candidate->SoftSkill;
             $this->skill_lainnya = $candidate->SkillLainnya;
             $this->pengalaman_kerja = $candidate->PengalamanKerja;
+            $this->poin_rekomendasi = $candidate->poin_rekomendasi;
         }
     }
 
@@ -165,6 +169,7 @@ class Detail extends Component
                     'SoftSkill' => $this->soft_skill,
                     'SkillLainnya' => $this->skill_lainnya,
                     'PengalamanKerja' => $this->pengalaman_kerja,
+                    'poin_rekomendasi' => $this->poin_rekomendasi,
                 ];
                 if ($this->objId) {
                     $exata_id = Crypt::decrypt($this->objId);

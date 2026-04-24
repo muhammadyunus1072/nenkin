@@ -1005,6 +1005,12 @@ class Exata extends Model
                 'isNotImport' => true,
                 'isDate' => false,
             ],
+            'DATATABLE_' . self::PERMISSION_PoinOfRecommendation => [
+                'name' => 'Poin Rekomendasi',
+                'class' => 'text-center',
+                'isNotImport' => true,
+                'isDate' => false,
+            ],
         ];
     }
 

@@ -408,24 +408,45 @@
                         </div>
                     @enderror
                 </div>
-                {{-- FILE --}}
-                <div class="col-md-6">
-                    <label>Sertifikat Bahasa Jepang</label>
-                    <input type="file"
-                        wire:model="sertifikat_bahasa_jepang"
-                        class="form-control @error('sertifikat_bahasa_jepang') is-invalid @enderror">
-                    @error('sertifikat_bahasa_jepang')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="col-md-6 mb-2">
+                <label for="poin_rekomendasi">3 Alasan Direkomendasikan </label>
+                <textarea cols="30" rows="10" wire:model="poin_rekomendasi" style="line-height: 15px;" class="@error('poin_rekomendasi') is-invalid @enderror form-control" 
+                placeholder="contoh pengisian:
+- Memiliki pengalaman mengajar Bahasa Jepang lebih dari 2 tahun dengan kemampuan menyusun materi pembelajaran yang efektif.
+- Memiliki kemampuan komunikasi, public speaking, dan membimbing siswa hingga persiapan JLPT serta wawancara kerja.
+- Berpengalaman sebagai leader (Sub Leader & Group Leader) dengan kemampuan problem solving dan koordinasi tim.
+- Berpengalaman sebagai trainer, mentor, dan leader (5S & Kaizen Improvement) dengan kemampuan meningkatkan efisiensi dan kualitas kerja."
+                ></textarea>
+                <div class="form-text" id="basic-addon4">
+                    Mohon isi bagian ini secara jelas, objektif, dan profesional mengenai alasan mengapa Anda layak direkomendasikan kepada perusahaan. Penjelasan dapat didasarkan pada pengalaman kerja, kemampuan teknis, kompetensi, serta nilai tambah yang relevan dengan posisi yang dilamar.
                 </div>
-                <div class="col-md-6">
-                    <label>CV</label>
-                    <input type="file"
-                        wire:model="cv"
-                        class="form-control @error('cv') is-invalid @enderror">
-                    @error('cv')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
+
+                @error('poin_rekomendasi')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+                {{-- FILE --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Sertifikat Bahasa Jepang</label>
+                        <input type="file"
+                            wire:model="sertifikat_bahasa_jepang"
+                            class="form-control @error('sertifikat_bahasa_jepang') is-invalid @enderror">
+                        @error('sertifikat_bahasa_jepang')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label>CV</label>
+                        <input type="file"
+                            wire:model="cv"
+                            class="form-control @error('cv') is-invalid @enderror">
+                        @error('cv')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
         </div>
    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary mt-3">

@@ -123,194 +123,215 @@
                     </div>
                 @enderror
             </div>
-
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label>Sertifikat Bahasa Jepang</label>
-                    @if (!$sertifikat_bahasa_jepang_old)
-                        <input type="file" wire:model="sertifikat_bahasa_jepang" class="form-control">
-        
-                        @error('sertifikat_bahasa_jepang.*')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    @endif
+            <div class="col-md-6 mb-2">
+                <label for="poin_rekomendasi">3 Alasan Direkomendasikan </label>
+                <textarea cols="30" rows="10" wire:model="poin_rekomendasi" style="line-height: 15px;" class="@error('poin_rekomendasi') is-invalid @enderror form-control" 
+                placeholder="contoh pengisian:
+- Memiliki pengalaman mengajar Bahasa Jepang lebih dari 2 tahun dengan kemampuan menyusun materi pembelajaran yang efektif.
+- Memiliki kemampuan komunikasi, public speaking, dan membimbing siswa hingga persiapan JLPT serta wawancara kerja.
+- Berpengalaman sebagai leader (Sub Leader & Group Leader) dengan kemampuan problem solving dan koordinasi tim.
+- Berpengalaman sebagai trainer, mentor, dan leader (5S & Kaizen Improvement) dengan kemampuan meningkatkan efisiensi dan kualitas kerja."
+                ></textarea>
+                <div class="form-text" id="basic-addon4">
+                    Mohon isi bagian ini secara jelas, objektif, dan profesional mengenai alasan mengapa Anda layak direkomendasikan kepada perusahaan. Penjelasan dapat didasarkan pada pengalaman kerja, kemampuan teknis, kompetensi, serta nilai tambah yang relevan dengan posisi yang dilamar.
                 </div>
-                
-                {{-- Preview --}}
-                <div class="row mt-3">
-                    @foreach ($sertifikat_bahasa_jepang as $index => $image)
-                        <div class="col-md-6 mb-2 position-relative" wire:key="sertifikat_bahasa_jepang_{{$index}}">
-                            <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeSertifikatBahasaJepang({{$index}})">
-                                <i class='ki-duotone ki-trash fs-4'>
-                                    <span class='path1'></span>
-                                    <span class='path2'></span>
-                                    <span class='path3'></span>
-                                    <span class='path4'></span>
-                                    <span class='path5'></span>
-                                </i>
-                            </button>
-                            @php
-                                $ext = $image->getClientOriginalExtension();
-                                if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
-                                    $url = $image->temporaryUrl();
-                                }else{
-                                    $url = $image->getClientOriginalName();
-                                }
-                                
 
-                                $ext = strtolower($ext);
-                                
-                            @endphp
-                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
-    
-                                <img src="{{ $url }}" class="img-fluid rounded">
-                            @else
-
-                                <div class="border rounded p-4 text-center bg-light">
-                                    <i class="bi bi-file-earmark fs-1"></i>
-                                    <div class="mt-2">
-                                        {{$url}}
-                                    </div>
-                                </div>
-
-                            @endif
-                        </div>
-                    @endforeach
-                    @foreach ($sertifikat_bahasa_jepang_old as $index => $image)
-                        <div class="col-md-6 mb-2 position-relative" wire:key="sertifikat_bahasa_jepang_old_{{$index}}">
-                            <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeSertifikatBahasaJepangOld({{$index}})">
-                                <i class='ki-duotone ki-trash fs-4'>
-                                    <span class='path1'></span>
-                                    <span class='path2'></span>
-                                    <span class='path3'></span>
-                                    <span class='path4'></span>
-                                    <span class='path5'></span>
-                                </i>
-                            </button>
-                            @php
-                                
-                                if (is_array($image)) {
-                                    $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
-                                    $url = $image['file'];
-                                }
-
-                                $ext = strtolower($ext);
-                                
-                            @endphp
-                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
-    
-                                <img src="{{ $url }}" class="img-fluid rounded">
-                            @else
-                                <div class="border rounded p-4 text-center bg-light">
-                                    <i class="bi bi-file-earmark fs-1"></i>
-                                    <div class="mt-2">
-                                        {{ $image['name'] }}
-                                    </div>
-
-                                    <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
-                                        Download
-                                    </a>
-                                </div>
-
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
+                @error('poin_rekomendasi')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label>CV</label>
-                    @if (!$cv_old)
-                        <input type="file" wire:model="cv" class="form-control @error('cv') is-invalid @enderror">
 
-                        @error('cv')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label>Sertifikat Bahasa Jepang</label>
+                        @if (!$sertifikat_bahasa_jepang_old)
+                            <input type="file" wire:model="sertifikat_bahasa_jepang" class="form-control">
+            
+                            @error('sertifikat_bahasa_jepang.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @endif
+                    </div>
+                    
+                    {{-- Preview --}}
+                    <div class="row mt-3">
+                        @foreach ($sertifikat_bahasa_jepang as $index => $image)
+                            <div class="col-md-6 mb-2 position-relative" wire:key="sertifikat_bahasa_jepang_{{$index}}">
+                                <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeSertifikatBahasaJepang({{$index}})">
+                                    <i class='ki-duotone ki-trash fs-4'>
+                                        <span class='path1'></span>
+                                        <span class='path2'></span>
+                                        <span class='path3'></span>
+                                        <span class='path4'></span>
+                                        <span class='path5'></span>
+                                    </i>
+                                </button>
+                                @php
+                                    $ext = $image->getClientOriginalExtension();
+                                    if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
+                                        $url = $image->temporaryUrl();
+                                    }else{
+                                        $url = $image->getClientOriginalName();
+                                    }
+                                    
+    
+                                    $ext = strtolower($ext);
+                                    
+                                @endphp
+                                @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+        
+                                    <img src="{{ $url }}" class="img-fluid rounded">
+                                @else
+    
+                                    <div class="border rounded p-4 text-center bg-light">
+                                        <i class="bi bi-file-earmark fs-1"></i>
+                                        <div class="mt-2">
+                                            {{$url}}
+                                        </div>
+                                    </div>
+    
+                                @endif
                             </div>
-                        @enderror
-                    @endif
+                        @endforeach
+                        @foreach ($sertifikat_bahasa_jepang_old as $index => $image)
+                            <div class="col-md-6 mb-2 position-relative" wire:key="sertifikat_bahasa_jepang_old_{{$index}}">
+                                <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeSertifikatBahasaJepangOld({{$index}})">
+                                    <i class='ki-duotone ki-trash fs-4'>
+                                        <span class='path1'></span>
+                                        <span class='path2'></span>
+                                        <span class='path3'></span>
+                                        <span class='path4'></span>
+                                        <span class='path5'></span>
+                                    </i>
+                                </button>
+                                @php
+                                    
+                                    if (is_array($image)) {
+                                        $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
+                                        $url = $image['file'];
+                                    }
+    
+                                    $ext = strtolower($ext);
+                                    
+                                @endphp
+                                @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+        
+                                    <img src="{{ $url }}" class="img-fluid rounded">
+                                @else
+                                    <div class="border rounded p-4 text-center bg-light">
+                                        <i class="bi bi-file-earmark fs-1"></i>
+                                        <div class="mt-2">
+                                            {{ $image['name'] }}
+                                        </div>
+    
+                                        <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                            Download
+                                        </a>
+                                    </div>
+    
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label>CV</label>
+                        @if (!$cv_old)
+                            <input type="file" wire:model="cv" class="form-control @error('cv') is-invalid @enderror">
     
-
-                {{-- Preview --}}
-                <div class="row mt-3">
-                    @foreach ($cv as $index => $image)
-                        <div class="col-md-6 mb-2 position-relative" wire:key="cv_{{$index}}">
-                            <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeCV({{$index}})">
-                                <i class='ki-duotone ki-trash fs-4'>
-                                    <span class='path1'></span>
-                                    <span class='path2'></span>
-                                    <span class='path3'></span>
-                                    <span class='path4'></span>
-                                    <span class='path5'></span>
-                                </i>
-                            </button>
-                            @php
-                                $ext = $image->getClientOriginalExtension();
-                                if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
-                                    $url = $image->temporaryUrl();
-                                }else{
-                                    $url = $image->getClientOriginalName();
-                                }
-                                
-
-                                $ext = strtolower($ext);
-                                
-                            @endphp
-                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
-    
-                                <img src="{{ $url }}" class="img-fluid rounded">
-                            @else
-
-                                <div class="border rounded p-4 text-center bg-light">
-                                    <i class="bi bi-file-earmark fs-1"></i>
-                                    <div class="mt-2">
-                                        {{$url}}
-                                    </div>
+                            @error('cv')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
-
-                            @endif
-                        </div>
-                    @endforeach
-                    @foreach ($cv_old as $index => $image)
-                        <div class="col-md-6 mb-2 position-relative" wire:key="cv_old_{{$index}}">
-                            <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeCVOld({{$index}})">
-                                <i class='ki-duotone ki-trash fs-4'>
-                                    <span class='path1'></span>
-                                    <span class='path2'></span>
-                                    <span class='path3'></span>
-                                    <span class='path4'></span>
-                                    <span class='path5'></span>
-                                </i>
-                            </button>
-                            @php
-                                
-                                if (is_array($image)) {
-                                    $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
-                                    $url = $image['file'];
-                                }
-
-                                $ext = strtolower($ext);
-                                
-                            @endphp
-                            @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+                            @enderror
+                        @endif
+                    </div>
+        
     
-                                <img src="{{ $url }}" class="img-fluid rounded">
-                            @else
-                                <div class="border rounded p-4 text-center bg-light">
-                                    <i class="bi bi-file-earmark fs-1"></i>
-                                    <div class="mt-2">
-                                        {{ $image['name'] }}
+                    {{-- Preview --}}
+                    <div class="row mt-3">
+                        @foreach ($cv as $index => $image)
+                            <div class="col-md-6 mb-2 position-relative" wire:key="cv_{{$index}}">
+                                <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeCV({{$index}})">
+                                    <i class='ki-duotone ki-trash fs-4'>
+                                        <span class='path1'></span>
+                                        <span class='path2'></span>
+                                        <span class='path3'></span>
+                                        <span class='path4'></span>
+                                        <span class='path5'></span>
+                                    </i>
+                                </button>
+                                @php
+                                    $ext = $image->getClientOriginalExtension();
+                                    if(in_array($ext, ['jpg','jpeg','png','gif','webp'])){
+                                        $url = $image->temporaryUrl();
+                                    }else{
+                                        $url = $image->getClientOriginalName();
+                                    }
+                                    
+    
+                                    $ext = strtolower($ext);
+                                    
+                                @endphp
+                                @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+        
+                                    <img src="{{ $url }}" class="img-fluid rounded">
+                                @else
+    
+                                    <div class="border rounded p-4 text-center bg-light">
+                                        <i class="bi bi-file-earmark fs-1"></i>
+                                        <div class="mt-2">
+                                            {{$url}}
+                                        </div>
                                     </div>
-
-                                    <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
-                                        Download
-                                    </a>
-                                </div>
-
-                            @endif
-                        </div>
-                    @endforeach
+    
+                                @endif
+                            </div>
+                        @endforeach
+                        @foreach ($cv_old as $index => $image)
+                            <div class="col-md-6 mb-2 position-relative" wire:key="cv_old_{{$index}}">
+                                <button type="button" class="position-absolute btn btn-danger btn-sm p-2 m-2" wire:click="removeCVOld({{$index}})">
+                                    <i class='ki-duotone ki-trash fs-4'>
+                                        <span class='path1'></span>
+                                        <span class='path2'></span>
+                                        <span class='path3'></span>
+                                        <span class='path4'></span>
+                                        <span class='path5'></span>
+                                    </i>
+                                </button>
+                                @php
+                                    
+                                    if (is_array($image)) {
+                                        $ext = pathinfo($image['file'], PATHINFO_EXTENSION);
+                                        $url = $image['file'];
+                                    }
+    
+                                    $ext = strtolower($ext);
+                                    
+                                @endphp
+                                @if(in_array($ext, ['jpg','jpeg','png','gif','webp']))
+        
+                                    <img src="{{ $url }}" class="img-fluid rounded">
+                                @else
+                                    <div class="border rounded p-4 text-center bg-light">
+                                        <i class="bi bi-file-earmark fs-1"></i>
+                                        <div class="mt-2">
+                                            {{ $image['name'] }}
+                                        </div>
+    
+                                        <a href="{{ $url }}" download="{{$image['name']}}" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                            Download
+                                        </a>
+                                    </div>
+    
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

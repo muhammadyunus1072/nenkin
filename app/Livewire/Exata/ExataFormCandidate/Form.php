@@ -133,6 +133,9 @@ class Form extends Component
     #[Validate('required', message: 'Pengalaman kerja harus diisi', onUpdate: false)]
     public $pengalaman_kerja;
 
+    #[Validate('required', message: 'Poin Rekomendasi harus diisi', onUpdate: false)]
+    public $poin_rekomendasi;
+
     public $sertifikat_bahasa_jepang = [];
     public $cv = [];
     public $sertifikat_bahasa_jepang_old = [];
@@ -363,6 +366,7 @@ class Form extends Component
                     'SoftSkill' => $this->soft_skill,
                     'SkillLainnya' => $this->skill_lainnya,
                     'PengalamanKerja' => $this->pengalaman_kerja,
+                    'poin_rekomendasi' => $this->poin_rekomendasi,
                     'Pipeline' => Exata::FILTER_PIPELINE_CHOICE[Exata::PIPELINE_NEW_LEAD],
                     'TglInput' => now(),
                     'PICSales' => Exata::FILTER_SALES_FORM_KANDIDAT,
