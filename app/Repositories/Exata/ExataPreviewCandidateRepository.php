@@ -14,8 +14,13 @@ class ExataPreviewCandidateRepository extends MasterDataRepository
         return ExataPreviewCandidate::class;
     }
 
-    public static function datatable()
-    {
-        return ExataPreviewCandidate::query();
+    public static function datatable(
+        $sortBy = null,
+        $sortDirection = 'asc',
+    ) {
+
+        return ExataPreviewCandidate::when($sortBy, function ($q) use ($sortBy, $sortDirection) {
+            $q->orderBy($sortBy, $sortDirection);
+        });
     }
 }

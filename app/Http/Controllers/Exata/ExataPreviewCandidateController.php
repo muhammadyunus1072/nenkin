@@ -12,9 +12,11 @@ class ExataPreviewCandidateController extends Controller
         return view('app.exata.exata-preview-candidate.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('app.exata.exata-preview-candidate.detail');
+        $sortBy = isset($request->sortBy) ? $request->sortBy : null;
+        $sortDirection = isset($request->sortDirection) ? $request->sortDirection : null;
+        return view('app.exata.exata-preview-candidate.detail', ["sortBy" => $sortBy, "sortDirection" => $sortDirection]);
     }
 
 

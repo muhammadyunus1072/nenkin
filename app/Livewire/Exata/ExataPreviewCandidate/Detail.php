@@ -11,6 +11,8 @@ class Detail extends Component
     use WithFileUploads;
 
     public $data;
+    public $sortBy;
+    public $sortDirection;
 
     public $nama_lpk = 'LPK HADITAMA';
     public $alamat_lpk = 'International Human Resource & Language Center 
@@ -26,7 +28,7 @@ Jl. Tanjung No. 45, Komplek Perkantoran, Jawa Barat';
 
     public function mount()
     {
-        $this->data = ExataPreviewCandidateRepository::datatable()->get();
+        $this->data = ExataPreviewCandidateRepository::datatable($this->sortBy, $this->sortDirection)->get();
     }
 
     public function render()

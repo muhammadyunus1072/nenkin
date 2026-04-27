@@ -86,8 +86,10 @@ class Datatable extends Component
     #[On('export')]
     public function export($type)
     {
-
-        return redirect()->route('exata_preview_candidate.create');
+        return redirect()->route(
+            'exata_preview_candidate.create',
+            ['sortBy' => $this->sortBy, 'sortDirection' => $this->sortDirection]
+        );
     }
 
 

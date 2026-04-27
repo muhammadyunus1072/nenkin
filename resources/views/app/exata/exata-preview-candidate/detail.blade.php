@@ -2,6 +2,6 @@
 
 @section('content')
 <main class="watermark-container">
-    <livewire:exata.exata-preview-candidate.detail>
+    <livewire:exata.exata-preview-candidate.detail :sortBy="$sortBy" :sortDirection="$sortDirection">
 </main>
 @endsection
