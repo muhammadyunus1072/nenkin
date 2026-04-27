@@ -117,7 +117,7 @@ class Datatable extends Component
                     }
 
                     $html = "<div class='row'>
-                        $editHtml $destroyHtml 
+                        $destroyHtml 
                     </div>";
 
                     return $html;
