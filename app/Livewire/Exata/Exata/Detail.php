@@ -66,17 +66,15 @@ class Detail extends Component
     protected function rules()
     {
         return [
-            'cv' => [
-                function ($attribute, $value, $fail) {
+            // 'cv' => [
 
-                    $newEmpty = empty($this->cv);
-                    $oldEmpty = empty($this->cv_old);
+            //     function ($attribute, $value, $fail) {
 
-                    if ($newEmpty && $oldEmpty) {
-                        $fail('CV harus diisi');
-                    }
-                },
-            ],
+            //         if (!$this->cv && !$this->cv_old) {
+            //             $fail('CV harus diisi');
+            //         }
+            //     },
+            // ],
         ];
     }
     public function mount()
@@ -154,6 +152,10 @@ class Detail extends Component
 
     public function store()
     {
+        if (!$this->cv && !$this->cv_old) {
+            $this->addError('cv', 'CV harus diisi');
+            return;
+        }
         $this->validate();
         try {
 
