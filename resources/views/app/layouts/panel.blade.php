@@ -254,6 +254,16 @@
     @livewireScripts
 
     <script>
+        document.addEventListener('contextmenu', e => {
+            e.preventDefault();
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.body.style.filter = 'blur(20px)';
+            } else {
+                document.body.style.filter = '';
+            }
+        });
         Livewire.on("{{ Alert::EVENT_INFO }}", (event) => {
             Swal.fire({
                 icon: event[0],
