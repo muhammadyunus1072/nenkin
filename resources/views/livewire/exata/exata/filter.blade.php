@@ -1,59 +1,62 @@
 <div>
     {{-- Export Data --}}
     <div class="row mt-4 d-flex gap-0">
-        @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_CREATE))
+        
+        @if (auth()->user()->hasRole('Admin'))
+            @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_CREATE))
 
-            <div class="col-md-auto mb-0">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('header')">
-                    <i class="fa fa-upload"></i>
-                    Import By Header
-                </button>
-            </div>
-            <div class="col-md-auto mb-0">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('row')">
-                    <i class="fa fa-upload"></i>
-                    Import By Row
-                </button>
-            </div>
-        @endCan
+                <div class="col-md-auto mb-0">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('header')">
+                        <i class="fa fa-upload"></i>
+                        Import By Header
+                    </button>
+                </div>
+                <div class="col-md-auto mb-0">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importModal" wire:click="setImportBy('row')">
+                        <i class="fa fa-upload"></i>
+                        Import By Row
+                    </button>
+                </div>
+            @endCan
             <div class="col-md-auto mb-0">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#importPipelineModal">
                     <i class="fa fa-upload"></i>
                     Import Pipeline
                 </button>
             </div>
-        <div class="col-auto">
-            <button
-                class="btn btn-success btn-sm"
-                x-data
-                @click="$dispatch('export', { type: '{{ App\Helpers\ExportHelper::TYPE_EXCEL }}' })">
-                <i class="fa fa-file-excel"></i>
-                Download
-            </button>
-        </div>
-        <div class="col-auto">
-            <button
-                class="btn btn-success btn-sm"
-                x-data
-                @click="$dispatch('export-preview', { type: '{{ App\Helpers\ExportHelper::TYPE_EXCEL }}' })">
-                <i class="fa fa-file-excel"></i>
-                Download Preview
-            </button>
-        </div>
-        <div class="col-auto">
-            <a href="{{asset('template_import.xlsx')}}" download="Template Import Seluruh Data"
-                class="btn btn-success btn-sm">
-                <i class="fa fa-file-excel"></i>
-                Download Template Import Row
-            </a>
-        </div>
-        <div class="col-auto">
-            <a href="{{asset('template_pipeline.xlsx')}}" download="Template Pipeline"
-                class="btn btn-success btn-sm">
-                <i class="fa fa-file-excel"></i>
-                Download Template Pipeline 
-            </a>
-        </div>
+            <div class="col-auto">
+                <button
+                    class="btn btn-success btn-sm"
+                    x-data
+                    @click="$dispatch('export', { type: '{{ App\Helpers\ExportHelper::TYPE_EXCEL }}' })">
+                    <i class="fa fa-file-excel"></i>
+                    Download
+                </button>
+            </div>
+            <div class="col-auto">
+                <button
+                    class="btn btn-success btn-sm"
+                    x-data
+                    @click="$dispatch('export-preview', { type: '{{ App\Helpers\ExportHelper::TYPE_EXCEL }}' })">
+                    <i class="fa fa-file-excel"></i>
+                    Download Preview
+                </button>
+            </div>
+            <div class="col-auto">
+                <a href="{{asset('template_import.xlsx')}}" download="Template Import Seluruh Data"
+                    class="btn btn-success btn-sm">
+                    <i class="fa fa-file-excel"></i>
+                    Download Template Import Row
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="{{asset('template_pipeline.xlsx')}}" download="Template Pipeline"
+                    class="btn btn-success btn-sm">
+                    <i class="fa fa-file-excel"></i>
+                    Download Template Pipeline 
+                </a>
+            </div>
+        @endif
         {{-- @can(PermissionHelper::transform(PermissionHelper::ACCESS_EXATA, PermissionHelper::TYPE_UPDATE))
             <div class="col-auto">
                 <button class="btn btn-warning btn-sm" data-bs-toggle='modal' data-bs-target='#bulkModal' wire:click="editBulk">

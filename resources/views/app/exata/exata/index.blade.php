@@ -10,9 +10,7 @@
 
     <div class="card">
         <div class="card-header">
-            @if (auth()->user()->hasRole('Admin'))
-                <livewire:exata.exata.filter>
-            @endif
+            <livewire:exata.exata.filter>    
         </div>
         <div class="card-body">
             <livewire:exata.exata.datatable lazy>
