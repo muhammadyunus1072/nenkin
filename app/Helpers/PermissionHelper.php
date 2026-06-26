@@ -1,0 +1,181 @@
+<?php
+
+namespace App\Helpers;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+class PermissionHelper
+{
+    const SEPARATOR =  ".";
+
+    const TYPE_CREATE = "create";
+    const TYPE_READ = "read";
+    const TYPE_UPDATE = "update";
+    const TYPE_DELETE = "delete";
+    const TYPE_ALL = [self::TYPE_CREATE, self::TYPE_READ, self::TYPE_UPDATE, self::TYPE_DELETE];
+    const TRANSLATE_TYPE = [
+        self::TYPE_CREATE => "Buat",
+        self::TYPE_READ => "Lihat",
+        self::TYPE_UPDATE => "Edit",
+        self::TYPE_DELETE => "Hapus",
+    ];
+
+    const ROUTE_TYPE_CREATE = ['create', 'store'];
+    const ROUTE_TYPE_READ = ['index', 'show', 'print', 'export', 'find'];
+    const ROUTE_TYPE_UPDATE = ['edit', 'update'];
+    const ROUTE_TYPE_DELETE = ['destroy'];
+
+    const ACCESS_DASHBOARD = "dashboard";
+    const ACCESS_USER = "user";
+    const ACCESS_PERMISSION = "permission";
+    const ACCESS_ROLE = "role";
+    // const ACCESS_CONVERT_DATA_ICHIJIKIN = "convert-data-ichijikin";
+    // const ACCESS_VEHICLE = "vehicle";
+    // const ACCESS_VEHICLE_USAGE = "vehicle-usage";
+
+    // MASTER DATA
+    const ACCESS_REGENCY = 'regency';
+
+    // EXATA
+    const ACCESS_EXATA = 'exata';
+    const ACCESS_EXATA_FORM_CANDIDATE = 'exata_form_candidate';
+    const ACCESS_EXATA_PERMISSION = 'permission_exata';
+    const ACCESS_EXATA_PREVIEW_CANDIDATE = 'exata_preview_candidate';
+    const ACCESS_EXATA_ATTACHMENT = 'exata_attachment';
+    const ACCESS_EXATA_HISTORY_FILE_PREVIEW = 'exata_history_file_preview';
+
+    const ACCESS_ALL = [
+        self::ACCESS_DASHBOARD,
+        self::ACCESS_USER,
+        self::ACCESS_PERMISSION,
+        self::ACCESS_ROLE,
+        // self::ACCESS_CONVERT_DATA_ICHIJIKIN,
+        // self::ACCESS_VEHICLE,
+        // self::ACCESS_VEHICLE_USAGE,
+
+        // MASTER DATA
+        self::ACCESS_REGENCY,
+
+        // EXATA
+        self::ACCESS_EXATA,
+        self::ACCESS_EXATA_FORM_CANDIDATE,
+        self::ACCESS_EXATA_PERMISSION,
+        self::ACCESS_EXATA_PREVIEW_CANDIDATE,
+        self::ACCESS_EXATA_ATTACHMENT,
+        self::ACCESS_EXATA_HISTORY_FILE_PREVIEW,
+    ];
+
+    const TRANSLATE_ACCESS = [
+        self::ACCESS_DASHBOARD => "Dashboard",
+        self::ACCESS_USER => "Pengguna",
+        self::ACCESS_PERMISSION => "Akses",
+        self::ACCESS_ROLE => "Jabatan",
+        // self::ACCESS_CONVERT_DATA_ICHIJIKIN => "Convert Data Ichijikin",
+        // self::ACCESS_VEHICLE => "Data Kendaraan",
+        // self::ACCESS_VEHICLE_USAGE => "Data Penggunaan Kendaraan",
+
+        // MASTER DATA
+        self::ACCESS_REGENCY => "Data Kabupaten / Kota",
+
+        // EXATA
+        self::ACCESS_EXATA => "Data J-Expert",
+        self::ACCESS_EXATA_FORM_CANDIDATE => "Data J-Expert - Form Kandidat",
+        self::ACCESS_EXATA_PERMISSION => "Data Ijin J-Expert",
+        self::ACCESS_EXATA_PREVIEW_CANDIDATE => "Preview Kandidat - J-Expert",
+        self::ACCESS_EXATA_ATTACHMENT => "Lampiran Kandidat - J-Expert",
+        self::ACCESS_EXATA_HISTORY_FILE_PREVIEW => "Riwayat Preview Kandidat - J-Expert",
+    ];
+
+
+
+    /*
+    | Parameters
+    | permission (string) : merupakan nama dari permission
+    */
+    public static function translate($permission)
+    {
+        $explode = explode(self::SEPARATOR, $permission);
+        $access = $explode[0];
+        $type = $explode[1];
+
+        $translateAccess = isset(self::TRANSLATE_ACCESS[$access]) ? self::TRANSLATE_ACCESS[$access] : $access;
+        $translateType = isset(self::TRANSLATE_TYPE[$type]) ? self::TRANSLATE_TYPE[$type] : $type;
+
+        return $translateAccess . " - " . $translateType;
+    }
+
+    /*
+    | Parameters
+    | access (string) : merupakan access yang tersedia pada helper ini
+    | type (string) : merupakan type yang tersedia pada helper ini
+    */
+    public static function transform($access, $type)
+    {
+        return $access . self::SEPARATOR . $type;
+    }
+
+    /*
+    | Parameters
+    | permission (string) : merupakan nama dari permission
+    */
+    public static function getAccess($permission)
+    {
+        return explode(self::SEPARATOR, $permission)[0];
+    }
+
+
+    /*
+    | Parameters
+    | permission (string) : merupakan nama dari permission
+    */
+    public static function getTranslatedAccess($permission)
+    {
+        return self::TRANSLATE_ACCESS[self::getAccess($permission)];
+    }
+
+
+    /*
+    | Parameters
+    | permission (string) : merupakan nama dari permission
+    */
+    public static function getType($permission)
+    {
+        return explode(self::SEPARATOR, $permission)[1];
+    }
+
+    /*
+    | Parameters
+    | permission (string) : merupakan nama dari permission
+    */
+    public static function getTranslatedType($permission)
+    {
+        return self::TRANSLATE_TYPE[self::getType($permission)];
+    }
+
+    /*
+    | Parameters
+    | route_name (string) : Nama Route
+    */
+    public static function isRoutePermitted($route_name, $user = null)
+    {
+        // Identifikasi Route
+        $exploded_route_names = explode(".", $route_name);
+        $access = $exploded_route_names[0];
+        $route_type = $exploded_route_names[1];
+
+        if (in_array($route_type, self::ROUTE_TYPE_CREATE)) {
+            $type = self::TYPE_CREATE;
+        } else if (in_array($route_type, self::ROUTE_TYPE_READ)) {
+            $type = self::TYPE_READ;
+        } else if (in_array($route_type, self::ROUTE_TYPE_UPDATE)) {
+            $type = self::TYPE_UPDATE;
+        } else {
+            $type = self::TYPE_DELETE;
+        }
+
+        // Pemeriksaan Hak Akses
+        $user = $user == null ? User::find(Auth::id()) : $user;
+        return $user->hasPermissionTo(self::transform($access, $type));
+    }
+}
