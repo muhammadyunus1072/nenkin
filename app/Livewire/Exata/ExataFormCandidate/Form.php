@@ -18,7 +18,10 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+<<<<<<< HEAD
 use Vinkla\Hashids\Facades\Hashids;
+=======
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 
 class Form extends Component
 {
@@ -165,6 +168,7 @@ class Form extends Component
     public function mount()
     {
         try {
+<<<<<<< HEAD
             $idArray = Hashids::decode($this->objId);
 
             if (empty($idArray)) {
@@ -173,12 +177,20 @@ class Form extends Component
 
             $id = $idArray[0];
             $form = ExataFormCandidateRepository::find($id);
+=======
+            $form_id = Crypt::decrypt($this->objId);
+            $form = ExataFormCandidateRepository::find($form_id);
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
             if (!$form) {
                 abort(404, 'Form Tidak Tersedia');
             }
             if ($form->expired_at && now()->greaterThan($form->expired_at)) {
                 ExataFormCandidateRepository::update(
+<<<<<<< HEAD
                     $id,
+=======
+                    Crypt::decrypt($this->objId),
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                     ['status' => ExataFormCandidate::STATUS_EXPIRED]
                 );
                 abort(403, 'Form sudah expired');
@@ -208,6 +220,7 @@ class Form extends Component
     {
         try {
 
+<<<<<<< HEAD
             $idArray = Hashids::decode($this->objId);
 
             if (empty($idArray)) {
@@ -216,6 +229,11 @@ class Form extends Component
 
             $id = $idArray[0];
             $form = ExataFormCandidateRepository::find($id);
+=======
+            $form_id = Crypt::decrypt($this->objId);
+
+            $form = ExataFormCandidateRepository::find($form_id);
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 
             if (!$form) {
                 abort(404, 'Form tidak ditemukan');
@@ -241,7 +259,11 @@ class Form extends Component
                 if ($this->max_attempts <= 0) {
 
                     ExataFormCandidateRepository::update(
+<<<<<<< HEAD
                         $id,
+=======
+                        $form_id,
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                         ['expired_at' => now()]
                     );
 
@@ -408,6 +430,7 @@ class Form extends Component
                     ExataCurriculumVitaeRepository::create($validatedCv);
                 }
 
+<<<<<<< HEAD
                 $idArray = Hashids::decode($this->objId);
 
                 if (empty($idArray)) {
@@ -417,6 +440,10 @@ class Form extends Component
                 $id = $idArray[0];
                 ExataFormCandidateRepository::update(
                     $id,
+=======
+                ExataFormCandidateRepository::update(
+                    Crypt::decrypt($this->objId),
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                     [
                         'status' => ExataFormCandidate::STATUS_SUBMITTED,
                         'exata_id' => $exata_id,

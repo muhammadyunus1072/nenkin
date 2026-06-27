@@ -12,10 +12,16 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
+<<<<<<< HEAD
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Vinkla\Hashids\Facades\Hashids;
+=======
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 
 class Detail extends Component
 {
@@ -81,6 +87,7 @@ class Detail extends Component
     public function mount()
     {
         if ($this->objId) {
+<<<<<<< HEAD
 
             $idArray = Hashids::decode($this->objId);
 
@@ -90,6 +97,9 @@ class Detail extends Component
 
             $id = $idArray[0];
             $candidate = ExataRepository::find($id);
+=======
+            $candidate = ExataRepository::find(Crypt::decrypt($this->objId));
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
             $this->candidate_profile = $candidate->toArray();
 
             foreach ($candidate->exataJapaneseLanguageCertificates as $certificate) {
@@ -183,6 +193,7 @@ class Detail extends Component
                     'poin_rekomendasi' => $this->poin_rekomendasi,
                 ];
                 if ($this->objId) {
+<<<<<<< HEAD
 
                     $idArray = Hashids::decode($this->objId);
 
@@ -191,6 +202,9 @@ class Detail extends Component
                     }
 
                     $exata_id = $idArray[0];
+=======
+                    $exata_id = Crypt::decrypt($this->objId);
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                     ExataRepository::update($exata_id, $validateData);
                 }
 

@@ -19,8 +19,12 @@
         "muhammadyunus1072/track-history": "^1.0",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
+<<<<<<< HEAD
         "spatie/laravel-permission": "^6.3",
         "vinkla/hashids": "^11.0"
+=======
+        "spatie/laravel-permission": "^6.3"
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

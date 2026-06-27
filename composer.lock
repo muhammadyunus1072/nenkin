@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "1ce01245278454793c1e246229e53ed3",
+=======
+    "content-hash": "ec5e21736beb8e49e58a15d0dda87360",
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1528,6 +1532,7 @@
             "time": "2026-01-29T20:49:00+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "graham-campbell/manager",
             "version": "v5.3.0",
             "source": {
@@ -1598,6 +1603,8 @@
             "time": "2026-03-19T20:25:10+00:00"
         },
         {
+=======
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
             "name": "graham-campbell/result-type",
             "version": "v1.1.4",
             "source": {
@@ -2115,6 +2122,7 @@
             "time": "2025-08-22T14:27:06+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "hashids/hashids",
             "version": "5.0.2",
             "source": {
@@ -2184,6 +2192,8 @@
             "time": "2023-02-23T15:00:54+00:00"
         },
         {
+=======
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
             "name": "intervention/gif",
             "version": "4.2.4",
             "source": {
@@ -7915,6 +7925,7 @@
             "time": "2025-12-02T11:56:42+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "vinkla/hashids",
             "version": "11.0.0",
             "source": {
@@ -7982,6 +7993,8 @@
             "time": "2023-02-26T18:30:57+00:00"
         },
         {
+=======
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
             "name": "vlucas/phpdotenv",
             "version": "v5.6.3",
             "source": {
@@ -10706,12 +10719,21 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
+<<<<<<< HEAD
     "stability-flags": {},
+=======
+    "stability-flags": [],
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
+<<<<<<< HEAD
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
+=======
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+>>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 }
