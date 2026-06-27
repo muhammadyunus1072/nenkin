@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Validate;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Detail extends Component
 {
@@ -80,7 +81,15 @@ class Detail extends Component
     public function mount()
     {
         if ($this->objId) {
-            $candidate = ExataRepository::find(Crypt::decrypt($this->objId));
+
+            $idArray = Hashids::decode($this->objId);
+
+            if (empty($idArray)) {
+                abort(404);
+            }
+
+            $id = $idArray[0];
+            $candidate = ExataRepository::find($id);
             $this->candidate_profile = $candidate->toArray();
 
             foreach ($candidate->exataJapaneseLanguageCertificates as $certificate) {
@@ -174,7 +183,14 @@ class Detail extends Component
                     'poin_rekomendasi' => $this->poin_rekomendasi,
                 ];
                 if ($this->objId) {
-                    $exata_id = Crypt::decrypt($this->objId);
+
+                    $idArray = Hashids::decode($this->objId);
+
+                    if (empty($idArray)) {
+                        abort(404);
+                    }
+
+                    $exata_id = $idArray[0];
                     ExataRepository::update($exata_id, $validateData);
                 }
 

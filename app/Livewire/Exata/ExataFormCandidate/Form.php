@@ -18,6 +18,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Form extends Component
 {
@@ -164,14 +165,20 @@ class Form extends Component
     public function mount()
     {
         try {
-            $form_id = Crypt::decrypt($this->objId);
-            $form = ExataFormCandidateRepository::find($form_id);
+            $idArray = Hashids::decode($this->objId);
+
+            if (empty($idArray)) {
+                abort(404);
+            }
+
+            $id = $idArray[0];
+            $form = ExataFormCandidateRepository::find($id);
             if (!$form) {
                 abort(404, 'Form Tidak Tersedia');
             }
             if ($form->expired_at && now()->greaterThan($form->expired_at)) {
                 ExataFormCandidateRepository::update(
-                    Crypt::decrypt($this->objId),
+                    $id,
                     ['status' => ExataFormCandidate::STATUS_EXPIRED]
                 );
                 abort(403, 'Form sudah expired');
@@ -201,9 +208,14 @@ class Form extends Component
     {
         try {
 
-            $form_id = Crypt::decrypt($this->objId);
+            $idArray = Hashids::decode($this->objId);
 
-            $form = ExataFormCandidateRepository::find($form_id);
+            if (empty($idArray)) {
+                abort(404);
+            }
+
+            $id = $idArray[0];
+            $form = ExataFormCandidateRepository::find($id);
 
             if (!$form) {
                 abort(404, 'Form tidak ditemukan');
@@ -229,7 +241,7 @@ class Form extends Component
                 if ($this->max_attempts <= 0) {
 
                     ExataFormCandidateRepository::update(
-                        $form_id,
+                        $id,
                         ['expired_at' => now()]
                     );
 
@@ -396,8 +408,15 @@ class Form extends Component
                     ExataCurriculumVitaeRepository::create($validatedCv);
                 }
 
+                $idArray = Hashids::decode($this->objId);
+
+                if (empty($idArray)) {
+                    abort(404);
+                }
+
+                $id = $idArray[0];
                 ExataFormCandidateRepository::update(
-                    Crypt::decrypt($this->objId),
+                    $id,
                     [
                         'status' => ExataFormCandidate::STATUS_SUBMITTED,
                         'exata_id' => $exata_id,

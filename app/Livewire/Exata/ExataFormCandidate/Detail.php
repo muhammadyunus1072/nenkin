@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Detail extends Component
 {
@@ -29,10 +30,12 @@ class Detail extends Component
     public function mount()
     {
         if ($this->objId) {
+
             $form = ExataFormCandidateRepository::find(Crypt::decrypt($this->objId));
             $this->password = $form->password;
             $this->expired_at = Carbon::parse($form->expired_at)->format('Y-m-d\TH:i');
-            $this->link = route('exata_form_candidate.form', Crypt::encrypt($form->id));
+
+            $this->link = route('exata_form_candidate.form', Hashids::encode($form->id));
             $this->user = $form->user->toArray();
         }
     }
