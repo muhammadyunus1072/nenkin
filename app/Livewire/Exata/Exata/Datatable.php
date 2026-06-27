@@ -17,10 +17,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
-<<<<<<< HEAD
 use Vinkla\Hashids\Facades\Hashids;
-=======
->>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 
 
 class Datatable extends Component
@@ -335,12 +332,8 @@ class Datatable extends Component
                             </button>
                         </div>
                         ";
-<<<<<<< HEAD
 
                     $routeLink = route('exata.edit', Hashids::encode($item->id));
-=======
-                    $routeLink = route('exata.edit', $id);
->>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                     $linkHtml = "
                         <div class='col-auto mb-2'>
                             <button

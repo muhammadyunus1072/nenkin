@@ -11,10 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Attributes\On;
 use Livewire\Component;
-<<<<<<< HEAD
 use Vinkla\Hashids\Facades\Hashids;
-=======
->>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
 
 
 class Datatable extends Component
@@ -150,13 +147,9 @@ class Datatable extends Component
                 'searcable' => false,
                 'name' => 'Link',
                 'render' => function ($item) {
-<<<<<<< HEAD
 
                     $id = Hashids::encode($item->id);
                     $link = route('exata_form_candidate.form', $id);
-=======
-                    $link = route('exata_form_candidate.form', Crypt::encrypt($item->id));
->>>>>>> fc451f8fda2b4ae304e8b1f1b4b360984a9d420b
                     $linkHtml = "
 
                         <div class='col-auto mb-2'>
